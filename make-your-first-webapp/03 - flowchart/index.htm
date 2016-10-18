@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!--
+	title:	Digilab - Flowchart
+	desc:	Determines if the user is meatloaf
+	author:	@asameshimae
+	credit:	inspired by http://www.pleated-jeans.com/2010/08/18/are-you-meat-loaf-flowchart/
+-->
+
+<head>
+	<meta charset="UTF-8">
+	<title>Are you Meat Loaf?</title>
+
+	<!-- google webfont -->
+	<link href='https://fonts.googleapis.com/css?family=Germania+One' rel='stylesheet' type='text/css'>
+	<style>
+		body { 
+			font-family: 'Germania One', cursive;
+			background-color: #333;
+			margin-left: 3em;
+			margin-top: 4em;
+			color: #f44;
+			font-size: 200%;
+		}
+		h1 {
+			border-bottom: 1px dotted #555;
+			margin-right: 5em;
+			padding-bottom: .2em;
+		}
+		a {
+			color: #f44;
+		}
+		a:active, a:hover {
+			color: white;
+		}
+		#response {
+			display: none;
+		}
+		.level {
+			display: none;
+		}
+		.credit {
+			font-size: 50%;
+			margin-top: 15em;
+		}
+	</style>
+
+	<!-- google-hosted jQuery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script> 
+
+</head>
+<body>
+
+	<div id="questions">
+
+		<div class="level" data-level="1">
+			<h1>Would you do anything for love?</h1>
+			<p>
+				<a href="#" class="answer" data-nextlevel="3">Yes</a>&emsp;
+				<a href="#" class="answer" data-nextlevel="2">No</a>
+			</p>
+		</div>
+
+		<div class="level" data-level="2">
+			<h1>You are not Meat Loaf</h1>
+			<p>
+				<a href="#" class="answer" data-nextlevel="1">Thanks for that</a>
+			</p>
+		</div>
+
+		<div class="level" data-level="3">
+			<h1>Even that?</h1>
+			<p>
+				<a href="#" class="answer" data-nextlevel="2">Yes, even that</a>&emsp;
+				<a href="#" class="answer" data-nextlevel="4">No, I won't do that</a>
+			</p>
+		</div>
+
+		<div class="level" data-level="4">
+			<img style="float:right; margin-right: 3em;" src="meatloaf.jpg" alt="Meat Loaf gesturing while talking to an MTV reporter" title="Image CC-BY-2.0 by christopher simon on wikimedia commons; https://commons.wikimedia.org/wiki/File:Meat_Loaf.jpg"/>
+			<h1>You are Meat Loaf</h1>
+			<p>
+				<a href="#" class="answer" data-nextlevel="1">Thanks for that</a>
+			</p>
+		</div>
+
+	</div>
+
+	<div class="credit">
+
+		<p>Inspired by <a href="http://www.pleated-jeans.com/2010/08/18/are-you-meat-loaf-flowchart/" target="_blank">this</a>.</p>
+
+	</div>
+
+	<script>
+	// when the document is ready in the browser, do this...
+	$(document).ready(function(){
+
+		$('[data-level=1]').show();
+
+		$('.answer').click(function(){
+			$('.level').hide();
+			$('[data-level='+$(this).data('nextlevel')+']').show();
+		});
+
+	});
+</script>
+
+</body>
+</html>

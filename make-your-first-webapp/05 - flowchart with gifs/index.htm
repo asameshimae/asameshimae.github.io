@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!--
+	title:	Digilab - Flowchart
+	desc:	Determines if the user is meatloaf
+	author:	@asameshimae
+	credit:	inspired by http://www.pleated-jeans.com/2010/08/18/are-you-meat-loaf-flowchart/
+-->
+
+<head>
+	<meta charset="UTF-8">
+	<title>Are you an owl?</title>
+
+	<!-- google webfont -->
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+	<style>
+		body { 
+			font-family: 'Open Sans', sans-serif;
+			background-color: #eff;
+			margin-left: 3em;
+			margin-top: 4em;
+			color: #333;
+			font-size: 200%;
+		}
+		h1 {
+			border-bottom: 1px dotted #555;
+			margin-right: 5em;
+			padding-bottom: .2em;
+		}
+		a {
+			color: #f44;
+		}
+		a:active, a:hover {
+			color: white;
+		}
+		#response {
+			display: none;
+		}
+		.level {
+			display: none;
+		}
+		.credit {
+			font-size: 50%;
+			margin-top: 15em;
+		}
+	</style>
+
+	<!-- google-hosted jQuery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script> 
+
+</head>
+<body>
+
+	<div id="questions">
+
+<!DOCTYPE html>
+<html lang="en">
+
+<!--
+	title:	Digilab - Flowchart
+	desc:	A flowchart template
+	author:	@asameshimae
+	license:code is CC0; images from giphy; jQuery from jQuery.
+-->
+
+<head>
+	<meta charset="UTF-8">
+	<title>Flowchart</title>
+
+	<style>
+		body { 
+			font-family: 'Arial', sans-serif;
+			background-color:# eff;
+			margin-left: 3em;
+			margin-top: 4em;
+			color: #333;
+			font-size: 200%;
+		}
+		h1 {
+			border-bottom: 1px dotted #555;
+			margin-right: 5em;
+			padding-bottom: .2em;
+		}
+		a {
+			color: #f44;
+		}
+		a:active, a:hover {
+			color: blue;
+		}
+		#response {
+			display: none;
+		}
+		.level {
+			display: none;
+		}
+	</style>
+
+	<!-- google-hosted jQuery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script> 
+
+</head>
+<body>
+
+	<div id="questions">
+
+		<div class="level" data-level="1">
+			<h1>Can you fly?</h1>
+			<img src="http://i.giphy.com/3o7abAHdYvZdBNnGZq.gif" style="width:500px; height:auto;"/>
+			<p>
+				<a href="#" class="answer"
+					data-nextlevel="2">Yes</a> &emsp;
+				<a href="#" class="answer"
+					data-nextlevel="3">No</a>
+			</p>
+		</div>
+
+		<div class="level" data-level="2">
+			<h1>Can you hoot?</h1>
+			<img src="http://i.giphy.com/c5Rlke9hRLoDS.gif"/>
+			<p>
+				<a href="#" class="answer" data-nextlevel="4">Hoot hoot! (Yes)</a>&emsp;
+				<a href="#" class="answer" data-nextlevel="5">No</a>
+			</p>
+		</div>
+
+		<div class="level" data-level="3">
+			<h1>Do you have a flat face?</h1>
+			<img src="http://i.giphy.com/RyxeaK6CrfP0Y.gif"/>
+			<p>
+				<a href="#" class="answer" data-nextlevel="6">Yes</a>&emsp;
+				<a href="#" class="answer" data-nextlevel="7">No</a>
+			</p>
+		</div>
+
+		<div class="level" data-level="4">
+			<h1>You are an owl</h1>
+			<img src="http://i.giphy.com/kewCD3ucGAwak.gif"/>
+			<p>
+				<a href="#" class="answer" data-nextlevel="1">I know</a>
+			</p>
+		</div>
+
+
+		<div class="level" data-level="5">
+			<h1>You are a bird or a plane</h1>
+			<img src="http://i.giphy.com/11qNtu3829ph72.gif"/>
+			<p>
+				<a href="#" class="answer" data-nextlevel="1">Tweet tweet vroom (Thanks)</a>
+			</p>
+		</div>
+
+
+		<div class="level" data-level="6">
+			<h1>You are a baby owl</h1>
+			<img src="http://i.giphy.com/qISaMW1xwmvNS.gif"/>
+			<p>
+				<a href="#" class="answer" data-nextlevel="1">Hoot hoot</a>
+			</p>
+		</div>
+
+
+		<div class="level" data-level="7">
+			<h1>You are not an owl in any way</h1>
+			<img src="http://i.giphy.com/Jx2YWZoo8ZsuQ.gif"/>
+			<p>
+				<a href="#" class="answer" data-nextlevel="1">I am still happy though</a>
+			</p>
+		</div>
+
+	</div>
+
+
+	<script>
+	// when the document is ready in the browser, do this...
+	$(document).ready(function(){
+
+		$('[data-level=1]').show();
+
+		$('.answer').click(function(){
+			$('.level').hide();
+			$('[data-level='+$(this).data('nextlevel')+']').show();
+		});
+
+	});
+	</script>
+
+</body>
+</html>

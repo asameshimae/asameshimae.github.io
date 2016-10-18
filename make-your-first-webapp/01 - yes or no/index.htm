@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!--
+	============
+	OH HI THERE!
+	============
+
+	How are you? You are viewing the source code for this web app.
+	This is a comment. It is here for you to read - it doesn't change
+	anything about the app. There are lots of comments in this app to
+	help you make changes to it.
+
+	If you are in the session, we will talk through what to do. If you
+	are reading this outside of the session, the comments might help
+	you.
+
+	The next comment has some information about the app. Again, it's
+	just for your info.
+
+-->
+
+<!--
+	title:	Yes or no?
+	desc:	Asks a yes/no question then gives a response
+	usage:	CC0 1.0 Universal (you can do whatever you like with this)
+	note:	All GIPHY gifs are Copyright the original license owners
+-->
+
+<head>
+	<meta charset="UTF-8">
+	<!--
+		The next comments explain the bit of code which follows.
+		When you see ***CHANGE THIS***, there is an example of
+		something you can change, to make this *your* app.
+
+		Just change the code as suggested, save the file, and reload
+		it in your browser to see what happens. You are making an app!
+
+		You can change anything you like! Some of it won't do anything.
+		Some of it will break the app. That's OK.
+
+		Remember: FAIL = First Attempt In Learning. If things go wrong,
+		try again. When it works, you will have made something new.
+
+		If the app seems broken, don't worry. Just undo your changes
+		and save it again. If things get really broken, you can start
+		again from the original app.
+
+		Let's make your own copy of this app, so we can start
+		editing it. Select all the code (Ctrl+A or Cmd+A) and copy it
+		(Ctrl+C or Cmd+C) then open a new text file and paste it
+		(Ctrl+V or Cmd+V). Then save the file somewhere you can find
+		it, like your desktop. IMPORTANT: the file name needs to end
+		with .html. You can call it yesno.html or anything.html
+		
+		When you have done that, drag the new file onto your browser 
+		to try out your copy. It should be the same as the original.
+
+		Every time you make a change, save the file, and click reload
+		in your browser. You can see what effect the change had.
+
+	-->
+
+	<title>Yes or no?</title>
+
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+
+	<style>
+		body {
+			font-family: 'Open Sans', sans-serif; 
+			background-color: white;
+			margin-left: 2em;
+		}
+		h1 {
+			color: purple;
+		}
+		#response {
+			display:none;
+		}
+		.message {
+			display:none;
+		}
+		img {
+			z-index: -10;
+			max-width: 500px;
+			max-height: 350px;
+		}
+		p.options {
+			position: absolute;
+			top:440px;
+		}
+	</style>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script> 
+
+</head>
+
+<body>
+
+	<div id="question">
+
+		<!--
+			make a heading which says
+			'Is it your birthday today?' [001]
+			==================================
+			***CHANGE THIS*** to a different question
+		-->
+		<h1>Is it your birthday today?</h1>
+
+		<!--
+			show an image (e.g. a gif) below the question [002]
+
+			HINT: You can search gifs from giphy.com. Click 'Advanced'
+			then copy the GIF download link and use it in your app
+
+			NOTE: if you are sharing your app publicly, make sure you
+			have permission and attribute images appropriately
+			==================================
+			***CHANGE THIS*** to a different gif
+		-->
+		<img src="http://i.giphy.com/5fHY45L9XLzcQ.gif" alt="Cat eating a birthday cake with reckless abandon"/>
+
+		<p class="options">
+			<a href="#" data-answer="1">Yes</a> | <a href="#" data-answer="2">No</a>
+		</p>
+
+	</div>
+
+	<div id="response">
+
+		<!-- this part is called message-1. we'll put the 'yes' message here -->
+		<div id="message-1" class="message">
+			<!--
+				set the 'Yes' message to Happy birthday! [003]
+				========================================
+				***CHANGE THIS*** to another message
+				HINT: Change the bit inside the quote marks
+			-->
+			<h1>Happy birthday!</h1>
+			<!--
+				show an image below the response [004] 
+				========================================
+				***CHANGE THIS*** to another image
+			-->
+			<img src="http://i.giphy.com/hRS2MZzDx933i.gif"	alt="Rotating birthday cake"/>
+		</div>
+
+
+		<!-- this part is called message-1. we'll put the 'no' message here -->
+		<div id="message-2" class="message">
+			<h1>Happy unbirthday!</h1>			
+			<img src="http://i.giphy.com/6FPTBL8qD5Uvm.gif"	alt="Alice blowing out a candle"/>
+		</div>
+
+		<p class="options">
+			<a href="#">Thanks</a>
+		</p>
+
+	</div>
+
+	<script>
+		// wait until the page is loaded
+		$(document).ready(function(){
+
+			// when a question link (like 'Yes' or 'No') is clicked, do this...
+			$('#question a').click(function(){
+
+				$('.message').hide();
+				$('#message-'+$(this).data('answer')).show();
+
+				// hide the question
+				$('#question').hide();
+				// show the response
+				$('#response').show();
+			});
+
+			// when the response link ('Thanks') is clicked, do this...
+			$('#response a').click(function(){
+
+				// restart - put everything back to how it was: show the question again and hide the response
+				$('#question').show();
+				$('#response').hide();
+
+			});
+
+		});
+	</script>
+
+</body>
+</html>
+
+<!--
+	You have reached the end of the code for this web app!
+	If you have changed all of the CHANGE THIS parts, well done.
+	If you got it working how you wanted it, great.
+	Why not go through again and make it do something different.
+
+	Can you make the app do this?
+
+		Is it cold today?
+			YES -> Wear a coat
+			NO -> No need to wear a coat
+
+	Can you make the app ask any yes/no question and give your
+	choice of answers? OF COURSE YOU CAN!
+
+	If you enjoyed this, and you want to learn more, you can:
+		* Read through the comments and the code
+		* Try changing more things like text, colours and numbers
+		* Learn by doing more at codecademy.com (no affiliation to us)
+		* Suggest ideas for more sessions like this
+-->

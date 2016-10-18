@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!--
+	title:	Digilab - Yes or no [multiple]
+	desc:	Asks multiple yes/no questions, and provides feedback
+-->
+
+<head>
+	<meta charset="UTF-8">
+	<title>Quiz</title>
+
+	<!-- google webfont -->
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+	<style>
+		body { 
+			font-family: 'Open Sans', sans-serif; 
+			background-color: #FFFFDF;
+			margin-left: 2em;
+		}
+		h1 {
+			color: #666699;
+		}
+		#response {
+			display: none;
+		}
+		.level {
+			display: none;
+		}
+	</style>
+
+	<!-- google-hosted jQuery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script> 
+
+</head>
+<body>
+
+	<div id="questions">
+
+		<!-- level 1 -->
+		<div class="level" data-level="1">
+
+			<h1>Can you fly?</h1>
+
+			<p>
+				<a href="#" class="answer" data-answer="1">Yes</a>
+				|
+				<a href="#" class="answer" data-answer="0">No</a>
+			</p>
+
+		</div>
+
+		<!-- level 2... -->
+		<div class="level" data-level="2">
+
+			<h1>Do you have a flat face?</h1>
+
+			<p>
+				<!-- answer 1... -->
+				<a href="#" class="answer" data-answer="1">Yes</a>
+				|
+				<a href="#" class="answer" data-answer="0">No</a>
+			</p>
+
+		</div>
+
+		<!-- level 3... -->
+		<div class="level" data-level="3">
+
+			<h1>Do you make a hooting sound, generally?</h1>
+
+			<p>
+				<!-- answer 1... -->
+				<a href="#" class="answer" data-answer="1">Yes</a>
+				|
+				<a href="#" class="answer" data-answer="0">No</a>
+			</p>
+
+		</div>
+
+		<div class="level" data-level="4">
+
+			<h1 id="message"></h1>
+
+			<p>
+				<a href="#" class="restart">Restart</a>
+			</p>
+
+		</div>
+
+	</div>
+
+	<script>
+		// when the document is ready in the browser, do this...
+		$(document).ready(function(){
+
+			var currentScore = 0; // start from score zero
+			var currentQuestion = 1; // start at level 1
+
+			$('[data-level='+currentQuestion+']').show(); // show the current level
+
+			$('.restart').click(function(){ // if the user clicks 'restart', do this...
+				currentScore = 0;
+				currentQuestion = 1; // reset the level to 1
+				$('#response').hide();
+				$('.level').hide();
+				$('[data-level='+currentQuestion+']').show();
+				$('#questions').show();
+			});
+
+			// when any link (<a class="answer">) is clicked, do this...
+			$('.answer').click(function(){
+
+				currentScore += $(this).data('answer');
+
+				switch($(this).parents('.level').data('level')) {
+
+					case $('.level').length-1: // if it's the end
+						// decide what to do based on data-answer for the link clicked
+						switch(currentScore) {
+							case 3: // 3 points
+								$('#message').text("You are probably an owl!");
+								break;
+
+							case 2:
+								$('#message').text("You are quite owly but probably not an owl!");
+								break;
+
+							case 1:
+								$('#message').text("You are an owl impersonator!");
+								break;
+
+							default: // any other amount of points
+								$('#message').text("There is no way you are an owl");
+								break;
+						}
+						break;
+
+					default: // if it's not the end...
+						break;
+				}								
+
+				currentQuestion++;
+				$('.level').hide();
+				$('[data-level='+currentQuestion+']').show();
+				
+			});
+
+		});
+	</script>
+
+</body>
+</html>

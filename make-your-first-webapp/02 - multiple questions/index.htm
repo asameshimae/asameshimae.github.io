@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!--
+	title:	Digilab - Yes or no [multiple]
+	desc:	Asks multiple yes/no questions, and provides feedback
+-->
+
+<head>
+	<meta charset="UTF-8">
+	<title>Yes or no?</title>
+
+	<!-- google webfont -->
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+	<style>
+		body { 
+			font-family: 'Open Sans', sans-serif; 
+			background-color: #FFFFDF;
+			margin-left: 2em;
+		}
+		h1 {
+			color: #666699;
+		}
+		#response {
+			display: none;
+		}
+		.level {
+			display: none;
+		}
+	</style>
+
+	<!-- google-hosted jQuery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script> 
+
+</head>
+<body>
+
+	<div id="questions">
+
+		<!-- level 1 -->
+		<div class="level" data-level="1">
+
+			<h1>Is it your birthday today?</h1>
+
+			<p>
+				<!-- answer 1 -->
+				<a href="#" class="answer" data-answer="1">Yes</a>
+				|
+				<!-- answer 2 -->
+				<a href="#" class="answer" data-answer="2">No</a>
+				|
+				<!-- answer 3 -->
+				<a href="#" class="answer" data-answer="3">Not sure</a>
+			</p>
+
+		</div>
+
+		<!-- level 2... -->
+		<div class="level" data-level="2">
+
+			<h1>Is it raining today?</h1>
+
+			<p>
+				<!-- answer 1... -->
+				<a href="#" class="answer" data-answer="1">Yes</a>
+				|
+				<a href="#" class="answer" data-answer="2">No</a>
+				|
+				<a href="#" class="answer" data-answer="3">Not sure</a>
+			</p>
+
+		</div>
+
+		<div class="level" data-level="3">
+
+			<h1>You win!</h1>
+
+			<p>
+				Congratulations; you have completed this 'game'
+			</p>
+
+			<p>
+				<a href="#" class="restart">Restart</a>
+			</p>
+
+		</div>
+
+	</div>
+
+	<div id="response">
+
+		<h1 id="message"></h1>
+
+		<p>
+			<a href="#">Thanks</a>
+		</p>
+
+	</div>
+
+	<script>
+		// when the document is ready in the browser, do this...
+		$(document).ready(function(){
+
+			var currentQuestion = 1; // start at level 1
+
+			$('[data-level='+currentQuestion+']').show(); // show the current level
+
+			$('.restart').click(function(){ // if the user clicks 'restart', do this...
+				currentQuestion = 1; // reset the level to 1
+				$('#response').hide();
+				$('.level').hide();
+				$('[data-level='+currentQuestion+']').show();
+				$('#questions').show();
+			});
+
+			// when any link (<a class="answer">) is clicked, do this...
+			$('.answer').click(function(){
+
+				switch($(this).parents('.level').data('level')) {
+
+					case 1: // if it's level 1
+						// decide what to do based on data-answer for the link clicked
+						switch($(this).data('answer')) {
+							case 1: // if it's answer 1
+								// set <h1 id="message"> to say Happy birthday...
+								$('#message').text("Happy birthday!");
+								break;
+
+							case 2: // if it's answer 2...
+								$('#message').text("Happy unbirthday!");
+								break;
+
+							case 3: // if it's answer 3...
+								$('#message').text("Happy today!");
+								break;
+
+							default:
+								break;
+						}
+						break;
+
+					case 2: // if it's level 2...
+						switch($(this).data('answer')) {
+							case 1:
+								$('#message').text("Bring a brolly!");
+								break;
+
+							case 2:
+								$('#message').text("Enjoy!");
+								break;
+
+							case 3:
+								$('#message').text("Look up a forecast!");
+								break;
+
+							default:
+								break;
+						}
+						break;
+
+					default:
+						break;
+				}
+
+				$('#questions').hide();
+				$('#response').show();
+				
+			});
+
+			// when any link in <div id="response"> is clicked...
+			$('#response a').click(function(){
+
+				// restart - put everything back to how it was: #question is visible; #response is not
+				$('#response').hide();
+				$('.level').hide();
+				currentQuestion++;
+				$('[data-level='+currentQuestion+']').show();
+				$('#questions').show();
+
+			});
+
+		});
+	</script>
+
+</body>
+</html>
