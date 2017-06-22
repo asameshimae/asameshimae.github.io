@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <!-- 
-  
+
     by:   @asameshimae
     live: https://asameshimae.github.io/twimmer
     src:  https://github.com/asameshimae/asameshimae.github.io/tree/master/twimmer  
@@ -28,6 +28,13 @@
     padding:0em .5em;
     border-left:1em solid #632B30;
   }
+  a {
+    padding:.2em .5em;
+    margin:.2em 1em;
+    display:inline-block;
+    background-color:#632B30;
+    color:#FADF63;
+  }
   textarea {
     font-family: 'Slabo 27px', serif;
     font-size:27px;
@@ -52,6 +59,7 @@
   </div>
   <div><span id="status"></span></div>
   <div id="textDest"></div>
+  <a id="intent" href="" target="_blank">Tweet it!</a>
   <!-- main layout ends -->
 
   <script type="text/javascript">
@@ -76,12 +84,13 @@
     const twitterChars = (text,linkLength=tw_linkLength) => urlMasked(text,linkLength).length
 
     // update the output text with wide characters, update the status field
-    const updateText = (src='textSource', dst='textDest', status='status', limit=tw_tweetLimit) => { 
+    const updateText = (src='textSource', dst='textDest', status='status', intent='intent', limit=tw_tweetLimit) => { 
       srcLen = twitterChars(srcTxt = document.querySelector(`#${src}`).value)
       dstLen = twitterChars(dstTxt = convertToSpaced(srcTxt))
       document.querySelector(`#${dst}`).textContent = dstTxt
       document.querySelector(`#${status}`).textContent = `${srcLen} → ${dstLen} (saved ${srcLen-dstLen} chars)`
       document.querySelector(`#${status}`).style['background-color'] = ['','red'][+(dstLen>limit)]
+      document.querySelector(`#${intent}`).href = `https://twitter.com/intent/tweet?text=${encodeURI(dstTxt)}`
     }
 
   </script>
