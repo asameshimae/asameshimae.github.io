@@ -62,7 +62,7 @@
 
   <!-- main layout begins -->
   <div>
-    <textarea id="textSource" rows="5" onkeyup="updateText()" onfocus="focusInit()">Hello. Write your text here (using punctuation and spaces as you normally would) and... BOOM! You can express yourself slightly more than before...</textarea>
+    <textarea id="textSource" rows="5" onkeyup="updateText()">Hello. Write your text here (using punctuation and spaces as you normally would) and... BOOM! You can express yourself slightly more than before...</textarea>
   </div>
   <div><span id="status"></span></div>
   <div id="textDest"></div>
@@ -83,9 +83,6 @@
       // destination spaced characters
       [..."，．：；？！）"," （","…"] 
     ]
-
-    let inited=false
-    const focusInit = () => inited?true:inited=document.querySelector('#textSource').value=''
 
     // convert text to wide character-spaced text
     const convertToSpaced = text => text.replace(/([\,\.\:\;\?\!\)\(] |\.\.\.| \()/g, match => dictionary[spaced][dictionary[unspaced].indexOf(match)])
