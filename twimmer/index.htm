@@ -1,69 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
-	<style type="text/css">
-	* {
-		font-family: 'Slabo 27px', serif;
-		background-color: #2274A5;
-		color: #FADF63;
-	}
-	body,textarea {
-		font-size:27px;
-		width:100%;
-	}
-	textarea,#textDest {
-		background-color: #E6AF2E;
-		color:#632B30;
-		border:0px none;
-		padding:.2em;
-		margin-top: .5em;
-	}
-	div {
-		display:block;
-		width:23em;
-	}
-	span {
-		display:inline-block;
-		padding:0em .5em;
-		border-left:1em solid #632B30;
-	}
-	</style>
-	<title>Twimmer</title>
+  <!-- 
+  
+    by:   @asameshimae
+    live: https://asameshimae.github.io/twimmer
+    src:  https://github.com/asameshimae/asameshimae.github.io/tree/master/twimmer  
+
+  -->
+  <meta charset="UTF-8">
+  <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
+  <style type="text/css">
+  body {
+    font-family: 'Slabo 27px', serif;
+    font-size:27px;
+    background-color: #2274A5;
+    color: #FADF63;
+    margin:1%;
+  }
+  div {
+    display:block;
+    width:98%;
+    margin:.5em 0;
+  }
+  span {
+    display:inline-block;
+    padding:0em .5em;
+    border-left:1em solid #632B30;
+  }
+  textarea {
+    font-family: 'Slabo 27px', serif;
+    font-size:27px;
+    width:100%;
+  }
+  textarea,#textDest {
+    background-color: #E6AF2E;
+    color:#632B30;
+    border:0px none;
+    padding:.2em;
+    margin-top: .5em;
+  }
+  /* colours from coolers.co because there is nowhere cooler for colours */
+  </style>
+  <title>Twimmer</title>
 </head>
 <body onload="updateText()">
-	<div>
-		<textarea id="textSource" rows="5" onkeyup="updateText()">Hello. Write your text here (using punctuation and spaces as you normally would) and... BOOM! You can express yourself slightly more than before...</textarea>
-	</div>
-	<div><span id="status"></span></div>
-	<div id="textDest"></div>
-	<script type="text/javascript">
-		const unspaced = 0, spaced = 1
-		const tw_tweetLimit = 140, tw_linkLength = 23
 
-		const dictionary = [
-			[...[...",.:;?!)"].map(e=>`${e} `)," (","..."], // source patterns to match
-			[..."，．：；？！）"," （","…"] // destination spaced characters
-		]
+  <!-- main layout begins -->
+  <div>
+    <textarea id="textSource" rows="5" onkeyup="updateText()">Hello. Write your text here (using punctuation and spaces as you normally would) and... BOOM! You can express yourself slightly more than before...</textarea>
+  </div>
+  <div><span id="status"></span></div>
+  <div id="textDest"></div>
+  <!-- main layout ends -->
 
-		const convertToSpaced = text => text.replace(/([\,\.\:\;\?\!\)\(] |\.\.\.| \()/g, match => dictionary[spaced][dictionary[unspaced].indexOf(match)])
+  <script type="text/javascript">
+    // index markers for the dictionary
+    const [unspaced, spaced] = [0,1]
+    // twitter params in case they ever change
+    const [tw_tweetLimit, tw_linkLength] = [140,23]
 
-		const urlMasked = (text,linkLength=tw_linkLength) => text.replace(/(https?:\/\/\S+|\S+\.\S+)/g,'_'.repeat(linkLength))
+    // unspaced to spaced dictionary
+    const dictionary = [
+      [...[...",.:;?!)"].map(e=>`${e} `)," (","..."], // source patterns to match
+      [..."，．：；？！）"," （","…"] // destination spaced characters
+    ]
 
-		const twitterChars = (text,linkLength=tw_linkLength) => urlMasked(text,linkLength).length
+    // convert text to wide character-spaced text
+    const convertToSpaced = text => text.replace(/([\,\.\:\;\?\!\)\(] |\.\.\.| \()/g, match => dictionary[spaced][dictionary[unspaced].indexOf(match)])
 
-		const updateText = (src='textSource', dst='textDest', status='status', limit=tw_tweetLimit) => { 
-			srcTxt = document.querySelector(`#${src}`).value
-			srcLen = twitterChars(srcTxt)
-			dstTxt = convertToSpaced(srcTxt)
-			dstLen = twitterChars(dstTxt)
-			saving = srcLen-dstLen
-			document.querySelector(`#${dst}`).textContent = dstTxt
-			document.querySelector(`#${status}`).textContent = `${srcLen} → ${dstLen} (saved ${saving} chars)`
-			document.querySelector(`#${status}`).style['background-color'] = ['','red'][+(dstLen>limit)]
-		}
+    // replace urls with a set-length mask to simulate t.co shortening (url regex is only basic)
+    const urlMasked = (text,linkLength=tw_linkLength) => text.replace(/(https?:\/\/\S+)/g,'_'.repeat(linkLength))
 
-	</script>
+    // return the length of a string as counted by twitter (approx)
+    const twitterChars = (text,linkLength=tw_linkLength) => urlMasked(text,linkLength).length
+
+    // update the output text with wide characters, update the status field
+    const updateText = (src='textSource', dst='textDest', status='status', limit=tw_tweetLimit) => { 
+      srcLen = twitterChars(srcTxt = document.querySelector(`#${src}`).value)
+      dstLen = twitterChars(dstTxt = convertToSpaced(srcTxt))
+      document.querySelector(`#${dst}`).textContent = dstTxt
+      document.querySelector(`#${status}`).textContent = `${srcLen} → ${dstLen} (saved ${srcLen-dstLen} chars)`
+      document.querySelector(`#${status}`).style['background-color'] = ['','red'][+(dstLen>limit)]
+    }
+
+  </script>
+
 </body>
 </html>
