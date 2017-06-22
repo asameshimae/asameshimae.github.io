@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet">
+	<style type="text/css">
+	* {
+		font-family: 'Slabo 27px', serif;
+		background-color: #2274A5;
+		color: #FADF63;
+	}
+	body,textarea {
+		font-size:27px;
+		width:100%;
+	}
+	textarea,#textDest {
+		background-color: #E6AF2E;
+		color:#632B30;
+		border:0px none;
+		padding:.2em;
+		margin-top: .5em;
+	}
+	div {
+		display:block;
+		width:23em;
+	}
+	span {
+		display:inline-block;
+		padding:0em .5em;
+		border-left:1em solid #632B30;
+	}
+	</style>
+	<title>Twimmer</title>
+</head>
+<body onload="updateText()">
+	<div>
+		<textarea id="textSource" rows="5" onkeyup="updateText()">Hello. Write your text here (using punctuation and spaces as you normally would) and... BOOM! You can express yourself slightly more than before...</textarea>
+	</div>
+	<div><span id="status"></span></div>
+	<div id="textDest"></div>
+	<script type="text/javascript">
+		const unspaced = 0, spaced = 1
+		const tw_tweetLimit = 140, tw_linkLength = 23
+
+		const dictionary = [
+			[...[...",.:;?!)"].map(e=>`${e} `)," (","..."], // source patterns to match
+			[..."，．：；？！）"," （","…"] // destination spaced characters
+		]
+
+		const convertToSpaced = text => text.replace(/([\,\.\:\;\?\!\)\(] |\.\.\.| \()/g, match => dictionary[spaced][dictionary[unspaced].indexOf(match)])
+
+		const urlMasked = (text,linkLength=tw_linkLength) => text.replace(/(https?:\/\/\S+|\S+\.\S+)/g,'_'.repeat(linkLength))
+
+		const twitterChars = (text,linkLength=tw_linkLength) => urlMasked(text,linkLength).length
+
+		const updateText = (src='textSource', dst='textDest', status='status', limit=tw_tweetLimit) => { 
+			srcTxt = document.querySelector(`#${src}`).value
+			srcLen = twitterChars(srcTxt)
+			dstTxt = convertToSpaced(srcTxt)
+			dstLen = twitterChars(dstTxt)
+			saving = srcLen-dstLen
+			document.querySelector(`#${dst}`).textContent = dstTxt
+			document.querySelector(`#${status}`).textContent = `${srcLen} → ${dstLen} (saved ${saving} chars)`
+			document.querySelector(`#${status}`).style['background-color'] = ['','red'][+(dstLen>limit)]
+		}
+
+	</script>
+</body>
+</html>
