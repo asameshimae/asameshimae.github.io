@@ -98,7 +98,7 @@
       let srcLen = twitterChars(srcTxt = document.querySelector(`#${src}`).value)
       let dstLen = twitterChars(dstTxt = convertToSpaced(srcTxt))
       document.querySelector(`#${dst}`).textContent = dstTxt
-      document.querySelector(`#${status}`).textContent = `${srcLen} → ${dstLen} (saved ${srcLen-dstLen} chars)`
+      document.querySelector(`#${status}`).textContent = `${limit-srcLen} (${srcLen}) → ${limit-dstLen} (${dstLen}) ：： saved ${srcLen-dstLen} chars`
       document.querySelector(`#${status}`).style['background-color'] = ['','red'][+(dstLen>limit)]
       document.querySelector(`#${intent}`).href = `https://twitter.com/intent/tweet?text=${encodeURI(dstTxt)}`
     }
