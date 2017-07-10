@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+	<link href="https://fonts.googleapis.com/css?family=Zilla+Slab" rel="stylesheet"> 
+
+	<style type="text/css">
+	body {	
+		/* Coolors Exported Palette - coolors.co/88d18a-ccddb7-6a5b6e-f0b7b3-a833b9 */
+		--color1: #88d18a; 	/* dark sea green */
+		--color2: #ccddb7;		/* pastel grey */
+		--color3: #6a5b6e;		/* dim grey */
+		--color4: #f0b7b3;		/* melon */
+		--color5: #a833b9;	/* dark orchid */
+
+		background-color: var(--color3);
+		color: var(--color4);
+
+    font-family: 'Zilla Slab', serif;
+		font-size: 5em;
+
+		margin:1em 1em 1em 2em;
+	}
+	#card {
+		padding-left:.2em;
+		height:2em;
+	}
+	a,a:active,a:visited {
+		text-decoration: none;
+		padding:.2em;
+	}
+	#vote {
+		margin-top:.8em;
+		padding-top:.4em;
+		border-top:1px dotted var(--color4);
+	}
+	#vBd { color: var(--color4); }
+	#vOk { color: var(--color2); }
+	#vGd { color: var(--color1); }
+	</style>
+
+  <title>Voterater</title>
+</head>
+<body>
+
+  <div id="card">...</div>
+
+  <div id="vote">
+  	<a href="#" id="vBd" data-vote="-1">😞</a><a href="#" id="vOk" data-vote="0">😐</a><a href="#" id="vGd" data-vote="1">😂</a> 
+  </div>
+
+  <script type="text/javascript">
+    /* constants */
+    const keyGS = 'AKfycbzSpeYhp_HZ6sncI6iHK4plCcG-VvhZYamMJFeQ7mgTI8nEhqp5'
+    const roundels = {pattern:
+    	[...t='...|..:|.:.|:..|...'.split`|`,
+    	...[';;;',':::',';;;'],
+    	...t.reverse()], pos:0}
+    const cardBatchSize = 10
+
+    /* variables */
+    let cardPile = []
+    let newCard = {}
+    let loading = true
+
+    /* simple templaters */
+    const urlReq = (set,n=cardBatchSize)=>`https://script.google.com/macros/s/${keyGS}/exec?set=${set}&n=${n}`
+    const urlVote = (itemid,name,vote)=>`https://script.google.com/macros/s/${keyGS}/exec?itemid=${itemid}&hash=${name.hashCode()}&vote=${vote}`
+
+    /* reusable functions */
+    // SOURCE: https://stackoverflow.com/a/7616484
+    String.prototype.hashCode = function() {
+      var hash=0, i, chr
+      if (this.length===0) return hash
+      for (i=0;i<this.length;i++) {
+        chr=this.charCodeAt(i)
+        hash=((hash<<5)-hash)+chr
+        hash|=0 // Convert to 32bit integer
+      }
+      return hash;
+    }
+
+    /* app-specific functions */
+
+    // add a new batch of cards to the bottom of the pile
+    const replenishCards = (set='bandstowns') => fetch(urlReq(set))
+      .then(r=>r.json())
+      .then(json=>cardPile.push(...json.data))
+      .then(r=>console.log('replenished'))
+
+    // update the card area with a new entry to vote on
+    const drawCard = function() {
+    	console.log(cardPile.length)
+
+    	if(loading) clearInterval(loading)
+    	if(cardPile.length<cardBatchSize) replenishCards()
+
+      newCard = cardPile.shift()
+      if(newCard) {
+        card = document.querySelector('#card')
+        card.textContent = card.dataset.entry = newCard.entry
+        card.dataset.id = newCard.id      
+      } else replenishCards().then(r=>drawCard())
+    }
+
+    const vote = vote => fetch(urlVote(newCard.id,newCard.entry,vote))
+    	.then(drawCard())
+
+    /* app init */
+
+    // display a beautiful loading animation
+    loading = setInterval(()=>document.querySelector('#card').textContent = roundels.pattern[(++roundels.pos)%roundels.pattern.length],120)
+
+    // add event listeners to voting buttons
+    document.querySelectorAll('#vote a').forEach(e=>e.addEventListener('click',function(){
+    	vote(this.dataset.vote)
+    	// drawCard()
+    }))
+
+    replenishCards().then(r=>drawCard())
+
+  </script>
+</body>
+</html>
+
