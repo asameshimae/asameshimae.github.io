@@ -3,70 +3,97 @@
 <head>
   <meta charset="UTF-8">
 
-	<link href="https://fonts.googleapis.com/css?family=Zilla+Slab" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css?family=Zilla+Slab" rel="stylesheet"> 
 
-	<style type="text/css">
-	body {	
-		/* Coolors Exported Palette - coolors.co/88d18a-ccddb7-6a5b6e-f0b7b3-a833b9 */
-		--color1: #88d18a; 	/* dark sea green */
-		--color2: #ccddb7;	/* pastel grey */
-		--color3: #6a5b6e;	/* dim grey */
-		--color4: #f0b7b3;	/* melon */
-		--color5: #a833b9;	/* dark orchid */
+    <style type="text/css">
+    body {    
+        /* Coolors Exported Palette - coolors.co/88d18a-ccddb7-6a5b6e-f0b7b3-a833b9 */
+        --color1: #88d18a;     /* dark sea green */
+        --color2: #ccddb7;    /* pastel grey */
+        --color3: #6a5b6e;    /* dim grey */
+        --color4: #f0b7b3;    /* melon */
+        --color5: #a833b9;    /* dark orchid */
 
-		background-color: var(--color3);
-		color: var(--color4);
+        background-color: var(--color3);
+        color: var(--color4);
 
     font-family: 'Zilla Slab', serif;
-		font-size: 5em;
+        font-size: 5em;
 
-		margin:1em 1em 1em 2em;
-	}
-	#card {
-		padding-left:.2em;
-		height:2em;
-	}
-	a,a:active,a:visited {
-		text-decoration: none;
-		padding:.2em;
-	}
-	#vote {
-		margin-top:.8em;
-		padding-top:.4em;
-		border-top:1px dotted var(--color4);
-	}
-	#vBd { color: var(--color4); }
-	#vOk { color: var(--color2); }
-	#vGd { color: var(--color1); }
+        margin:1em 1em 1em 2em;
+    }
+    #card, #leaders {
+        padding-left:.2em;
+        height:2em;
+    }
+  @media screen and (min-width: 1000px) {
+    #leaders { display:inline-block; }
+  }
+  @media screen and (max-width: 1000px) {
+    #leaders { display:none; }
+  }
+  #leaders {
+    float:right;
+    height:auto;
+    padding-left:3em;
+    /*border-left:1px dotted var(--color4);*/
+    min-height:13em;
+    font-size: .3em;
+    background-color: var(--color3);
+  }
+  #leaders h3 {
+    font-size: 1em;
+    font-weight: normal;
+    color: var(--color1);
+    margin:0em;
+  }
+  a,a:active,a:visited {
+    text-decoration: none;
+    padding:.2em;
+  }
+  #vote {
+    margin-top:.8em;
+    padding-top:.4em;
+    border-top:1px dotted var(--color4);
+  }
+  #vBd { color: var(--color4); }
+  #vOk { color: var(--color2); }
+  #vGd { color: var(--color1); }
   #vEp { color: var(--color1); }
-	</style>
+    </style>
 
   <title>Voterater</title>
 </head>
 <body>
 
+  <div id="leaders">...</div>
+
   <div id="card">...</div>
 
   <div id="vote">
-  	<a href="#" id="vBd" data-vote="0">😞</a><a href="#" id="vOk" data-vote="1">😐</a><a href="#" id="vGd" data-vote="2">😊</a><a href="#" id="vEp" data-vote="4">😂</a> 
+    <a href="#" id="vBd" data-vote="0">😞</a><a href="#" id="vOk" data-vote="1">😐</a><a href="#" id="vGd" data-vote="2">😊</a><a href="#" id="vEp" data-vote="4">😂</a> 
   </div>
+
 
   <script type="text/javascript">
     /* constants */
     const keyGS = 'AKfycbzSpeYhp_HZ6sncI6iHK4plCcG-VvhZYamMJFeQ7mgTI8nEhqp5'
-    const roundels = {pattern:
-    	[...t='...|..:|.:.|:..|...'.split`|`,
-    	...[';;;',':::',';;;'],
-    	...t.reverse()], pos:0}
+    const roundels = 
+      [...t='...|..:|.:.|:..|...'.split`|`,
+      ...[';;;',':::',';;;'],
+      ...t.reverse()]
     const cardBatchSize = 10
 
     /* variables */
+    let roundelPos = {card:0,leaders:0}
     let cardPile = []
+    let leaderPile = []
     let newCard = {}
-    let loading = true
+    let [loadingData,loadingLeaders] = [true,true]
 
     /* simple templaters */
     const urlReq = (set,n=cardBatchSize)=>`https://script.google.com/macros/s/${keyGS}/exec?set=${set}&n=${n}`
+    const urlLeaders = (set)=>`https://script.google.com/macros/s/${keyGS}/exec?set=${set}&show=leaders`
     const urlVote = (itemid,name,vote)=>`https://script.google.com/macros/s/${keyGS}/exec?itemid=${itemid}&hash=${name.hashCode()}&vote=${vote}`
 
     /* reusable functions */
@@ -84,18 +111,27 @@
 
     /* app-specific functions */
 
+    // display a beautiful loading animation
+    const showRoundel = elem => setInterval(()=>document.querySelector(`#${elem}`).textContent=roundels[(++roundelPos[elem])%roundels.length],120)
+
     // add a new batch of cards to the bottom of the pile
     const replenishCards = (set='bandstowns') => fetch(urlReq(set))
       .then(r=>r.json())
       .then(json=>cardPile.push(...json.data))
-      .then(r=>console.log('replenished'))
+      .then(()=>console.log('replenished'))
+
+    const refreshLeaders = (set='bandstowns') => fetch(urlLeaders(set))
+      .then(r=>r.json())
+      .then(json=>leaderPile=json.data)
+      .then(()=>clearInterval(loadingLeaders))
+      .then(()=>document.querySelector('#leaders').innerHTML='<h3>The beautiful ones:</h3>'+leaderPile.map(e=>e.entry).join('<br/>'))
 
     // update the card area with a new entry to vote on
     const drawCard = function() {
-    	console.log(cardPile.length)
+        console.log(cardPile.length)
 
-    	if(loading) clearInterval(loading)
-    	if(cardPile.length<cardBatchSize) replenishCards()
+      if(loadingData) loadingData=clearInterval(loadingData)
+      if(cardPile.length<cardBatchSize) replenishCards()
 
       newCard = cardPile.shift()
       if(newCard) {
@@ -106,20 +142,21 @@
     }
 
     const vote = vote => fetch(urlVote(newCard.id,newCard.entry,vote))
-    	.then(drawCard())
+      .then(drawCard())
 
     /* app init */
 
-    // display a beautiful loading animation
-    loading = setInterval(()=>document.querySelector('#card').textContent = roundels.pattern[(++roundels.pos)%roundels.pattern.length],120)
+    loadingData = showRoundel('card')
+    loadingLeaders = showRoundel('leaders')
 
     // add event listeners to voting buttons
     document.querySelectorAll('#vote a').forEach(e=>e.addEventListener('click',function(){
-    	vote(this.dataset.vote)
-    	// drawCard()
+      vote(this.dataset.vote)
+      // drawCard()
     }))
 
     replenishCards().then(r=>drawCard())
+    refreshLeaders()
 
   </script>
 </body>
