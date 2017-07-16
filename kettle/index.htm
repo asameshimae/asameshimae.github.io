@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link href="https://fonts.googleapis.com/css?family=Merriweather" rel="stylesheet"> 
+  <style type="text/css">
+  * {
+    font-family: 'Merriweather', serif;
+  }
+  body {
+    /* Coolors Exported Palette - coolors.co/a4243b-d8c99b-d8973c-bd632f-273e47 */
+    --color1: #a4243b;
+    --color2: #d8c99b;
+    --color3: #d8973c;
+    --color4: #bd632f;
+    --color5: #273e47;
+    
+    background-color: var(--color2);
+    color: var(--color5);
+    margin: 2.5em 5em;
+  }
+  td:first-child {
+    min-width: 30em;
+  }
+  h1,h2,h3,h4,h5,h6 {
+    color: var(--color1);
+  }
+  em {
+    font-size:0.8em;
+  }
+  </style>
+  <title>Kettle time</title>
+</head>
+<body>
+  <div id="main">
+
+    <h2>Boil some water. Time it. I'll wait.</h2>
+    <table id="stage1">
+    <tbody>
+      <tr>
+        <td><label for="i_v_boil">How much water did you boil (litres)?</label></td>
+        <td><input type="text" name="i_v_boil" id="i_v_boil" value="1"></td>
+      </tr>
+      <tr>
+        <td><label for="i_Ti">What temperature did the water start at (Celsius)?</label></td>
+        <td><input type="text" name="i_Ti" id="i_Ti" value="12"></td>
+      </tr>
+      <tr>
+        <td><label for="i_t_boil">How long did it take to click (seconds)?</label></td>
+        <td><input type="text" name="i_t_boil" id="i_t_boil" value="150"></td>
+      </tr>
+    </tbody>
+    </table>
+
+    <h2>Outline your beverage situation.</h2>
+    <table id="stage2">
+    <tbody>
+      <tr>
+        <td><label for="i_P">Actual heating power (Watts)</label></td>
+        <td><input type="text" name="i_P" id="i_P" value="" disabled="true"></td>
+      </tr>
+      <tr>
+        <td><label for="i_v">How much water do you want to heat (litres)?</label></td>
+        <td><input type="text" name="i_v" id="i_v" value="0.5"></td>        
+      </tr>
+      <tr>
+        <td><label for="i_Tf">What temperature do you want the water (Celsius)?</label></td>
+        <td><input type="text" name="i_Tf" id="i_Tf" value="70"></td>        
+      </tr>
+    </tbody>
+    </table>
+
+    <h2>Here are all the answers.</h2>
+    <table id="output">
+    <tbody>      
+      <tr>
+        <td><label for="i_t">Time required to heat this water (seconds)</label></td>
+        <td><input type="text" name="i_t" id="i_t" value="120" disabled="true"></td>
+      </tr>
+      <tr>
+        <td><label for="i_cheat">Magic water volume (litres)<br/><em>this much water takes approx t sec to reach t degrees</em></label></td>
+        <td><input type="text" name="i_cheat" id="i_cheat" value="" disabled="true"></td>
+      </tr>
+    </tbody>
+    </table>
+
+  </div>
+  <script>
+    // constants
+    const kcal = 4184 // 1 kcal in SI (Joule). 1kcal = energy to raise 1litre water by 1degC 
+
+    // variables
+    let v_boil, v, Ti, t_boil, P, Tf, t, cheat
+
+    // inputs
+    ['v_boil','v','Ti','t_boil','P','Tf','t', 'cheat'].forEach(e => window[`i_${e}`] = document.querySelector(`#i_${e}`))
+
+    // simple templaters
+    const power = (v,dT,t) => kcal * v * dT / t // effective heating power from time(t) to achieve dT in volume v of water
+    const time  = (v,dT,P) => kcal * v * dT / P // time to achieve dT in v at power P
+    const temp  = (v,Ti,t,P) => Ti + (P * t / (kcal * v)) // temperature after boiling v at P for t
+
+    // functions
+    const upower = () => Math.floor(power(
+      Number(i_v_boil.value),
+      100 - Number(i_Ti.value),
+      Number(i_t_boil.value)
+    ))
+
+    const utime = () => Math.floor(time(
+      Number(i_v.value),
+      Number(i_Tf.value) - Number(i_Ti.value),
+      Number(i_P.value)
+    ))
+
+    const refresh = () => { i_cheat.value = ((i_P.value = upower())/3500).toFixed(2); i_t.value = utime(); }
+
+    // init everything
+    document.querySelectorAll('#stage1 input').forEach(e=>e.addEventListener('keyup',()=>refresh() ))
+    document.querySelectorAll('#stage2 input').forEach(e=>e.addEventListener('keyup',()=>refresh() ))
+    refresh()
+
+  </script>
+</body>
+</html>
