@@ -26,10 +26,10 @@
         padding-left:.2em;
         height:2em;
     }
-    @media screen and (min-width: 1000px) {
+    @media screen and (min-width: 700px) {
       #leaders { display:inline-block; }
     }
-    @media screen and (max-width: 1000px) {
+    @media screen and (max-width: 700px) {
       #leaders { display:none; }
     }
     #leaders {
@@ -73,7 +73,6 @@
         to {opacity:1;width:9em;}
     }
 
-    /* The element to apply the animation to */
     .animOut {
       animation-name: animOut;
       animation-duration: 2s;
@@ -88,7 +87,7 @@
 </head>
 <body>
 
-  <div id="leaders">...</div>
+  <div id="leaders" class="animIn">...</div>
 
   <div id="card">...</div>
 
@@ -144,7 +143,12 @@
 
     const refreshLeaders = (set='bandstowns') => fetch(urlLeaders(set))
       .then(r=>r.json())
-      .then(json=>leaderPile=json.data)
+      .then(json=>{
+        if(JSON.stringify(leaderPile)!=JSON.stringify(json.data)) {
+          leaderPile = json.data
+          displayLeaders()
+        }
+      })
 
     // update the card area with a new entry to vote on
     const drawCard = function() {
@@ -159,12 +163,11 @@
     }
 
     const displayLeaders = () => {
-      newText = '<h3>The beautiful ones:</h3>'+leaderPile.map(e=>e.entry).join('<br/>')
+      newText = '<h3>The beautiful ones:</h3>'+leaderPile.map(e=>e.entry).join('<br>')
       target = document.querySelector('#leaders')
-      if(target.innerHTML!=newText) {
-        target.innerHTML=newText
-        target.classList.add('animIn')
-      }
+      target.innerHTML = newText
+      var clone = target.cloneNode(true);
+      target.parentNode.replaceChild(clone,target);
     }
 
     const vote = vote => fetch(urlVote(newCard.id,newCard.entry,vote))
@@ -186,7 +189,7 @@
     refreshLeaders()
       .then(()=>clearInterval(loading.get('leaders')))
       .then(()=>displayLeaders())
-      .then(()=>setInterval(()=>refreshLeaders().then(()=>displayLeaders()),10000))
+      .then(()=>setInterval(()=>refreshLeaders(),10000))
 
   </script>
 </body>
