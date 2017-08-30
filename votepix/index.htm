@@ -19,7 +19,6 @@
 
     font-family: 'Zilla Slab', serif;
         font-size: 5em;
-
         margin:1em 1em 1em 2em;
     }
     #card, #leaders {
@@ -158,7 +157,8 @@
         card = document.querySelector('#card')
         cardTxt = document.querySelector('#cardTxt')
         cardImg = document.querySelector('#cardImg')
-        cardTxt.textContent = card.dataset.entry = newCard.entry
+        // cardTxt.textContent =
+        cardImg.alt = card.dataset.entry = newCard.entry
         card.dataset.id = newCard.id
         cardImg.src = newCard.pic
       } else replenishCards().then(r=>drawCard())
