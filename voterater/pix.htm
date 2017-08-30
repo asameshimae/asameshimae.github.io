@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+    <link href="https://fonts.googleapis.com/css?family=Zilla+Slab" rel="stylesheet"> 
+
+    <style type="text/css">
+    body {    
+        /* Coolors Exported Palette - coolors.co/88d18a-ccddb7-6a5b6e-f0b7b3-a833b9 */
+        --color1: #88d18a;     /* dark sea green */
+        --color2: #ccddb7;    /* pastel grey */
+        --color3: #6a5b6e;    /* dim grey */
+        --color4: #f0b7b3;    /* melon */
+        --color5: #a833b9;    /* dark orchid */
+
+        background-color: var(--color3);
+        color: var(--color4);
+
+    font-family: 'Zilla Slab', serif;
+        font-size: 5em;
+
+        margin:1em 1em 1em 2em;
+    }
+    #card, #leaders {
+        padding-left:.2em;
+        height:2em;
+    }
+    @media screen and (min-width: 700px) {
+      #leaders { display:inline-block; }
+    }
+    @media screen and (max-width: 700px) {
+      #leaders { display:none; }
+    }
+    #leaders {
+      float:right;
+      height:auto;
+      width:9em;
+      overflow: hidden;
+      white-space: nowrap;
+      padding-left:3em;
+      min-height:13em;
+      font-size: .3em;
+      background-color: var(--color3);
+    }
+    #leaders h3 {
+      font-size: 1em;
+      font-weight: normal;
+      color: var(--color1);
+      margin:0em;
+    }
+    a,a:active,a:visited {
+      text-decoration: none;
+      padding:.2em;
+    }
+    #vote {
+      margin-top:.8em;
+      margin-right:4em;
+      padding-top:.4em;
+      border-top:1px dotted var(--color4);
+    }
+    #vBd { color: var(--color4); }
+    #vOk { color: var(--color2); }
+    #vGd { color: var(--color1); }
+    #vEp { color: var(--color1); }
+    
+    @keyframes animOut {
+      from {opacity:1;width:9em;}
+        to {opacity:0;width:8em;}
+    }
+    @keyframes animIn {
+      from {opacity:0;width:8em;}
+        to {opacity:1;width:9em;}
+    }
+
+    .animOut {
+      animation-name: animOut;
+      animation-duration: 2s;
+    }
+    .animIn {
+      animation-name: animIn;
+      animation-duration: 2s;  
+    }
+    </style>
+
+  <title>Voterater</title>
+</head>
+<body>
+
+  <div id="leaders" class="animIn">...</div>
+
+  <div id="card">...</div>
+
+  <div id="vote">
+    <a href="#" id="vBd" data-vote="0">😞</a><a href="#" id="vOk" data-vote="1">😐</a><a href="#" id="vGd" data-vote="2">😊</a><a href="#" id="vEp" data-vote="4">😂</a> 
+  </div>
+
+
+  <script type="text/javascript">
+    /* constants */
+    const keyGS = 'AKfycbz7SAoadz1yrsdHUHHJMCFcvyR5Fo1TcWzyn6V1-A09kSKezKg' // key to the Google Sheet (prod)
+    const roundels = 
+      [...t='...|..:|.:.|:..|...'.split`|`,
+      ...[';;;',':::',';;;'],
+      ...t.reverse()] // array of ascii animation stages used when loading content
+    const cardBatchSize = 10 // how many cards to get per remote request
+
+    /* variables */
+    let roundelPos = {card:0,leaders:0} // counter for each animation
+    let cardPile = [] // array of entries with metadata to vote on
+    let leaderPile = [] // array of top voted entries for info
+    let newCard = {} // current entry with metadata
+    let loading = new Map([['data',true],['leaders',true]]) // are these elements still loading? (true, intervalid, then undefined when ready)
+
+    /* simple templaters */
+    const urlReq = (set,n=cardBatchSize)=>`https://script.google.com/macros/s/${keyGS}/exec?set=${set}&n=${n}` // generate the url to get more cards
+    const urlLeaders = (set)=>`https://script.google.com/macros/s/${keyGS}/exec?set=${set}&show=leaders` // generate the url to get the leaderboard
+    const urlVote = (itemid,name,vote)=>`https://script.google.com/macros/s/${keyGS}/exec?itemid=${itemid}&hash=${name.hashCode()}&vote=${vote}` // generate the url to vote for a card
+
+    /* reusable functions */
+
+    // SOURCE: https://stackoverflow.com/a/7616484
+    String.prototype.hashCode = function() { // hash a string
+      var hash=0, i, chr
+      if (this.length===0) return hash
+      for (i=0;i<this.length;i++) {
+        chr=this.charCodeAt(i)
+        hash=((hash<<5)-hash)+chr
+        hash|=0 // Convert to 32bit integer
+      }
+      return hash;
+    }
+
+    /* app-specific functions */
+
+    // display a beautiful loading animation
+    const showRoundel = elem => setInterval(()=>document.querySelector(`#${elem}`).textContent=roundels[(++roundelPos[elem])%roundels.length],120)
+
+    // add a new batch of cards to the bottom of the pile
+    const replenishCards = (set='ritter') => fetch(urlReq(set))
+      .then(r=>r.json())
+      .then(json=>cardPile.push(...json.data))
+
+    const refreshLeaders = (set='ritter') => fetch(urlLeaders(set))
+      .then(r=>r.json())
+      .then(json=>{
+        if(JSON.stringify(leaderPile)!=JSON.stringify(json.data)) {
+          leaderPile = json.data
+          displayLeaders()
+        }
+      })
+
+    // update the card area with a new entry to vote on
+    const drawCard = function() {
+      if(cardPile.length<cardBatchSize) replenishCards()
+
+      newCard = cardPile.shift()
+      if(newCard) {
+        card = document.querySelector('#card')
+        card.textContent = card.dataset.entry = newCard.entry
+        card.dataset.id = newCard.id
+      } else replenishCards().then(r=>drawCard())
+    }
+
+    const displayLeaders = () => {
+      newText = '<h3>The beautiful ones:</h3>'+leaderPile.map(e=>e.entry).join('<br>')
+      target = document.querySelector('#leaders')
+      target.innerHTML = newText
+      var clone = target.cloneNode(true);
+      target.parentNode.replaceChild(clone,target);
+    }
+
+    const vote = vote => fetch(urlVote(newCard.id,newCard.entry,vote))
+      .then(drawCard())
+
+    /* app init */
+    loading.set('card', showRoundel('card'))
+    loading.set('leaders', showRoundel('leaders'))
+
+    // add event listeners to voting buttons
+    document.querySelectorAll('#vote a').forEach(e=>e.addEventListener('click',function(){
+      vote(this.dataset.vote)
+    }))
+
+    replenishCards()
+      .then(()=>clearInterval(loading.get('card')))
+      .then(()=>drawCard())
+
+    refreshLeaders()
+      .then(()=>clearInterval(loading.get('leaders')))
+      .then(()=>displayLeaders())
+      .then(()=>setInterval(()=>refreshLeaders(),10000))
+
+  </script>
+</body>
+</html>
