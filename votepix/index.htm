@@ -165,7 +165,7 @@
     }
 
     const displayLeaders = () => {
-      newText = '<h3>The beautiful ones:</h3>'+leaderPile.map(e=>e.entry).join('<br>')
+      newText = '<h3>The most practical:</h3>'+leaderPile.map(e=>e.entry).join('<br>')
       target = document.querySelector('#leaders')
       target.innerHTML = newText
       var clone = target.cloneNode(true);
