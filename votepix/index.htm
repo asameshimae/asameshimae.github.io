@@ -89,12 +89,11 @@
 
   <div id="leaders" class="animIn">...</div>
 
-  <div id="card">...</div>
+  <div id="card"><img id="cardImg"/><span id="cardTxt">...</span></div>
 
   <div id="vote">
     <a href="#" id="vBd" data-vote="0">😞</a><a href="#" id="vOk" data-vote="1">😐</a><a href="#" id="vGd" data-vote="2">😊</a><a href="#" id="vEp" data-vote="4">😂</a> 
   </div>
-
 
   <script type="text/javascript">
     /* constants */
@@ -157,8 +156,11 @@
       newCard = cardPile.shift()
       if(newCard) {
         card = document.querySelector('#card')
-        card.textContent = card.dataset.entry = newCard.entry
+        cardTxt = document.querySelector('#cardTxt')
+        cardImg = document.querySelector('#cardImg')
+        cardTxt.textContent = card.dataset.entry = newCard.entry
         card.dataset.id = newCard.id
+        cardImg.src = newCard.pic
       } else replenishCards().then(r=>drawCard())
     }
 
@@ -174,7 +176,7 @@
       .then(drawCard())
 
     /* app init */
-    loading.set('card', showRoundel('card'))
+    loading.set('card', showRoundel('cardTxt'))
     loading.set('leaders', showRoundel('leaders'))
 
     // add event listeners to voting buttons
