@@ -32,15 +32,17 @@
     @media screen and (max-width: 700px) {
       #leaders { display:none; }
     }
-    #leaders {
-      float:right;
-      height:auto;
+    .leadersRH {
+      float:right;      
       width:9em;
       overflow: hidden;
+      font-size: .3em;
+    }
+    #leaders {
+      height:auto;
       white-space: nowrap;
       padding-left:3em;
       min-height:13em;
-      font-size: .3em;
       background-color: var(--color3);
     }
     #leaders h3 {
@@ -87,7 +89,7 @@
 </head>
 <body>
 
-  <div id="leaders" class="animIn">...</div>
+  <div id="leaders" class="animIn leadersRH">...</div>
 
   <div id="card">...</div>
 
@@ -106,13 +108,13 @@
     const cardBatchSize = 10 // how many cards to get per remote request
     const query = new Map(location.search.substr(1).split`&`.map(p=>p.split`=`)) // make a map out of the url query string
     const defaultSet = query.get('set') || 'bandstowns' // use the specified set, or fall back on a default. use ?set=bandstowns to specify
+    const displayMode = query.get('mode') || 'vote' // 'leaderboard' will just show a massive leaderboard e.g. for a live big-screen display
 
     /* variables */
     let roundelPos = {card:0,leaders:0} // counter for each animation
     let cardPile = [] // array of entries with metadata to vote on
     let leaderPile = [] // array of top voted entries for info
     let newCard = {} // current entry with metadata
-    let qd = {} // dictionary of url query string
     let loading = new Map([['data',true],['leaders',true]]) // are these elements still loading? (true, intervalid, then undefined when ready)
 
     /* simple templaters */
@@ -177,23 +179,32 @@
       .then(drawCard())
 
     /* app init */
-    loading.set('card', showRoundel('card'))
     loading.set('leaders', showRoundel('leaders'))
-
-    // add event listeners to voting buttons
-    document.querySelectorAll('#vote a').forEach(e=>e.addEventListener('click',function(){
-      vote(this.dataset.vote)
-    }))
-
-    replenishCards()
-      .then(()=>clearInterval(loading.get('card')))
-      .then(()=>drawCard())
 
     refreshLeaders()
       .then(()=>clearInterval(loading.get('leaders')))
       .then(()=>displayLeaders())
       .then(()=>setInterval(()=>refreshLeaders(),10000))
 
+    if(displayMode==='vote') {
+
+      loading.set('card', showRoundel('card'))
+
+      // add event listeners to voting buttons
+      document.querySelectorAll('#vote a').forEach(e=>e.addEventListener('click',function(){
+        vote(this.dataset.vote)
+      }))
+
+      replenishCards()
+        .then(()=>clearInterval(loading.get('card')))
+        .then(()=>drawCard())
+
+    } else if(displayMode==='leaderboard') {
+
+      [...document.querySelectorAll('#card,#vote')].map(e=>e.style.display='none')
+      document.querySelector('#leaders').classList.remove('leadersRH')
+      
+    }
   </script>
 </body>
 </html>
