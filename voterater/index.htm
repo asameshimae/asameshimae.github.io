@@ -104,17 +104,20 @@
       ...[';;;',':::',';;;'],
       ...t.reverse()] // array of ascii animation stages used when loading content
     const cardBatchSize = 10 // how many cards to get per remote request
+    const query = new Map(location.search.substr(1).split`&`.map(p=>p.split`=`)) // make a map out of the url query string
+    const defaultSet = query.get('set') || 'bandstowns' // use the specified set, or fall back on a default. use ?set=bandstowns to specify
 
     /* variables */
     let roundelPos = {card:0,leaders:0} // counter for each animation
     let cardPile = [] // array of entries with metadata to vote on
     let leaderPile = [] // array of top voted entries for info
     let newCard = {} // current entry with metadata
+    let qd = {} // dictionary of url query string
     let loading = new Map([['data',true],['leaders',true]]) // are these elements still loading? (true, intervalid, then undefined when ready)
 
     /* simple templaters */
-    const urlReq = (set,n=cardBatchSize)=>`https://script.google.com/macros/s/${keyGS}/exec?set=${set}&n=${n}` // generate the url to get more cards
-    const urlLeaders = (set)=>`https://script.google.com/macros/s/${keyGS}/exec?set=${set}&show=leaders` // generate the url to get the leaderboard
+    const urlReq = (set=defaultSet,n=cardBatchSize)=>`https://script.google.com/macros/s/${keyGS}/exec?set=${set}&n=${n}` // generate the url to get more cards
+    const urlLeaders = (set=defaultSet)=>`https://script.google.com/macros/s/${keyGS}/exec?set=${set}&show=leaders` // generate the url to get the leaderboard
     const urlVote = (itemid,name,vote)=>`https://script.google.com/macros/s/${keyGS}/exec?itemid=${itemid}&hash=${name.hashCode()}&vote=${vote}` // generate the url to vote for a card
 
     /* reusable functions */
@@ -137,11 +140,11 @@
     const showRoundel = elem => setInterval(()=>document.querySelector(`#${elem}`).textContent=roundels[(++roundelPos[elem])%roundels.length],120)
 
     // add a new batch of cards to the bottom of the pile
-    const replenishCards = (set='bandstowns') => fetch(urlReq(set))
+    const replenishCards = (set=defaultSet) => fetch(urlReq(set))
       .then(r=>r.json())
       .then(json=>cardPile.push(...json.data))
 
-    const refreshLeaders = (set='bandstowns') => fetch(urlLeaders(set))
+    const refreshLeaders = (set=defaultSet) => fetch(urlLeaders(set))
       .then(r=>r.json())
       .then(json=>{
         if(JSON.stringify(leaderPile)!=JSON.stringify(json.data)) {
@@ -163,7 +166,7 @@
     }
 
     const displayLeaders = () => {
-      newText = '<h3>The beautiful ones:</h3>'+leaderPile.map(e=>e.entry).join('<br>')
+      newText = '<h3>Top rated:</h3>'+leaderPile.map(e=>e.entry).join('<br>')
       target = document.querySelector('#leaders')
       target.innerHTML = newText
       var clone = target.cloneNode(true);
