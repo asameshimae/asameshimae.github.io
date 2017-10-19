@@ -17,7 +17,7 @@
         background-color: var(--color3);
         color: var(--color4);
 
-    font-family: 'Zilla Slab', serif;
+        font-family: 'Zilla Slab', serif;
         font-size: 5em;
 
         margin:1em 1em 1em 2em;
@@ -59,12 +59,22 @@
       margin-top:.8em;
       margin-right:4em;
       padding-top:.4em;
+      font-size: .8em;
       border-top:1px dotted var(--color4);
     }
     #vBd { color: var(--color4); }
     #vOk { color: var(--color2); }
     #vGd { color: var(--color1); }
     #vEp { color: var(--color1); }
+
+    #skip {
+      display: none;
+    }
+
+    #bSkip { 
+      color: var(--color2);
+      font-size: 0.5em;
+    }
     
     @keyframes animOut {
       from {opacity:1;width:9em;}
@@ -94,31 +104,69 @@
   <div id="card">...</div>
 
   <div id="vote">
-    <a href="#" id="vBd" data-vote="0">😞</a><a href="#" id="vOk" data-vote="1">😐</a><a href="#" id="vGd" data-vote="2">😊</a><a href="#" id="vEp" data-vote="4">😂</a> 
+    <a href="#" id="vBd" data-vote="0">😞</a><a href="#" id="vOk" data-vote="1">😐</a><a href="#" id="vGd" data-vote="2">😊</a><a href="#" id="vEp" data-vote="4">😂</a>
+  </div>
+
+  <div id="skip">
+    <a href="#" id="bSkip">¯\_(ツ)_/¯</a>
   </div>
 
 
   <script type="text/javascript">
-    /* constants */
+    /* constants: known */
     const keyGS = 'AKfycbzSpeYhp_HZ6sncI6iHK4plCcG-VvhZYamMJFeQ7mgTI8nEhqp5' // key to the Google Sheet (prod)
     const roundels = 
       [...t='...|..:|.:.|:..|...'.split`|`,
       ...[';;;',':::',';;;'],
       ...t.reverse()] // array of ascii animation stages used when loading content
-    const cardBatchSize = 10 // how many cards to get per remote request
     const query = new Map(location.search.substr(1).split`&`.map(p=>p.split`=`)) // make a map out of the url query string
+    const setConfigs = { 
+      'bandstowns': { 
+        'cardBatchSize': 10,
+        'showSkip': 0,
+        'buttons': [
+          {'id':'vBd', 'value': 0, 'text': '😞'},
+          {'id':'vOk', 'value': 1, 'text': '😐'},
+          {'id':'vGd', 'value': 2, 'text': '😊'},
+          {'id':'vEp', 'value': 4, 'text': '😂'}
+        ]
+      }, 
+      'digilab1710': { 
+        'cardBatchSize': 100,
+        'showSkip': 1,
+        'buttons': [
+          {'id':'vBd', 'value': 0, 'text': '😞'},
+          {'id':'vOk', 'value': 1, 'text': '😐'},
+          {'id':'vGd', 'value': 2, 'text': '😊'},
+          {'id':'vEp', 'value': 4, 'text': '😄'}
+        ]
+      },
+      'default': { 
+        'cardBatchSize': 10,
+        'showSkip': 0,
+        'buttons': [
+          {'id':'vBd', 'value': 0, 'text': '😞'},
+          {'id':'vOk', 'value': 1, 'text': '😐'},
+          {'id':'vGd', 'value': 2, 'text': '😊'},
+          {'id':'vEp', 'value': 4, 'text': '😂'}
+        ]
+      }
+    }    
+
+    /* configuration parameters */
     const defaultSet = query.get('set') || 'bandstowns' // use the specified set, or fall back on a default. use ?set=bandstowns to specify
     const displayMode = query.get('mode') || 'vote' // 'leaderboard' will just show a massive leaderboard e.g. for a live big-screen display
+    const setConfig = setConfigs[defaultSet] || setConfigs.default // load up the custom configuration for this set if poss
 
-    /* variables */
+    /* parameters for init only - do not change */
     let roundelPos = {card:0,leaders:0} // counter for each animation
     let cardPile = [] // array of entries with metadata to vote on
     let leaderPile = [] // array of top voted entries for info
     let newCard = {} // current entry with metadata
-    let loading = new Map([['data',true],['leaders',true]]) // are these elements still loading? (true, intervalid, then undefined when ready)
+    let loading = new Map([['data',true],['leaders',true]]) // are these elements still loading? (true, intervalId, then undefined when ready)
 
     /* simple templaters */
-    const urlReq = (set=defaultSet,n=cardBatchSize)=>`https://script.google.com/macros/s/${keyGS}/exec?set=${set}&n=${n}` // generate the url to get more cards
+    const urlReq = (set=defaultSet,n=setConfig.cardBatchSize)=>`https://script.google.com/macros/s/${keyGS}/exec?set=${set}&n=${n}` // generate the url to get more cards
     const urlLeaders = (set=defaultSet)=>`https://script.google.com/macros/s/${keyGS}/exec?set=${set}&show=leaders` // generate the url to get the leaderboard
     const urlVote = (itemid,name,vote)=>`https://script.google.com/macros/s/${keyGS}/exec?itemid=${itemid}&hash=${name.hashCode()}&vote=${vote}` // generate the url to vote for a card
 
@@ -157,7 +205,7 @@
 
     // update the card area with a new entry to vote on
     const drawCard = function() {
-      if(cardPile.length<cardBatchSize) replenishCards()
+      if(cardPile.length<setConfig.cardBatchSize) replenishCards()
 
       newCard = cardPile.shift()
       if(newCard) {
@@ -187,13 +235,26 @@
       .then(()=>setInterval(()=>refreshLeaders(),10000))
 
     if(displayMode==='vote') {
+      // set up the voting buttons
+      setConfig.buttons.forEach(e=>{
+        el = document.querySelector(`#${e.id}`)
+        el.textContent = e.text
+        el.dataset.vote = e.value
+      })
+      if(setConfig.showSkip) document.querySelector('#skip').style.display = 'inline-block'
 
+      // start loading cards
       loading.set('card', showRoundel('card'))
 
       // add event listeners to voting buttons
       document.querySelectorAll('#vote a').forEach(e=>e.addEventListener('click',function(){
         vote(this.dataset.vote)
       }))
+
+      // add skip event listener
+      document.querySelector('#bSkip').addEventListener('click',function(){
+        drawCard()
+      })
 
       replenishCards()
         .then(()=>clearInterval(loading.get('card')))
