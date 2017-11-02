@@ -7,24 +7,29 @@
 
     <style type="text/css">
     body {    
-        /* Coolors Exported Palette - coolors.co/88d18a-ccddb7-6a5b6e-f0b7b3-a833b9 */
-        --color1: #88d18a;     /* dark sea green */
-        --color2: #ccddb7;    /* pastel grey */
-        --color3: #6a5b6e;    /* dim grey */
-        --color4: #f0b7b3;    /* melon */
-        --color5: #a833b9;    /* dark orchid */
+      /* Coolors Exported Palette - coolors.co/88d18a-ccddb7-6a5b6e-f0b7b3-a833b9 */
+      --color1: #88d18a;     /* dark sea green */
+      --color2: #ccddb7;    /* pastel grey */
+      --color3: #6a5b6e;    /* dim grey */
+      --color4: #f0b7b3;    /* melon */
+      --color5: #a833b9;    /* dark orchid */
 
-        background-color: var(--color3);
-        color: var(--color4);
+      background-color: var(--color3);
+      color: var(--color4);
 
-        font-family: 'Zilla Slab', serif;
-        font-size: 5em;
+      font-family: 'Zilla Slab', serif;
+      font-size: 5em;
 
-        margin:1em 1em 1em 2em;
+      margin:1em 1em 1em 2em;
     }
     #card, #leaders {
-        padding-left:.2em;
-        height:2em;
+      padding-left:.2em;
+      height:2em;
+    }
+    #preview {
+      padding-left:1em;
+      font-size: .2em;
+      opacity: .5;
     }
     @media screen and (min-width: 700px) {
       #leaders { display:inline-block; }
@@ -56,11 +61,18 @@
       padding:.2em;
     }
     #vote {
+      padding-top:.4em;
+    }
+    #votecontainer {
+      border-top:1px dotted var(--color4);
       margin-top:.8em;
       margin-right:4em;
-      padding-top:.4em;
       font-size: .8em;
-      border-top:1px dotted var(--color4);
+    }
+    #progress {
+      border-top:3px solid var(--color1);
+      margin-top:-2px;
+      width:0%;
     }
     #vBd { color: var(--color4); }
     #vOk { color: var(--color2); }
@@ -102,9 +114,13 @@
   <div id="leaders" class="animIn leadersRH">...</div>
 
   <div id="card">...</div>
+  <div id="preview">&nbsp;</div>
 
-  <div id="vote">
-    <a href="#" id="vBd" data-vote="0">😞</a><a href="#" id="vOk" data-vote="1">😐</a><a href="#" id="vGd" data-vote="2">😊</a><a href="#" id="vEp" data-vote="4">😂</a>
+  <div id="votecontainer">
+    <div id="progress"></div>
+    <div id="vote">
+      <a href="#" id="vBd" data-vote="0">😞</a><a href="#" id="vOk" data-vote="1">😐</a><a href="#" id="vGd" data-vote="2">😊</a><a href="#" id="vEp" data-vote="4">😂</a>
+    </div>
   </div>
 
   <div id="skip">
@@ -122,8 +138,9 @@
     const query = new Map(location.search.substr(1).split`&`.map(p=>p.split`=`)) // make a map out of the url query string
     const setConfigs = { 
       'bandstowns': { 
-        'cardBatchSize': 10,
+        'cardBatchSize': 50,
         'showSkip': 0,
+        'shuffle': 1,
         'buttons': [
           {'id':'vBd', 'value': 0, 'text': '😞'},
           {'id':'vOk', 'value': 1, 'text': '😐'},
@@ -132,8 +149,9 @@
         ]
       }, 
       'digilab1710': { 
-        'cardBatchSize': 100,
+        'cardBatchSize': 0,
         'showSkip': 1,
+        'shuffle': 0,
         'buttons': [
           {'id':'vBd', 'value': 0, 'text': '😞'},
           {'id':'vOk', 'value': 1, 'text': '😐'},
@@ -144,6 +162,7 @@
       'default': { 
         'cardBatchSize': 10,
         'showSkip': 0,
+        'shuffle': 1,
         'buttons': [
           {'id':'vBd', 'value': 0, 'text': '😞'},
           {'id':'vOk', 'value': 1, 'text': '😐'},
@@ -161,12 +180,13 @@
     /* parameters for init only - do not change */
     let roundelPos = {card:0,leaders:0} // counter for each animation
     let cardPile = [] // array of entries with metadata to vote on
+    let masterDeck = [] // array of all entries if we manage to cache them, to reduce server traffic
     let leaderPile = [] // array of top voted entries for info
     let newCard = {} // current entry with metadata
     let loading = new Map([['data',true],['leaders',true]]) // are these elements still loading? (true, intervalId, then undefined when ready)
 
     /* simple templaters */
-    const urlReq = (set=defaultSet,n=setConfig.cardBatchSize)=>`https://script.google.com/macros/s/${keyGS}/exec?set=${set}&n=${n}` // generate the url to get more cards
+    const urlReq = (set=defaultSet,n=setConfig.cardBatchSize||100,shuffle=setConfig.shuffle)=>`https://script.google.com/macros/s/${keyGS}/exec?set=${set}&n=${n}&shuffle=${shuffle}` // generate the url to get more cards
     const urlLeaders = (set=defaultSet)=>`https://script.google.com/macros/s/${keyGS}/exec?set=${set}&show=leaders` // generate the url to get the leaderboard
     const urlVote = (itemid,name,vote)=>`https://script.google.com/macros/s/${keyGS}/exec?itemid=${itemid}&hash=${name.hashCode()}&vote=${vote}` // generate the url to vote for a card
 
@@ -184,15 +204,25 @@
       return hash;
     }
 
+    // tee function: log object to console and return the object. useful for chaining while debugging
+    const tee = obj => { console.log(obj); return obj }
+
     /* app-specific functions */
 
     // display a beautiful loading animation
     const showRoundel = elem => setInterval(()=>document.querySelector(`#${elem}`).textContent=roundels[(++roundelPos[elem])%roundels.length],120)
 
+    // restart the pile from a specified or cached deck (e.g. unshuffled mode or lost connection)
+    const loopCards = (deck=masterDeck) => cardPile.push(...deck)
+
     // add a new batch of cards to the bottom of the pile
     const replenishCards = (set=defaultSet) => fetch(urlReq(set))
       .then(r=>r.json())
-      .then(json=>cardPile.push(...json.data))
+      .then(json=>{
+        cardPile.push(...tee(json).data) // add the data to the pile and log it
+        if(!masterDeck.length) masterDeck = json.data // update the master deck if it is empty
+        setConfig.cardBatchSize = setConfig.cardBatchSize || json.data.length // if batch size was zero, next time we will ask for however many we were given this time
+      })
 
     const refreshLeaders = (set=defaultSet) => fetch(urlLeaders(set))
       .then(r=>r.json())
@@ -205,13 +235,27 @@
 
     // update the card area with a new entry to vote on
     const drawCard = function() {
-      if(cardPile.length<setConfig.cardBatchSize) replenishCards()
+
+      if(cardPile.length<setConfig.cardBatchSize) {
+        if(setConfig.shuffle) {
+          replenishCards()
+        } else loopCards()
+      }
 
       newCard = cardPile.shift()
-      if(newCard) {
+      if(tee(newCard)) {
         card = document.querySelector('#card')
+        nextCard = document.querySelector('#preview')
+
         card.textContent = card.dataset.entry = newCard.entry
         card.dataset.id = newCard.id
+
+        if(!setConfig.shuffle) { // display progress through the deck, if we're running in fixed order from a master deck
+          document.querySelector('#progress').style.width=`${100-(100*cardPile.length/masterDeck.length)%100}%`
+        }
+
+        nextCard.textContent = `next: ${cardPile[0].entry}` // preview the next card
+
       } else replenishCards().then(r=>drawCard())
     }
 
@@ -224,6 +268,8 @@
     }
 
     const vote = vote => fetch(urlVote(newCard.id,newCard.entry,vote))
+      .then(r=>r.json())
+      .then(console.log)
       .then(drawCard())
 
     /* app init */
@@ -262,7 +308,7 @@
 
     } else if(displayMode==='leaderboard') {
 
-      [...document.querySelectorAll('#card,#vote')].map(e=>e.style.display='none')
+      [...document.querySelectorAll('#card,#preview,#votecontainer')].map(e=>e.style.display='none')
       document.querySelector('#leaders').classList.remove('leadersRH')
       
     }
