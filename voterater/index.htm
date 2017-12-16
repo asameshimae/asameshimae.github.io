@@ -56,6 +56,9 @@
       color: var(--color1);
       margin:0em;
     }
+    #leaders p {
+      margin:.4em 0em 0em 0em;
+    }
     a,a:active,a:visited {
       text-decoration: none;
       padding:.2em;
@@ -293,7 +296,7 @@
     }
 
     const displayLeaders = () => {
-      newText = '<h3>Top rated:</h3>'+leaderPile.map(e=>e.entry).join('<br>')
+      newText = '<h3>Top rated:</h3>'+leaderPile.map(e=>`<p>${e.entry}</p>`).join``
       target = document.querySelector('#leaders')
       target.innerHTML = newText
       var clone = target.cloneNode(true);
