@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Shufflator</title>
+
+	<style type="text/css">
+		body {
+			font-family: 'IBM Plex Sans', sans-serif;
+]		}
+		a {
+			margin-right:.2em
+		}
+		div {
+			min-height:1.5em;
+		}
+		#board, #edit {
+			margin:1em auto;
+			width:80%;
+		}
+		.q {
+			border-bottom:1px dotted #ccc;
+			padding:.5em;
+		}
+		.result {
+			float:left;
+			width:1.5em;
+		}
+	</style>
+
+	<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans" rel="stylesheet">
+
+</head>
+<body>
+
+	<div id="board">
+
+		<div class="q">
+			<div class="shuffled"></div>
+			<div class="result"></div><div class="attempt"></div>
+			<br/>
+			<button type="button" id="reload" onclick="reload()">Another</button>
+		</div>
+
+
+	</div>
+
+	<div id="edit" style="display:none">
+
+		<textarea rows="8" cols="40" id="input"></textarea>
+		<button type="button" id="saveInput" onclick="saveInput()">Save</button>
+
+	</div>
+
+	<script type="text/javascript">
+
+		const marks = ['\u2715','\u25EF'] // [wrong, right]
+		const destination = ['.attempt','.shuffled'] // [dest, source]
+
+		// fischer-yates implementation, source: https://stackoverflow.com/a/6274398/1990183
+		function shuffle(array) {
+			let counter = array.length;
+
+			// While there are elements in the array
+			while (counter > 0) {
+				// Pick a random index
+				let index = Math.floor(Math.random() * counter);
+
+				// Decrease counter by 1
+				counter--;
+
+				// And swap the last element with it
+				let temp = array[counter];
+				array[counter] = array[index];
+				array[index] = temp;
+			}
+
+			return array;
+		}
+
+		const query = new Map(location.search.substr(1).split`&`.map(p=>p.split`=`)) // make a map out of the url query string
+
+		const saveInput = () => {
+			localStorage.setItem('input',document.querySelector('#input').value)
+			setTimeout(()=>window.location.href=`${location.protocol}//${location.host}${location.pathname}`,500)
+		}
+
+		const pickOne = array => array[Math.floor(Math.random()*array.length)]
+
+		const trimmed = text => text.trim()
+		const notEmpty = text => text
+
+		const toSentences = text => text.split(/\.[\s\r\n\t]*/g).map(trimmed).filter(notEmpty)
+		const toWords = text => text.split(/[\s\t]+/g).filter(notEmpty)
+
+		const linked = (word) => {
+			let a = document.createElement('A')
+			let t = document.createTextNode(word)
+			a.appendChild(t)
+			a.href='#'
+			a.className+='word'
+			return a
+		}
+
+		const setQ = node => {
+			let shuffled = shuffle(pickOne(answerWords))
+			shuffled.forEach(word=>node.appendChild(linked(word)))
+		}
+
+		const clearAll = () => {
+			document.querySelectorAll('.shuffled,.attempt').forEach(node=>node.textContent='')
+			document.querySelectorAll('.result').forEach(node=>node.textContent=marks[0])
+		}
+
+		const testAction = target => alert(target.textContent)
+
+		const moveWord = target => {
+			let parent = target.parentNode
+			let direction = parent.classList.contains('attempt')
+			let dest = parent.parentNode.querySelector(destination[+direction])
+			dest.appendChild(target)
+			checkAttempt(parent.parentNode)
+		}
+
+		const tee = data => {console.log(data); return data}
+
+		const checkAttempt = parent => parent.querySelector('.result').textContent = marks[+answers.some(a=>a===[...parent.querySelectorAll('.attempt a')].map(e=>e.textContent).join` `)]
+
+		const addClassListener = ({event='click', className, action}={}) => 
+			document.body.addEventListener(event,e=>e.target && e.target.classList.contains(className) && action(e.target))
+
+		const reload = () => {
+			clearAll()
+			document.querySelectorAll('.shuffled').forEach(setQ)
+		}
+
+		addClassListener({className:'word',action:moveWord})
+
+		let input = localStorage.getItem('input') || `Twinkle, twinkle, little star, how I wonder what you are. Up above the world so high, like a diamond in the sky.`
+
+		let answerWords = toSentences(input).map(toWords)
+		let answers = answerWords.map(s=>s.join` `)
+		
+		
+
+		if(query.get('mode')) document.querySelector('#edit').style.display=''
+
+		reload()
+
+	</script>
+</body>
+</html>
