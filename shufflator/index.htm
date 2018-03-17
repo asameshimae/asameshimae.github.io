@@ -103,7 +103,7 @@
 		const pickOne = array => array[Math.floor(Math.random()*array.length)]
 		const trimmed = text => text.trim()
 		const notEmpty = text => text
-		const toSentences = text => text.match(/.*?[\.\?\!$]+/g).map(trimmed).filter(notEmpty)
+		const toSentences = text => text.match(/.*?([\.\?\!]+|$)/g).map(trimmed).filter(notEmpty)
 		const toWords = text => text.split(/[\s\t]+/g).filter(notEmpty)
 		const tee = data => {console.log(data); return data}
 
