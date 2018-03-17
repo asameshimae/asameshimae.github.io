@@ -53,9 +53,31 @@
 	</div>
 
 	<script type="text/javascript">
+	// :: known constant values
+	    const keyGS = 'AKfycbytWge4QwRdEa-qr-8_NNYn_cWweV2K4Wr3iCwIAAKx2D82nO8' // key to the Google Sheet (prod)
+		const marks = ['\u2715','\u25EF'] // characters to display for marking [wrong, right]
+		const destination = ['.attempt','.shuffled'] // class identifiers for [dest, source]
+		
+	// :: per-URL constant values
+		const query = new Map(location.search.substr(1).split`&`.map(p=>p.split`=`)) // make a map out of the url query string :)
 
-		const marks = ['\u2715','\u25EF'] // [wrong, right]
-		const destination = ['.attempt','.shuffled'] // [dest, source]
+	// :: simple url template functions
+        const urlReq = hash => `https://script.google.com/macros/s/${keyGS}/exec?hash=${hash}` // get a set given its hash
+        const urlSub = (set,hash) => `https://script.google.com/macros/s/${keyGS}/exec?set=${set}&hash=${hash}` // submit a set (need hash)
+
+	// :: general reusable functions
+
+		// string to numeric hash, based on https://stackoverflow.com/a/7616484
+		hash = s => {
+		  var hash=0, i, chr
+		  if (s.length===0) return hash
+		  for (i=0;i<s.length;i++) {
+		    chr=s.charCodeAt(i)
+		    hash=((hash<<5)-hash)+chr
+		    hash|=0 // Convert to 32bit integer
+		  }
+		  return hash.toString();
+		}
 
 		// fischer-yates implementation, source: https://stackoverflow.com/a/6274398/1990183
 		function shuffle(array) {
@@ -78,20 +100,59 @@
 			return array;
 		}
 
-		const query = new Map(location.search.substr(1).split`&`.map(p=>p.split`=`)) // make a map out of the url query string
-
-		const saveInput = () => {
-			localStorage.setItem('input',document.querySelector('#input').value)
-			setTimeout(()=>window.location.href=`${location.protocol}//${location.host}${location.pathname}`,500)
-		}
-
 		const pickOne = array => array[Math.floor(Math.random()*array.length)]
-
 		const trimmed = text => text.trim()
 		const notEmpty = text => text
-
 		const toSentences = text => text.split(/\.[\s\r\n\t]*/g).map(trimmed).filter(notEmpty)
 		const toWords = text => text.split(/[\s\t]+/g).filter(notEmpty)
+		const tee = data => {console.log(data); return data}
+
+		const addClassListener = ({event='click', className, action}={}) => 
+			document.body.addEventListener(event,e=>e.target && e.target.classList.contains(className) && action(e.target))
+
+	// :: remote communication functions
+
+		const getSet = hash => fetch(urlReq(hash))
+			.then(r=>r.json())
+			.then(json=>{
+				if(typeof json.set!=='undefined') {
+					localStorage.setItem('input',input=json.set)
+					setTimeout(refresh,500)
+				}
+				return true
+			})
+
+		const subSet = (set) => fetch(urlSub(set,hash(set)))
+			.then(r=>r.json())
+			.then(json=>{
+				if(typeof json.result!=='undefined'&&json.result==='success') {
+					setTimeout(refresh,500)
+				} else {
+					console.error(json.result)
+					setTimeout(refresh,2000)
+				}
+			})
+
+	// :: in-app functions: init/config
+
+		const refresh = () => window.location.href=`${location.protocol}//${location.host}${location.pathname}?hash=${hash(input)}`
+
+		const init = () => {
+			addClassListener({className:'word',action:moveWord})
+			
+	
+			if(query.get('mode')) document.querySelector('#edit').style.display=''
+			if(query.get('hash')!==hash(input)) getSet(query.get('hash')) 
+
+			reload()
+		}
+
+	// :: in-app functions: DOM
+
+		const saveInput = () => {
+			localStorage.setItem('input',input=document.querySelector('#input').value)
+			subSet(input)
+		}
 
 		const linked = (word) => {
 			let a = document.createElement('A')
@@ -112,8 +173,6 @@
 			document.querySelectorAll('.result').forEach(node=>node.textContent=marks[0])
 		}
 
-		const testAction = target => alert(target.textContent)
-
 		const moveWord = target => {
 			let parent = target.parentNode
 			let direction = parent.classList.contains('attempt')
@@ -122,30 +181,20 @@
 			checkAttempt(parent.parentNode)
 		}
 
-		const tee = data => {console.log(data); return data}
-
 		const checkAttempt = parent => parent.querySelector('.result').textContent = marks[+answers.some(a=>a===[...parent.querySelectorAll('.attempt a')].map(e=>e.textContent).join` `)]
-
-		const addClassListener = ({event='click', className, action}={}) => 
-			document.body.addEventListener(event,e=>e.target && e.target.classList.contains(className) && action(e.target))
 
 		const reload = () => {
 			clearAll()
 			document.querySelectorAll('.shuffled').forEach(setQ)
 		}
 
-		addClassListener({className:'word',action:moveWord})
+	// :: app - main
 
 		let input = localStorage.getItem('input') || `Twinkle, twinkle, little star, how I wonder what you are. Up above the world so high, like a diamond in the sky.`
-
 		let answerWords = toSentences(input).map(toWords)
 		let answers = answerWords.map(s=>s.join` `)
-		
-		
 
-		if(query.get('mode')) document.querySelector('#edit').style.display=''
-
-		reload()
+		init()
 
 	</script>
 </body>
