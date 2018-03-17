@@ -103,7 +103,7 @@
 		const pickOne = array => array[Math.floor(Math.random()*array.length)]
 		const trimmed = text => text.trim()
 		const notEmpty = text => text
-		const toSentences = text => text.split(/\.[\s\r\n\t]*/g).map(trimmed).filter(notEmpty)
+		const toSentences = text => text.match(/.*?[\.\?\!$]+/g).map(trimmed).filter(notEmpty)
 		const toWords = text => text.split(/[\s\t]+/g).filter(notEmpty)
 		const tee = data => {console.log(data); return data}
 
@@ -129,7 +129,7 @@
 					setTimeout(refresh,500)
 				} else {
 					console.error(json.result)
-					setTimeout(refresh,2000)
+					// setTimeout(refresh,2000)
 				}
 			})
 
@@ -139,10 +139,9 @@
 
 		const init = () => {
 			addClassListener({className:'word',action:moveWord})
-			
 	
-			if(query.get('mode')) document.querySelector('#edit').style.display=''
 			if(query.get('hash')!==hash(input)) getSet(query.get('hash')) 
+			if(query.get('mode')) document.querySelector('#edit').style.display=''
 
 			reload()
 		}
