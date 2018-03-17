@@ -128,8 +128,8 @@
 				if(typeof json.result!=='undefined'&&json.result==='success') {
 					setTimeout(refresh,500)
 				} else {
-					console.error(json.result)
-					// setTimeout(refresh,2000)
+					console.error(json)
+					setTimeout(refresh,500)
 				}
 			})
 
