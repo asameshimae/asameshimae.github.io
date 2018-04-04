@@ -1,14 +1,29 @@
+var _templateObject5 = _taggedTemplateLiteral2(['-'], ['-']);
+
+function _taggedTemplateLiteral2(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
 var _templateObject = _taggedTemplateLiteral(['&'], ['&']),
     _templateObject2 = _taggedTemplateLiteral(['='], ['=']),
     _templateObject3 = _taggedTemplateLiteral(['-'], ['-']),
     _templateObject4 = _taggedTemplateLiteral([','], [',']);
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+function _toConsumableArray(arr) {
+  if (Array.isArray(arr)) {
+    for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
+      arr2[i] = arr[i];
+    }return arr2;
+  } else {
+    return Array.from(arr);
+  }
+}
 
-function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+function _taggedTemplateLiteral(strings, raw) {
+  return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } }));
+}
 
 /* constants */
 
+var trophmoji = '🏆'; // trophy emoji 
 var keyGS = 'AKfycbyaikUC17up2E2Pbt8L1qF0-GxTsyFnY7YbLA9Eg4Hni0-eAWM'; // key to the Google Sheet (prod)
 var query = new Map(location.search.substr(1).split(_templateObject).map(function (p) {
   return p.split(_templateObject2);
@@ -87,7 +102,8 @@ var validNumber = function validNumber() {
 var checkUsername = function checkUsername() {
   if (fields.mWindows.value) {
     document.querySelector('#session0 .reveal').style.display = 'none';
-    todo[0] = false;location.hash = '#session' + todo.indexOf(true);
+    todo[0] = false;
+    // location.hash = '#session' + todo.indexOf(true);
   }
 }; // if the URL field is valid, make it appear so, otherwise make it appear invalid
 
@@ -111,6 +127,37 @@ var flattenInputs = function flattenInputs() {
   });
   checkUsername();
   return JSON.stringify(r);
+};
+
+var deTrophy = function deTrophy(text) {
+  return text.replace(new RegExp('^[' + trophmoji + ' ]+'), '');
+};
+var enTrophy = function enTrophy(text) {
+  return trophmoji + ' ' + deTrophy(text);
+};
+
+var checkComplete = function checkComplete() {
+  allComplete = true;
+  document.querySelectorAll('.set').forEach(function (s) {
+    setComplete = Array.from(s.querySelectorAll('input')).every(function (i) {
+      return i.checked;
+    });
+    allComplete = setComplete && allComplete;
+    setName = s.querySelector('input').name.split(_templateObject5)[0];
+    h2 = s.querySelector('h2');
+    if (setComplete) {
+      h2.textContent = enTrophy(h2.textContent);
+      s.classList.add('complete');
+    } else {
+      h2.textContent = deTrophy(h2.textContent);
+      s.classList.remove('complete');
+    }
+  });
+  if (allComplete) {
+    document.querySelector('#bingo').style.display = 'block';
+  } else {
+    document.querySelector('#bingo').style.display = 'none';
+  }
 };
 
 /* rendering functions - called once */
@@ -140,7 +187,8 @@ var setInputs = function setInputs(data) {
   });
 }; // go through ratings data and check all relevant inputs
 var setWindows = function setWindows() {
-  return fields.mWindows.value = query.get('a').replace('%40','@');
+  checkComplete();
+  return fields.mWindows.value = query.get('a').replace('%40', '@');
 };
 
 // draw all the grids on the page to allow listeners to be set up and data to be populated
@@ -169,6 +217,7 @@ var initListeners = new Promise(function (resolve, reject) {
   try {
     inputs.forEach(function (e) {
       return e.addEventListener(e.type === 'text' ? 'input' : 'click', function () {
+        checkComplete();
         return scheduleUpdate();
       });
     });
