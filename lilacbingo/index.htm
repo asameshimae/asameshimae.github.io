@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:300" rel="stylesheet">
+
+    <style type="text/css">
+    body {    
+      --col1: rgb(38,38,38);     /* dark grey */
+      --col2: rgb(128,128,128);  /* light grey */
+      --col3: rgb(255,255,255);  /* white */
+      --good: #eeffee; /* pale green */
+      --bad: #ffeeee; /* pale red */
+      --lilac: #58306b; /* lilac */
+
+      background-color: var(--col3);
+      color: var(--col1);
+
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.2em;
+
+      margin:1em auto 5em auto;
+      width:800px;
+    }
+    td,th {
+      font-weight: normal;
+      width:5em;
+      height:2em;
+      text-align: center;
+    }
+    .rotate {
+      transform-origin: top left;
+      transform: rotate(270deg) translate(-50%,-0%) ;
+      position: absolute;
+      line-height:2em;
+    }
+    .narrow {
+      width: 2em;
+    }
+    .keyRow, .keyCol {
+      color: var(--col2);
+      font-size: .8em;
+    }
+    .hint {
+      color: var(--col2);
+    }
+    tr:not(:last-child) .keyRow, .keyCol {
+      border-bottom: 1px dotted white;
+    }
+    tr .keyCol:not(:last-child), .keyRow {
+      border-right: 1px dotted white;
+    }
+    input[type=radio] {
+      width:100%;
+      height:75%;
+    }
+    input[type=checkbox] {
+      width:2em;
+      height:2em;
+      margin-bottom:0em;
+      margin-right:1em;
+    }
+    input[type=text] {
+      height:1.5em;
+      width:100%;
+      font-size:1.5em;
+      font-family: 'Montserrat', sans-serif;
+    }
+    button {
+      height:1.5em;
+      font-size:1em;
+      margin-top:.5em;
+    }
+    .saveStatus {
+      color: var(--col2);
+    }
+    #mUser {
+      background-color: var(--bad);
+    }
+    #mUser.ok {
+      background-color: var(--good) !important;
+    }
+    td label {
+      display:none;
+    }
+    h1 {
+      color: var(--lilac);
+    }
+    h2 {
+      margin:2em 0em .5em 0em;
+      padding-top:1em;
+      border-bottom: 1px dotted var(--col2);
+      color: var(--lilac);
+    }
+    .grid {
+      margin-left: 3em;
+    }
+    hr {
+      border-bottom: 1px dotted var(--lilac);
+      border-top: 0px none;
+      border-left: 0px none;
+      border-right: 0px none;
+      margin-top:2em;
+    }
+    .todo {
+      background-color: #eeffee;
+      padding:0em 2em 2em 2em;
+      margin:0em -2em;
+    }
+    .sessionInfo {
+      color: var(--col2);
+      font-size:80%;
+      padding-left:1em;
+      float:right;
+    }
+    #mUserTip {
+      display:inline-block;
+      color:white;
+      font-weight:bold;
+      background-color:red;
+      line-height:1.1em;
+      padding:.1em;
+    }
+    #mUserTip.ok {
+      display:none !important;
+    }
+    #frmWindows, #frmReflect {
+      display:none;
+    }
+    .reva {
+      display:none;
+      margin-bottom:.5em;
+    }
+    </style>
+
+  <title>#lilac18 #bingo</title>
+</head>
+<body>
+
+  <h1>#lilac18 #bingo</h1>
+  <p>If you witness it, ticketh it.</p>
+  <noscript><p>
+    <strong>Your browser is not using JavaScript. If you experience issues with this page please contact the developer and we will sort them.</strong>
+  </p></noscript>
+
+  <form method="get" action="?action=u" id="frmWindows">
+
+  <div id="username">
+
+    <p>To gain access, please enter your Twitter handle (or agreed nickname if you don't use Twitter) below, then click 'Confirm'</p>
+
+    <label for="mWindows">Twitter handle including @ (or agreed nickname):</label> <input type="text" name="a" value="" id="a">
+    <input type="hidden" id="b" name="b" value="">
+
+    <button>Confirm</button>
+
+  </div>
+
+  </form>
+
+
+  <form onsubmit="return false;" id="frmReflect">
+  
+  <a name="session0"></a>
+  <div id="session0">
+
+    <!-- <a href="#" class="reva" style="display:none">Toggle instructions</a> -->
+    <div class="reveal" style="display:none"></div>
+
+	<label for="mWindows">Twitter handle including @ (or agreed nickname):</label> <input type="text" name="medium-windows" value="" id="mWindows" disabled>
+
+  </div>
+
+  <a name="lilac18"></a>
+  <div id="lilac18" class="">
+
+    <h2>Mentions</h2>
+
+    <p><input type="checkbox" name="mentions-cats" 	value="1" id="m1">	<label for="m1">Cats</label></p>
+    <p><input type="checkbox" name="mentions-dogs" 	value="1" id="m2">	<label for="m2">Dogs</label></p>
+    <p><input type="checkbox" name="mentions-hats" 	value="1" id="m3">	<label for="m3">Hats</label></p>
+
+	<h2>Visuals</h2>
+
+    <p><input type="checkbox" name="visuals-venn" 	value="1" id="v1">	<label for="v1">Venn diagram</label></p>
+    <p><input type="checkbox" name="visuals-wordle" value="1" id="v2">	<label for="v2">Word cloud</label></p>
+	<p><input type="checkbox" name="visuals-prezi" 	value="1" id="v3">	<label for="v3">Prezi</label></p>
+
+
+	<h2>Always save your work</h2>
+	<p>Your ticks should automatically be saved but here is a nice button to click :¬)</p>
+    <button class="save">Save</button> <span class="saveStatus"></span>
+
+   </div>
+  </form>
+
+  <hr/>
+
+  <p>If you have any problems with this page, please Tweet me (@asameshimae)</p>
+
+  <script src="reflect-es5.js" type="text/javascript"></script>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55064688-3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-55064688-3');
+  </script>
+
+</body>
+</html>
