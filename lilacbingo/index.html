@@ -13,6 +13,7 @@
       --good: #eeffee; /* pale green */
       --bad: #ffeeee; /* pale red */
       --lilac: #58306b; /* lilac */
+      --trophy: #ffffbb; /* pale yellow */
 
       background-color: var(--col3);
       color: var(--col1);
@@ -96,6 +97,17 @@
     .grid {
       margin-left: 3em;
     }
+    .complete {
+    	background-color: var(--trophy);
+    }
+    .set, #bingo {
+    	padding:0em 1em 1em 1em;
+    }
+    #bingo {
+    	border-left: 2px dotted var(--lilac);
+    	border-right: 2px dotted var(--lilac);
+    	background-color: var(--good)
+    }
     hr {
       border-bottom: 1px dotted var(--lilac);
       border-top: 0px none;
@@ -125,6 +137,9 @@
     #mUserTip.ok {
       display:none !important;
     }
+   	div.complete > p.tweet {
+   		display:block !important;
+   	}
     #frmWindows, #frmReflect {
       display:none;
     }
@@ -139,7 +154,7 @@
 <body>
 
   <h1>#lilac18 #bingo</h1>
-  <p>If you witness it, ticketh it.</p>
+  <p>If you witness it, ticketh it. Get a photo or other evidence if you can, as you may be asked to back up your claims! Suggestions for new categories/items gratefully received&mdash;I may add some more for the final day.</p>
   <noscript><p>
     <strong>Your browser is not using JavaScript. If you experience issues with this page please contact the developer and we will sort them.</strong>
   </p></noscript>
@@ -150,7 +165,7 @@
 
     <p>To gain access, please enter your Twitter handle (or agreed nickname if you don't use Twitter) below, then click 'Confirm'</p>
 
-    <label for="mWindows">Twitter handle including @ (or agreed nickname):</label> <input type="text" name="a" value="" id="a">
+    <label for="mWindows">Your Twitter handle including @ (or agreed nickname):</label> <input type="text" name="a" value="" id="a">
     <input type="hidden" id="b" name="b" value="">
 
     <button>Confirm</button>
@@ -158,7 +173,6 @@
   </div>
 
   </form>
-
 
   <form onsubmit="return false;" id="frmReflect">
   
@@ -168,28 +182,46 @@
     <!-- <a href="#" class="reva" style="display:none">Toggle instructions</a> -->
     <div class="reveal" style="display:none"></div>
 
-	<label for="mWindows">Twitter handle including @ (or agreed nickname):</label> <input type="text" name="medium-windows" value="" id="mWindows" disabled>
+	<label for="mWindows">Your Twitter handle or agreed nickname (if this is wrong, let me know)</label> <input type="text" name="medium-windows" value="" id="mWindows" disabled>
 
   </div>
 
   <a name="lilac18"></a>
   <div id="lilac18" class="">
 
-    <h2>Mentions</h2>
 
+	<div class="set">
+    <h2>Mentions</h2>
     <p><input type="checkbox" name="mentions-cats" 	value="1" id="m1">	<label for="m1">Cats</label></p>
     <p><input type="checkbox" name="mentions-dogs" 	value="1" id="m2">	<label for="m2">Dogs</label></p>
     <p><input type="checkbox" name="mentions-hats" 	value="1" id="m3">	<label for="m3">Hats</label></p>
+    <p style="display:none" class="tweet">You've completed this set! <a target="_blank" href="https://twitter.com/home?status=I%20just%20ticked%20off%20the%20whole%20'Mentions'%20set%20in%20%23lilac18%20%23bingo.%20DM%20or%20find%20@asameshimae%20to%20play">Brag on Twitter</a></p>
+	</div>
 
+	
+	<div class="set">
 	<h2>Visuals</h2>
-
     <p><input type="checkbox" name="visuals-venn" 	value="1" id="v1">	<label for="v1">Venn diagram</label></p>
     <p><input type="checkbox" name="visuals-wordle" value="1" id="v2">	<label for="v2">Word cloud</label></p>
 	<p><input type="checkbox" name="visuals-prezi" 	value="1" id="v3">	<label for="v3">Prezi</label></p>
+    <p style="display:none" class="tweet">You've completed this set! <a target="_blank" href="https://twitter.com/home?status=I%20just%20ticked%20off%20the%20whole%20'Visuals'%20set%20in%20%23lilac18%20%23bingo.%20DM%20or%20find%20@asameshimae%20to%20play">Share this accolade via Twitter</a></p>
+	</div>
 
 
-	<h2>Always save your work</h2>
-	<p>Your ticks should automatically be saved but here is a nice button to click :¬)</p>
+	<div class="set">
+	<h2>Models</h2>
+    <p><input type="checkbox" name="models-prensky" value="1" id="mo1">	<label for="mo1">&lsquo;Digital natives&rsquo;</label></p>
+    <p style="display:none" class="tweet">You've completed this set! <a target="_blank" href="https://twitter.com/home?status=I%20just%20ticked%20off%20the%20whole%20'Models'%20set%20in%20%23lilac18%20%23bingo.%20DM%20or%20find%20@asameshimae%20to%20play">Let the Twitterverse know</a></p>
+	</div>
+
+	<div id="bingo" style="display:none">
+	<h2>Full house!</h2>
+    <p class="tweet">Wowzers, full house! If you have witnessed all of these wondrous things and can provide evidence if asked, please DM or sidle up to <a href="https://twitter.com/asameshimae" target="_blank">@asameshimae</a> and your crown will duly be bestowed</a></p>
+	</div>
+
+
+	<h2>Save your work regularly</h2>
+	<p>Your ticks should automatically be saved but here is a reassuring button :¬)</p>
     <button class="save">Save</button> <span class="saveStatus"></span>
 
    </div>
