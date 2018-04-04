@@ -199,11 +199,13 @@ var sendUpdate = function sendUpdate() {
   return fetch(urlSend(flattenInputs())).then(function (r) {
     return tee(r.json());
   }).then(function (e) {
-    return console.log(e.result,e.error,e.debug);
+    return console.log(e.result);
   }).then(saveStatuses.forEach(function (e) {
     return e.textContent = textStatus().saved;
   }));
 }; // send the save state to the server
+
+// TODO qd to ls, sl
 
 /* app init */
 // enable toggle behaviour where script enabled
