@@ -141,7 +141,7 @@
     const query = new Map(location.search.substr(1).split`&`.map(p=>p.split`=`)) // make a map out of the url query string
     const fetchMode = {
       method: 'POST',
-      mode: "no-cors",
+      mode: 'no-cors',
       headers: {
         'content-type': 'application/json'
       }
