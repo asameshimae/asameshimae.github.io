@@ -139,6 +139,7 @@
       ...[';;;',':::',';;;'],
       ...t.reverse()] // array of ascii animation stages used when loading content
     const query = new Map(location.search.substr(1).split`&`.map(p=>p.split`=`)) // make a map out of the url query string
+    const fetchMode = { mode: 'no-cors' }
     const setConfigs = { 
       'bandstowns': { 
         'cardBatchSize': 50,
@@ -274,7 +275,7 @@
     const loopCards = (deck=masterDeck) => cardPile.push(...deck)
 
     // add a new batch of cards to the bottom of the pile
-    const replenishCards = (set=defaultSet) => fetch(urlReq(set))
+    const replenishCards = (set=defaultSet) => fetch(urlReq(set),fetchMode)
       .then(r=>r.json())
       .then(json=>{
         cardPile.push(...tee(json).data) // add the data to the pile and log it
@@ -282,7 +283,7 @@
         setConfig.cardBatchSize = setConfig.cardBatchSize || json.data.length // if batch size was zero, next time we will ask for however many we were given this time
       })
 
-    const refreshLeaders = (set=defaultSet) => fetch(urlLeaders(set))
+    const refreshLeaders = (set=defaultSet) => fetch(urlLeaders(set),fetchMode)
       .then(r=>r.json())
       .then(json=>{
         if(JSON.stringify(leaderPile)!=JSON.stringify(json.data)) {
@@ -325,7 +326,7 @@
       target.parentNode.replaceChild(clone,target);
     }
 
-    const vote = vote => fetch(urlVote(newCard.id,newCard.entry,vote))
+    const vote = vote => fetch(urlVote(newCard.id,newCard.entry,vote),fetchMode)
       .then(r=>r.json())
       .then(console.log)
       .then(drawCard())
