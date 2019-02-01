@@ -139,7 +139,13 @@
       ...[';;;',':::',';;;'],
       ...t.reverse()] // array of ascii animation stages used when loading content
     const query = new Map(location.search.substr(1).split`&`.map(p=>p.split`=`)) // make a map out of the url query string
-    const fetchMode = { mode: 'no-cors' }
+    const fetchMode = {
+      method: 'POST',
+      mode: "no-cors",
+      headers: {
+        'content-type': 'application/json'
+      }
+    }
     const setConfigs = { 
       'bandstowns': { 
         'cardBatchSize': 50,
