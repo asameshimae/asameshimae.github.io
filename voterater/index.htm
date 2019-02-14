@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,7 +23,7 @@
 
       margin:1em 1em 1em 2em;
     }
-    #card, #leaders {
+    #cardContainer, #leaders {
       padding-left:.2em;
       min-height:2em;
       word-wrap:break-word;
@@ -116,7 +117,7 @@
 
   <div id="leaders" class="animIn leadersRH">...</div>
 
-  <div id="card">...</div>
+  <div id="cardContainer"><img id="cardImg" style="display:none; max-width:250px; max-height:250px"><div id="cardEntry">...</div></div>
   <div id="preview">&nbsp;</div>
 
   <div id="votecontainer">
@@ -254,6 +255,8 @@
     let newCard = {} // current entry with metadata
     let loading = new Map([['data',true],['leaders',true]]) // are these elements still loading? (true, intervalId, then undefined when ready)
 
+
+
     /* simple templaters */
     const urlReq = (set=defaultSet,n=setConfig.cardBatchSize||100,shuffle=setConfig.shuffle)=>`https://script.google.com/macros/s/${keyGS}/exec?set=${set}&n=${n}&shuffle=${shuffle}` // generate the url to get more cards
     const urlLeaders = (set=defaultSet)=>`https://script.google.com/macros/s/${keyGS}/exec?set=${set}&show=leaders` // generate the url to get the leaderboard
@@ -313,8 +316,18 @@
 
       newCard = cardPile.shift()
       if(tee(newCard)) {
-        card = document.querySelector('#card')
+
+        card = document.querySelector('#cardEntry')
+        cardImg = document.querySelector('#cardImg')
         nextCard = document.querySelector('#preview')
+
+        if(newCard.img!=='') {
+          cardImg.src = newCard.img
+          cardImg.style.display = 'block'
+        } else {
+          cardImg.src = ''
+          cardImg.style.display = 'none'
+        }
 
         card.textContent = card.dataset.entry = newCard.entry
         card.dataset.id = newCard.id
@@ -359,7 +372,7 @@
       if(setConfig.showSkip) document.querySelector('#skip').style.display = 'inline-block'
 
       // start loading cards
-      loading.set('card', showRoundel('card'))
+      loading.set('cardEntry', showRoundel('cardEntry'))
 
       // add event listeners to voting buttons
       document.querySelectorAll('#vote a').forEach(e=>e.addEventListener('click',function(){
@@ -372,7 +385,7 @@
       })
 
       replenishCards()
-        .then(()=>clearInterval(loading.get('card')))
+        .then(()=>clearInterval(loading.get('cardEntry')))
         .then(()=>drawCard())
 
     } else if(displayMode==='leaderboard') {
