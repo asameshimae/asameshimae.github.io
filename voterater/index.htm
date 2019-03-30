@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,7 +18,7 @@
       color: var(--color4);
 
       font-family: 'Zilla Slab', serif;
-      font-size: 5em;
+      font-size: 4.3em;
 
       margin:1em 1em 1em 2em;
     }
@@ -90,10 +89,10 @@
       display: none;
     }
 
-    #bSkip { 
+    /*#bSkip { 
       color: var(--color2);
       font-size: 0.5em;
-    }
+    }*/
     
     @keyframes animOut {
       from {opacity:1;width:9em;}
@@ -126,13 +125,18 @@
   <div id="votecontainer">
     <div id="progress"></div>
     <div id="vote">
-      <a href="#" id="vBd" data-vote="0">😞</a><a href="#" id="vOk" data-vote="1">😐</a><a href="#" id="vGd" data-vote="2">😊</a><a href="#" id="vEp" data-vote="4">😂</a>
+      <span id="votes">
+      <a href="#" id="vBd" data-vote="0">😞</a>
+      <a href="#" id="vOk" data-vote="1">😐</a>
+      <a href="#" id="vGd" data-vote="2">😊</a>
+      <a href="#" id="vEp" data-vote="4">😂</a>
+      </span>
+      <span id="skip">
+        <a href="#" id="bSkip">🤷<!--¯\_(ツ)_/¯--></a>
+      </span>
     </div>
   </div>
 
-  <div id="skip">
-    <a href="#" id="bSkip">¯\_(ツ)_/¯</a>
-  </div>
 
 
   <script type="text/javascript">
@@ -240,7 +244,7 @@
           {'id':'vBd', 'value': 0, 'text': '😞'},
           {'id':'vOk', 'value': 1, 'text': '😐'},
           {'id':'vGd', 'value': 2, 'text': '😊'},
-          {'id':'vEp', 'value': 4, 'text': '😄'}
+          {'id':'vEp', 'value': 4, 'text': '😋'}
         ]
       },
       'default': { 
@@ -389,13 +393,15 @@
       loading.set('cardEntry', showRoundel('cardEntry'))
 
       // add event listeners to voting buttons
-      document.querySelectorAll('#vote a').forEach(e=>e.addEventListener('click',function(){
+      document.querySelectorAll('#votes a').forEach(e=>e.addEventListener('click',function(){
         vote(this.dataset.vote)
       }))
 
       // add skip event listener
-      document.querySelector('#bSkip').addEventListener('click',function(){
+      document.querySelector('#bSkip').addEventListener('click',function(e){
+        e.preventDefault()
         drawCard()
+        return false
       })
 
       replenishCards()
