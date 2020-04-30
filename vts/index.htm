@@ -1,0 +1,275 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<!--
+	title:	Digilab - Flowchart
+	desc:	Determines a course of action for new virtual teaching/support development
+	author:	@asameshimae
+-->
+
+<head>
+	<meta charset="UTF-8">
+	<title>VTS development decider</title>
+
+	<!-- google webfont -->
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+	<style>
+		body { 
+			font-family: 'Open Sans', sans-serif;
+			background-color: #efc;
+			margin-left: 3em;
+			margin-top: 4em;
+			color: #333;
+			font-size: 200%;
+		}
+		h1 {
+			border-bottom: 1px dotted #555;
+			margin-right: 5em;
+			padding-bottom: .2em;
+		}
+		a {
+			color: #f44;
+		}
+		a:active, a:hover {
+			color: white;
+		}
+		#response {
+			display: none;
+		}
+		.level {
+			display: none;
+		}
+		.credit {
+			font-size: 50%;
+			margin-top: 15em;
+		}
+	</style>
+
+	<!-- google-hosted jQuery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script> 
+
+</head>
+<body>
+
+	<div id="questions">
+
+<!DOCTYPE html>
+<html lang="en">
+
+<!--
+	title:	Digilab - Flowchart
+	desc:	A flowchart template
+	author:	@asameshimae
+	license:code is CC0; images from giphy; jQuery from jQuery.
+-->
+
+<head>
+	<meta charset="UTF-8">
+	<title>Flowchart</title>
+
+	<style>
+		body { 
+			font-family: 'Arial', sans-serif;
+			background-color:# eff;
+			margin-left: 3em;
+			margin-top: 4em;
+			color: #333;
+			font-size: 200%;
+		}
+		h1 {
+			border-bottom: 1px dotted #555;
+			margin-right: 5em;
+			padding-bottom: .2em;
+		}
+		a {
+			color: #f44;
+		}
+		a:active, a:hover {
+			color: blue;
+		}
+		#response {
+			display: none;
+		}
+		.level {
+			display: none;
+		}
+		.rarr,.qn,.re,.pause {
+			display:inline-block;
+			color:#060;
+		}
+		.rarr::before {
+			content:"🡲";
+		}
+		.qn::before {
+			content:"🤔";
+		}
+		.re::before {
+			content:"♻️";
+		}
+		.pause::before {
+			content:"⏸️";
+		}
+		.chat::before {
+			content:"💬";
+		}
+		.thumb::before {
+			content:"👍";
+		}
+	</style>
+
+	<!-- google-hosted jQuery -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script> 
+
+</head>
+<body>
+
+	<div id="questions">
+
+		<div class="level" data-level="1">
+			<p>Think about the support - it could be a new or updated online resource, virtual teaching, or any form of virtual student-facing learning/teaching support</p>
+			<h1><span class="qn"></span> Has the need arisen in response to the current CV19/lockdown situation?</h1>
+			<!-- <img src="http://i.giphy.com/3o7abAHdYvZdBNnGZq.gif" style="width:500px; height:auto;"/> -->
+			<p>
+				<a href="#" class="answer"
+					data-nextlevel="2">Yes</a> &emsp;
+				<a href="#" class="answer"
+					data-nextlevel="3">No</a> &emsp;
+				<a href="#" class="answer"
+					data-nextlevel="13">Not sure</a>
+
+			</p>
+		</div>
+
+		<div class="level" data-level="13">
+			<h2>
+				<span class="chat"></span> Discuss with <abbr title="Go into Microsoft Teams, click Chat, click the new message icon (or press Ctrl+N), create a message to SR, JB, NS & CM, and outline the situation">TLS Managers</abbr>.
+			</h2>
+			<p>
+				<a href="#" class="answer" data-nextlevel="1"><span class="re"></span> OK! (Start again)</a>
+			</p>
+		</div>
+
+
+		<div class="level" data-level="2">
+			<h2>
+				<span class="chat"></span> Ask <abbr title="Go into Microsoft Teams, click Chat, click the new message icon (or press Ctrl+N), create a message to SR, JB, NS & CM, and outline the situation">TLS Managers</abbr> before committing/doing any work, to ensure we align with the University’s offer.
+			</h2>
+			<p>
+				<a href="#" class="answer" data-nextlevel="1"><span class="re"></span> OK! (Start again)</a><br/>
+				<a href="#" class="answer" data-nextlevel="13"><span class="rarr"></span> I still have questions/this doesn't help</a>
+			</p>
+		</div>
+
+		<div class="level" data-level="3">
+			<p>Think about when we agreed the support. For an embedded session this could be when we let the academic know we would deliver it. For an online resource this could be when it was commissioned by the appropriate subgroup.</p>
+			<h1><span class="qn"></span> Was the support agreed before 6 Apr?</h1>
+			<p>
+				<a href="#" class="answer" data-nextlevel="4">Yes</a>&emsp;
+				<a href="#" class="answer" data-nextlevel="5">No</a>&emsp;
+				<a href="#" class="answer" data-nextlevel="13">Not sure</a>
+			</p>
+		</div>
+
+			<div class="level" data-level="4">
+				<p>Think about how we originally planned to deliver the support, e.g. when planning it before 'lockdown'.</p>
+				<h1><span class="qn"></span> Was the support always planned as an <abbr title="not live, i.e. can be accessed any time">asynchronous</abbr> online resource?</h1>
+				<p>
+					<a href="#" class="answer" data-nextlevel="6">Yes (e.g. planned as Medium post)</a><br/>
+					<a href="#" class="answer" data-nextlevel="5">No (e.g. originally face-to-face)</a><br/>
+					<a href="#" class="answer" data-nextlevel="13">Not sure</a>
+				</p>
+			</div>
+
+				<div class="level" data-level="6">
+					<h2>
+						<span class="thumb"></span> Use common sense. If it is important now and a good use of time, add to <abbr title="Go to Microsoft Teams > TLS > 'Virtual Teaching and Support' > tabs > 'VT&S development'. Under 'In development' click 'Add task' add add the details">VT&S development > in development</abbr> and go ahead. Ask <abbr title="Go into Microsoft Teams, click Chat, click the new message icon (or press Ctrl+N), create a message to SR, JB, NS & CM, and outline the situation">TLS Managers</abbr> if you need advice.
+					</h2>
+					<p>
+						<a href="#" class="answer" data-nextlevel="1"><span class="re"></span> OK! (Start again)</a><br/>
+						<a href="#" class="answer" data-nextlevel="13"><span class="rarr"></span> I still have questions/this doesn't help</a>
+					</p>
+				</div>
+
+			<div class="level" data-level="5">
+				<p>Think about what the support relates to. E.g. an embedded session in a lecture theatre, or an open workshop in the training room</p>
+				<h1><span class="qn"></span> Is the support directly connected to teaching/face-to-face support?</h1>
+				<p>
+					<a href="#" class="answer" data-nextlevel="7">Yes</a>&emsp;
+					<a href="#" class="answer" data-nextlevel="8">No</a>&emsp;
+					<a href="#" class="answer" data-nextlevel="13">Not sure</a>
+				</p>
+			</div>
+
+				<div class="level" data-level="7">
+					<p>Think about how the support can be delivered</p>
+					<h1><span class="qn"></span> Can the support feasibly be delivered <abbr title="not live, i.e. can be accessed any time">asynchronously</abbr>?</h1>
+					<p>
+						<a href="#" class="answer" data-nextlevel="9">Yes</a>&emsp;
+						<a href="#" class="answer" data-nextlevel="10">No</a>&emsp;
+					<a href="#" class="answer" data-nextlevel="13">Not sure</a>
+					</p>
+				</div>
+
+					<div class="level" data-level="9">
+						<h2><span class="thumb"></span> Add to <abbr title="Go to Microsoft Teams > TLS > 'Virtual Teaching and Support' > tabs > 'VT&S development'. Under 'In development' click 'Add task' add add the details">VT&S development > in development</abbr> and go ahead with asynchronous support.</h2>
+						<p>
+							<a href="#" class="answer" data-nextlevel="1"><span class="re"></span> OK! (Start again)</a><br/>
+							<a href="#" class="answer" data-nextlevel="13"><span class="rarr"></span> I still have questions/this doesn't help</a>
+						</p>
+					</div>
+
+					<div class="level" data-level="10">
+						<h1><span class="qn"></span> Did we agree before 6 Apr to deliver in a live online format for a session taking place before 15 May?</h1>
+						<p>
+							<a href="#" class="answer" data-nextlevel="11">Yes</a>&emsp;
+							<a href="#" class="answer" data-nextlevel="12">No</a>&emsp;
+							<a href="#" class="answer" data-nextlevel="13">Not sure</a>
+						</p>
+					</div>
+
+						<div class="level" data-level="11">
+							<h2><span class="thumb"></span> Use common sense - if it is still practical to deliver in the agreed format without significant additional effort for us or the audience, add to <abbr title="Go to Microsoft Teams > TLS > 'Virtual Teaching and Support' > tabs > 'VT&S development'. Under 'In development' or 'Live/ready to go', click 'Add task' add add the details">VT&S development > in development or live/ready to go</abbr> and go ahead. Ask <abbr title="Go into Microsoft Teams, click Chat, click the new message icon (or press Ctrl+N), create a message to SR, JB, NS & CM, and outline the situation">TLS Managers</abbr> if you need advice</h2>
+							<p>
+								<a href="#" class="answer" data-nextlevel="1"><span class="re"></span> OK! (Start again)</a><br/>
+								<a href="#" class="answer" data-nextlevel="13"><span class="rarr"></span> I still have questions/this doesn't help</a>
+							</p>
+						</div>
+
+						<div class="level" data-level="12">
+							<h2><span class="pause"></span> Pause development for now and add to <abbr title="Go to Microsoft Teams > TLS > 'Virtual Teaching and Support' > tabs > 'VT&S development'. Under 'Paused', click 'Add task' add add the details">'Paused'</abbr>; discuss with <abbr title="Go into Microsoft Teams, click Chat, click the new message icon (or press Ctrl+N), create a message to SR, JB, NS & CM, and outline the situation">TLS Managers</abbr> if you think this is an issue</h2>
+							<p>
+								<a href="#" class="answer" data-nextlevel="1"><span class="re"></span> OK! (Start again)</a><br/>
+								<a href="#" class="answer" data-nextlevel="13"><span class="rarr"></span> I still have questions/this doesn't help</a>
+							</p>
+						</div>
+						
+
+				<div class="level" data-level="8">
+					<h2><span class="pause"></span> Pause development for now and add to <abbr title="Go to Microsoft Teams > TLS > 'Virtual Teaching and Support' > tabs > 'VT&S development'. Under 'Paused', click 'Add task' add add the details">'Paused'</abbr>; discuss with <abbr title="Go into Microsoft Teams, click Chat, click the new message icon (or press Ctrl+N), create a message to SR, JB, NS & CM, and outline the situation">TLS Managers</abbr> if you think this is an issue.</h2>
+					<p>
+						<a href="#" class="answer" data-nextlevel="1"><span class="re"></span> OK! (Start again)</a><br/>
+						<a href="#" class="answer" data-nextlevel="13"><span class="rarr"></span> I still have questions/this doesn't help</a>
+					</p>
+				</div>
+			
+
+	</div>
+
+
+	<script>
+	// when the document is ready in the browser, do this...
+	$(document).ready(function(){
+
+		$('[data-level=1]').show();
+
+		$('.answer').click(function(){
+			$('.level').hide();
+			$('[data-level='+$(this).data('nextlevel')+']').show();
+		});
+
+	});
+	</script>
+
+</body>
+</html>
