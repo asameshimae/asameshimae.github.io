@@ -1,0 +1,1383 @@
+<krpano version="1.0.8" 
+
+
+
+onstart="startup();">
+
+	<!-- vtour.xml template krpano tools version 1.0.8.12 -->	
+ <plugin name="logo" url="hotspots/logo.jpg" keep="true" autopos="lefttop,10,10" onclick="openurl(http://www.boris.kiev.ua,_blank)" handcursor="true" scale="0.5" zoom="true"
+		         alpha="0.9" onover="tween(alpha,1);tween(scale,0.7);"onhover="showtext(www.boris.kiev.ua);"   onout="tween(alpha,0.7);tween(scale,0.5);"/>
+
+
+
+
+
+
+	<!-- text styles for startup info -->
+	<textstyle name="infostyle" origin="top" edge="top" yoffset="10" textalign="center" background="false" border="false"  fontsize="40" textcolor="0xFFFFFF" bold="false" effect="glow(0xFFFFFF,0.7,4,2);glow(0x000000,1,4,2);dropshadow(3,45,0x000000,2,0.6);" showtime="1.0" fadetime="1.0" />
+<textstyle name="DEFAULT" font="Arial" fontsize="16" textcolor="0xFFFFFF" border="false" background="false" effect="glow(0x000000,0.7,4,2);dropshadow(4,45,0x000000,4,1);"/>
+
+
+	<action name="startup">
+		<!-- load the first scene -->
+		loadscene(get(scene[10].name), null, MERGE); 
+		
+		<!-- build the thumbnails (remove the next line to remove the thumbnails) -->
+		buildthumbs(); 
+	</action>
+	
+	
+	<!-- disable the default progress bar -->
+	<progress showload="none" showwait="none" />
+	
+
+	<!-- hotspot styles (for Flash and HTML5) -->
+	<style name="hotspot_ani_black"
+	       url="hotspots/hotspot_ani_black_64x64x20.png"
+	       crop="0|0|64|64"
+	       frames="20" framewidth="64" frameheight="64" frame="0"
+	       onloaded="hotspot_animate();"
+	       altonloaded="if(isphone, mul(scale,2)); onloaded();"
+	       />
+
+	<style name="hotspot_ani_white"
+	       url="hotspots/hotspot_ani_white_64x64x20.png"
+	       crop="0|0|64|64"
+	       frames="20" framewidth="64" frameheight="64" frame="0"
+	       onloaded="hotspot_animate();"
+	       altonloaded="if(isphone, mul(scale,2)); onloaded();"
+	       />	       
+
+	<action name="hotspot_animate">
+		inc(frame,1,get(frames),0);
+		mul(ypos,frame,frameheight);
+		txtadd(crop,'0|',get(ypos),'|',get(framewidth),'|',get(frameheight));
+		delayedcall(0.03, hotspot_animate() );
+	</action>	       
+
+	
+		<scene name="scene_0reception" title="рецепція діагностичного центру 0-й поверх[br]рецепция диагностического центра 0-й этаж" onstart="action(startscene);" thumburl="0reception.tiles/thumb.jpg">
+		<action name="startscene">
+			
+			action(activatespot,scene_0reception, 0);
+		</action>
+
+		<view hlookat="270" vlookat="0" fovtype="MFOV" fov="110"  fovmin="90" fovmax="120" />
+
+		<preview url="0reception.tiles/preview.jpg" />
+
+		<image>
+			<left  url="0reception.tiles/pano_l.jpg" />
+			<front url="0reception.tiles/pano_f.jpg" />
+			<right url="0reception.tiles/pano_r.jpg" />
+			<back  url="0reception.tiles/pano_b.jpg" />
+			<up    url="0reception.tiles/pano_u.jpg" />
+			<down  url="0reception.tiles/pano_d.jpg" />
+		</image>
+
+		<!-- place hotspots here -->
+
+	<hotspot name="spot22" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_0densitometr,null,null,BLEND(1));lookat(176.23,29.31,82);wait(blend);lookto(172.69,20.45,89.99,smooth(100,20,50));set(autoratate.enabled,state);" url="hotspots/borisL.png" onhover="showtext(кабінет денситометрії[br]кабинет денситометрии);"   ath="269.65651677370784" atv="4.779550329657259" rz="0.031385489206701825" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,0.7);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" />
+    	<hotspot name="spot23" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_0mrt,null,null,BLEND(1));lookat(113.9,2.63,70);wait(blend);set(autoratate.enabled,state);" url="hotspots/borisR.png" onhover="showtext(кабінет магнітно-резонансної томографії (МРТ)[br]кабинет магнитно-резонансной томографии (МРТ));" ath="-89.09925340390652" atv="1.0088802440084204" rz="0.0006744711059465799" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,0.7);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" />
+    	<hotspot name="spot24" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_0kt,null,null,BLEND(1));lookat(45.74,2.31,82);wait(blend);lookto(36.53,11.4,89.99,smooth(100,20,50));set(autoratate.enabled,state);" url="hotspots/borisR.png" onhover="showtext(кабінет мультиспіральної комп'ютерної томографії (МСКТ)[br]кабинет мультиспиральной компьютерной томографии (МСКТ));" ath="-89.1072438567308" atv="2.847796244621632" rz="0.020659816475949333" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,0.7);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" />
+    	<hotspot name="spot25" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_0rengen,null,null,BLEND(1));lookat(-166.27,1.75,90);wait(blend);set(autoratate.enabled,state);" url="hotspots/borisL.png" onhover="showtext(кабінет рентгенографії[br]кабинет рентгенографии);" ath="-0.9248042527856056" atv="2.025691775792795" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,0.7);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" />
+    	<hotspot name="spot26" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_1reception,null,null,BLEND(1));lookat(-102.12,1.89,74);wait(blend); set(autoratate.enabled,state);" url="hotspots/borisU.png" onhover="showtext(рецепція поліклініки 1-й поверх[br]рецепция поликлиники 1-й этаж);" ath="-89.79858769588591" atv="-2.050849516453541" rz="-0.003791607835074151" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,0.7);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" />
+	<hotspot name="spot67" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_0mamograf,null,null,BLEND(1));wait(blend); set(autoratate.enabled,state);" url="hotspots/borisL.png" onhover="showtext(кабінет мамографії[br]кабинет маммографии);" ath="269.65924065969364" atv="6.694080297791216" rz="-0.004592082487207851" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,0.7);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" />
+
+
+
+	</scene>
+
+	<scene name="scene_0densitometr" title="кабінет денситометрії[br]кабинет денситометрии" thumburl="0densitometr.tiles/thumb.jpg">
+
+		
+
+		<action name="startscene">
+			
+			action(activatespot,scene_0densitometr, 90);
+		</action>
+
+		<view hlookat="140" vlookat="40" fovtype="MFOV" fov="110" maxpixelzoom="2.0" fovmin="60" fovmax="120" />
+
+		<preview url="0densitometr.tiles/preview.jpg" />
+
+		<image>
+			<left  url="0densitometr.tiles/pano_l.jpg" />
+			<front url="0densitometr.tiles/pano_f.jpg" />
+			<right url="0densitometr.tiles/pano_r.jpg" />
+			<back  url="0densitometr.tiles/pano_b.jpg" />
+			<up    url="0densitometr.tiles/pano_u.jpg" />
+			<down  url="0densitometr.tiles/pano_d.jpg" />
+		</image>
+
+		<!-- place hotspots here -->
+
+		<hotspot name="spot19" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_0reception,null,null,BLEND(1));set(autoratate.enabled,state);" url="hotspots/boris.png" onhover="showtext(рецепція діагностичного центру 0-й поверх[br]рецепция диагностического центра 0-й этаж);" ath="349.171" atv="6.74267" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" />
+
+
+	</scene>
+
+
+	<scene name="scene_0kt" title="кабінет мультиспіральної комп'ютерної томографії (МСКТ)[br]кабинет мультиспиральной компьютерной томографии (МСКТ)" onstart="action(startscene);" thumburl="0kt.tiles/thumb.jpg">
+		<action name="startscene">
+			
+			action(activatespot,scene_0kt, 45);
+		</action>
+
+		<view hlookat="0" vlookat="0" fovtype="MFOV" fov="90" maxpixelzoom="2.0" fovmin="60" fovmax="120" />
+
+		<preview url="0kt.tiles/preview.jpg" />
+
+		<image>
+			<left  url="0kt.tiles/pano_l.jpg" />
+			<front url="0kt.tiles/pano_f.jpg" />
+			<right url="0kt.tiles/pano_r.jpg" />
+			<back  url="0kt.tiles/pano_b.jpg" />
+			<up    url="0kt.tiles/pano_u.jpg" />
+			<down  url="0kt.tiles/pano_d.jpg" />
+		</image>
+
+		<!-- place hotspots here -->
+
+		<hotspot name="spot20" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_0reception,null,null,BLEND(1));lookat(-104.32,2.34,90);wait(blend); set(autoratate.enabled,state);" url="hotspots/boris.png" onhover="showtext(рецепція діагностичного центру 0-й поверх[br]рецепция диагностического центра 0-й этаж);" ath="188.78" atv="7.32899" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1);" onout="tween(alpha,0.5);tween(scale,0.5);" distorted="true" />
+
+
+	</scene>
+
+
+	<scene name="scene_0mrt" title="кабінет магнітно-резонансної томографії (МРТ)[br]кабинет магнитно-резонансной томографии (МРТ)" onstart="action(startscene);" thumburl="0mrt.tiles/thumb.jpg">
+		<action name="startscene">
+			
+			action(activatespot,scene_0mrt, 180);
+		</action>
+		<view hlookat="90" vlookat="0" fovtype="MFOV" fov="90" maxpixelzoom="2.0" fovmin="60" fovmax="120" />
+
+		<preview url="0mrt.tiles/preview.jpg" />
+
+		<image>
+			<left  url="0mrt.tiles/pano_l.jpg" />
+			<front url="0mrt.tiles/pano_f.jpg" />
+			<right url="0mrt.tiles/pano_r.jpg" />
+			<back  url="0mrt.tiles/pano_b.jpg" />
+			<up    url="0mrt.tiles/pano_u.jpg" />
+			<down  url="0mrt.tiles/pano_d.jpg" />
+		</image>
+
+		<!-- place hotspots here -->
+
+		<hotspot name="spot21" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_0reception,null,null,BLEND(1));lookat(-109.58,2.63,90);wait(blend);set(autoratate.enabled,state);" url="hotspots/boris.png" onhover="showtext(рецепція діагностичного центру 0-й поверх[br]рецепция диагностического центра 0-й этаж);" ath="268.302" atv="4.02062" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" />
+
+
+	</scene>
+
+
+
+
+
+	<scene name="scene_0rengen" title="кабінет рентгенографії[br]кабинет рентгенографии" onstart="action(startscene);" thumburl="0rengen.tiles/thumb.jpg">
+		<action name="startscene">
+			
+			action(activatespot,scene_0rengen,340);
+		</action>
+
+		<view hlookat="195" vlookat="0" fovtype="MFOV" fov="90" maxpixelzoom="2.0" fovmin="60" fovmax="120" />
+
+		<preview url="0rengen.tiles/preview.jpg" />
+
+		<image>
+			<left  url="0rengen.tiles/pano_l.jpg" />
+			<front url="0rengen.tiles/pano_f.jpg" />
+			<right url="0rengen.tiles/pano_r.jpg" />
+			<back  url="0rengen.tiles/pano_b.jpg" />
+			<up    url="0rengen.tiles/pano_u.jpg" />
+			<down  url="0rengen.tiles/pano_d.jpg" />
+		</image>
+
+		<!-- place hotspots here -->
+
+		
+	<hotspot name="spot27" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_0reception,null,null,BLEND(1));lookat(-109.29,1.75,90);wait(blend);" url="hotspots/boris.png" onhover="showtext(рецепція діагностичного центру 0-й поверх[br]рецепция диагностического центра 0-й этаж);" ath="512.488" atv="3.81107" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" />
+
+
+	</scene>
+
+<scene name="scene_0mamograf" title="кабінет мамографії[br]кабинет маммографии" onstart="action(startscene);" thumburl="0mamograf.tiles/thumb.jpg">
+
+		<action name="startscene">
+			action(activatespot,scene_0mamograf,110);
+		</action>
+
+		<view hlookat="30" vlookat="10" fovtype="MFOV" fov="90" maxpixelzoom="2.0" fovmin="60" fovmax="120" />
+
+		<preview url="0mamograf.tiles/preview.jpg" />
+
+		<image>
+			<left  url="0mamograf.tiles/pano_l.jpg" />
+			<front url="0mamograf.tiles/pano_f.jpg" />
+			<right url="0mamograf.tiles/pano_r.jpg" />
+			<back  url="0mamograf.tiles/pano_b.jpg" />
+			<up    url="0mamograf.tiles/pano_u.jpg" />
+			<down  url="0mamograf.tiles/pano_d.jpg" />
+		</image>
+
+		<!-- place hotspots here -->
+
+		<!-- example hotspot:
+		<hotspot name="spot1" style="hotspot_ani_black" 
+		         ath="-42.58075430688743" atv="6.450692721045411"
+		         zoom="false"
+		         onclick="looktohotspot(get(name)); loadscene('insert-scene-name',null,MERGE,BLEND(1));"
+		         />
+		-->
+<hotspot name="spot61" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_0reception,null,null,BLEND(1));lookat(-109.58,2.63,90);wait(blend); set(autoratate.enabled,state);" url="hotspots/boris.png" onhover="showtext(рецепція діагностичного центру 0-й поверх[br]рецепция диагностического центра 0-й этаж);" ath="-42.58075430688743" atv="6.450692721045411"
+scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" />
+
+	</scene>
+
+<scene name="scene_1reception" title="рецепція поліклініки 1-й поверх[br]рецепция поликлиники 1-й этаж" onstart="action(startscene);" thumburl="1reception.tiles/thumb.jpg">
+		<action name="startscene">
+			
+			action(activatespot,scene_1reception,100);
+		</action>
+
+		<view hlookat="190" vlookat="0" fovtype="MFOV" fov="110" maxpixelzoom="2.0" fovmin="60" fovmax="120" />
+ 
+		<preview url="1reception.tiles/preview.jpg" />
+
+		<image>
+			<left  url="1reception.tiles/pano_l.jpg" />
+			<front url="1reception.tiles/pano_f.jpg" />
+			<right url="1reception.tiles/pano_r.jpg" />     
+			<back  url="1reception.tiles/pano_b.jpg" />
+			<up    url="1reception.tiles/pano_u.jpg" />
+			<down  url="1reception.tiles/pano_d.jpg" />
+
+		</image>
+
+		<!-- place hotspots here -->
+
+		<hotspot name="spot35" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_1pediatry,null,null,BLEND(1));lookat(0,0,90);wait(blend);lookto(0,0,89.99,smooth(100,20,50));set(autoratate.enabled,state);" url="hotspots/borisL.png" onhover="showtext(кабінет педіатра[br]кабинет педиатра);" ath="145.8878404273454" atv="1.6991998581353744" rz="1.0799982374042567" scale="0.4" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,0.7);" onout="tween(alpha,0.5);tween(scale,0.4);"distorted="true" />
+    		<hotspot name="spot36" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_1surgeon,null,null,BLEND(1));lookat(76.56,0.29,90);wait(blend);set(autoratate.enabled,state);" url="hotspots/borisL.png" onhover="showtext(кабінет травматолога[br]кабинет травматолога);" ath="145.8969840667009" atv="-3.165515985588408" rz="0.11930403705042017" scale="0.4" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,0.7);" onout="tween(alpha,0.5);tween(scale,0.4);"distorted="true" />
+    		<hotspot name="spot37" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_1dressingroom,null,null,BLEND(1));lookat(-29.51,0.29,90);wait(blend);set(autoratate.enabled,state);" url="hotspots/borisL.png" onhover="showtext(кабінет хірурга[br]кабинет хирурга);" ath="145.87300931701958" atv="-0.7579765682173798" rz="0.5712239432389965" scale="0.4" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,0.7);" onout="tween(alpha,0.5);tween(scale,0.4);"distorted="true" />
+    		<hotspot name="spot38" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_1facade,null,null,BLEND(1));lookat(-12.86,-5.55,90);wait(blend);lookto(-14.52,-3.48,89.99,smooth(100,20,50));set(autoratate.enabled,state);" url="hotspots/boris.png" onhover="showtext(фасад приміщення клініки Борис[br]фасад помещения клиники Борис);"ath="-3.6733963471923516" atv="7.325992094338224" scale="0.4" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,0.7);" onout="tween(alpha,0.5);tween(scale,0.4);"distorted="true" />
+    		<hotspot name="spot39" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_2reception,null,null,BLEND(1));lookat(-149.61,-6.72,90);wait(blend);lookto(-151.36,6.43,89.99,smooth(100,20,50));set(autoratate.enabled,state);" url="hotspots/borisU.png" onhover="showtext(рецепція поліклініки 2-й поверх[br]рецепция поликлиники 2-й этаж);" ath="146.34983676099094" atv="-6.28383003572286" rz="-0.15524291265319043" scale="0.4" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,0.7);" onout="tween(alpha,0.5);tween(scale,0.4);"distorted="true" />
+    		<hotspot name="spot40" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_0reception,null,null,BLEND(1));lookat(-104.32,0.29,90);wait(blend);set(autoratate.enabled,state);" url="hotspots/borisD.png" onhover="showtext(рецепція діагностичного центру 0-й поверх[br]рецепция диагностического центра 0-й этаж);" ath="146.38278930674156" atv="4.992694330189946" rz="1.2685615744175798" scale="0.4"  zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,0.7);" onout="tween(alpha,0.5);tween(scale,0.4);"distorted="true" />
+
+
+	</scene>
+
+<scene name="scene_1surgeon" title="кабінет травматолога[br]кабинет травматолога" onstart="action(startscene);" thumburl="1surgeon.tiles/thumb.jpg">
+		<action name="startscene">
+			
+			action(activatespot,scene_1surgeon, 235);
+		</action>
+
+		<view hlookat="80" vlookat="0" fovtype="MFOV" fov="90" maxpixelzoom="2.0" fovmin="60" fovmax="120" />
+
+		<preview url="1surgeon.tiles/preview.jpg" />
+
+		<image>
+			<left  url="1surgeon.tiles/pano_l.jpg" />
+			<front url="1surgeon.tiles/pano_f.jpg" />
+			<right url="1surgeon.tiles/pano_r.jpg" />
+			<back  url="1surgeon.tiles/pano_b.jpg" />
+			<up    url="1surgeon.tiles/pano_u.jpg" />
+			<down  url="1surgeon.tiles/pano_d.jpg" />
+		</image>
+
+		<!-- place hotspots here -->
+
+		<!hotspot name="spot45" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_1dressingroom,null,null,BLEND(1));lookat(-27.18,1.46,90);wait(blend);set(autoratate.enabled,state);" url="hotspots/boris.png" onhover="showtext(кабінет хірурга[br]кабинет хирурга);" ath="493.756" atv="9.08795" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" />
+    		<hotspot name="spot46" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_1reception,null,null,BLEND(1));set(autoratate.enabled,state);" url="hotspots/boris.png" onhover="showtext(рецепція поліклініки 1-й поверх[br]рецепция поликлиники 1-й этаж);" ath="202.244" atv="6.15635" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" />
+
+
+	</scene>
+
+	<scene name="scene_1dressingroom" title="кабінет хірурга[br]кабинет хирурга" onstart="action(startscene);" thumburl="1dressingroom.tiles/thumb.jpg">
+		<action name="startscene">
+			
+			action(activatespot,scene_1dressingroom, 340);
+		</action>
+
+		<view hlookat="335" vlookat="0" fovtype="MFOV" fov="90" maxpixelzoom="2.0" fovmin="60" fovmax="120" />
+
+		<preview url="1dressingroom.tiles/preview.jpg" />
+
+		<image>
+			<left  url="1dressingroom.tiles/pano_l.jpg" />
+			<front url="1dressingroom.tiles/pano_f.jpg" />
+			<right url="1dressingroom.tiles/pano_r.jpg" />
+			<back  url="1dressingroom.tiles/pano_b.jpg" />
+			<up    url="1dressingroom.tiles/pano_u.jpg" />
+			<down  url="1dressingroom.tiles/pano_d.jpg" />
+		</image>
+
+		<!-- place hotspots here -->
+
+		<hotspot name="spot28" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_1reception,null,null,BLEND(1));lookat(-100.81,-0.29,90);wait(blend);set(autoratate.enabled,state);" url="hotspots/boris.png" onhover="showtext(рецепція поліклініки 1-й поверх[br]рецепция поликлиники 1-й этаж);" ath="511.902" atv="6.74267" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" />
+    		<!hotspot name="spot29" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_1surgeon,null,null,BLEND(1));lookat(70.13,-2.63,90);wait(blend);set(autoratate.enabled,state);" url="hotspots/boris.png" onhover="showtext(кабінет травмотології);" ath="270.146" atv="4.39739" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" />
+
+	</scene>
+<scene name="scene_1pediatry" title="кабінет педіатра[br]кабинет педиатра" onstart="action(startscene);" thumburl="1pediatry.tiles/thumb.jpg">
+		<action name="startscene">
+			
+			action(activatespot,scene_1pediatry, 90);
+		</action>
+
+		<view hlookat="0" vlookat="0" fovtype="MFOV" fov="90" maxpixelzoom="2.0" fovmin="60" fovmax="120" />
+
+		<preview url="1pediatry.tiles/preview.jpg" />
+
+		<image>
+			<left  url="1pediatry.tiles/pano_l.jpg" />
+			<front url="1pediatry.tiles/pano_f.jpg" />
+			<right url="1pediatry.tiles/pano_r.jpg" />
+			<back  url="1pediatry.tiles/pano_b.jpg" />
+			<up    url="1pediatry.tiles/pano_u.jpg" />
+			<down  url="1pediatry.tiles/pano_d.jpg" />
+		</image>
+
+		<!-- place hotspots here -->
+
+		<hotspot name="spot34" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_1reception,null,null,BLEND(1));lookat(-102.56,-7.01,90);wait(blend);set(autoratate.enabled,state);" url="hotspots/boris.png" onhover="showtext(рецепція поліклініки 1-й поверх[br]рецепция поликлиники 1-й этаж);" ath="196.055" atv="4.63918" rz="-1.810370902997989" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" />
+
+
+	</scene>
+
+	<scene name="scene_1facade" title="фасад приміщення клініки Борис[br]фасад помещения клиники Борис" onstart="action(startscene);" thumburl="1facade.tiles/thumb.jpg">
+		<action name="startscene">
+			
+			action(activatespot,scene_1facade, 285);
+		</action>
+		<view hlookat="346" vlookat="-10" fovtype="MFOV" fov="110" maxpixelzoom="2.0" fovmin="90" fovmax="130" />
+
+		<preview url="1facade.tiles/preview.jpg" />
+
+		<image>
+			<left  url="1facade.tiles/pano_l.jpg" />
+			<front url="1facade.tiles/pano_f.jpg" />
+			<right url="1facade.tiles/pano_r.jpg" />
+			<back  url="1facade.tiles/pano_b.jpg" />
+			<up    url="1facade.tiles/pano_u.jpg" />
+			<down  url="1facade.tiles/pano_d.jpg" />
+		</image>
+	
+
+	
+		<hotspot name="spot30" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_1resuscikationmoto,null,null,BLEND(1));lookat(-178.83,21.33,90);wait(blend);lookto(-179.42,27,89.99,smooth(100,20,50));set(autoratate.enabled,state);" url="hotspots/boris.png" onhover="showtext(мотоцикл швидкої допомоги[br]мотоцикл скорой помощи);" ath="40.955679057072885" atv="3.5680806500814115" rz="0.5072188785543043" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" />
+    		<hotspot name="spot31" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_1sekvoya,null,null,BLEND(1));lookat(128.28,-2.34,90);wait(blend);set(autoratate.enabled,state);" url="hotspots/boris.png" onhover="showtext(реанімобіль[br]реанимобиль);" ath="40.97311177874681" atv="1.161441103815311" rz="-0.06481740163632674" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" />
+    		<hotspot name="spot32" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_7receptionpolic2,null,null,BLEND(1));set(autoratate.enabled,state);" url="hotspots/borisR.png" onhover="showtext(хол поліклініки №2[br]холл поликлиники №2);" ath="41.70312987152115" atv="-1.17687066753086" rz="0.27302917264411614" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" />
+    		<hotspot name="spot33" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_1reception,null,null,BLEND(1));wait(blend);set(autoratate.enabled,state);" url="hotspots/boris.png" onhover="showtext(рецепція поліклініки 1-й поверх[br]рецепция поликлиники 1-й этаж);" ath="-12.887166839353199" atv="11.2308229912408" rz="0.6284688072934401" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" />
+		<hotspot name="spot66" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_1reanimobil,null,null,BLEND(1));wait(blend);set(autoratate.enabled,state);" url="hotspots/boris.png" onhover="showtext(автомобіль швидкої невідкладної допомоги[br]автомобиль скорой неотложной помощи);"  ath="40.91224527811156" atv="5.863829822943488" rz="0.6288921195981176" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" />
+
+	</scene>
+
+
+	
+
+
+	
+
+
+	<scene name="scene_1resuscikationmoto" title="мотоцикл швидкої допомоги[br]мотоцикл скорой помощи" onstart="action(startscene);" thumburl="1resuscikationmoto.tiles/thumb.jpg">
+		<action name="startscene">
+			
+			action(activatespot,scene_1resuscikationmoto, 270);
+		</action>
+
+		<view hlookat="180" vlookat="30" fovtype="MFOV" fov="110" fovmin="110" fovmax="130" />
+
+		<preview url="1resuscikationmoto.tiles/preview.jpg" />
+
+		<image>
+			<left  url="1resuscikationmoto.tiles/pano_l.jpg" />
+			<front url="1resuscikationmoto.tiles/pano_f.jpg" />
+			<right url="1resuscikationmoto.tiles/pano_r.jpg" />
+			<back  url="1resuscikationmoto.tiles/pano_b.jpg" />
+			<up    url="1resuscikationmoto.tiles/pano_u.jpg" />
+			<down  url="1resuscikationmoto.tiles/pano_d.jpg" />
+		</image>
+
+		<!-- place hotspots here -->
+
+		<hotspot name="spot41" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_1facade,null,null,BLEND(1));set(autoratate.enabled,state);" url="hotspots/boris.png" onhover="showtext(фасад приміщення клініки Борис[br]фасад помещения клиники Борис);" ath="240" atv="-5" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" />
+
+    		<!hotspot name="spot42" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_1sekvoya,null,null,BLEND(1));lookat(131.52,8.71,90);wait(blend);" url="hotspots/boris.png" onhover="showtext(автомобіль швидкої невідкладної допомоги);" ath="415.883" atv="4.63918" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" />
+
+
+	</scene>
+
+
+	<scene name="scene_1sekvoya" title="реанімобіль[br]реанимобиль" onstart="action(startscene);" thumburl="1sekvoya.tiles/thumb.jpg">
+		<action name="startscene">
+			
+			action(activatespot,scene_1sekvoya, 330);
+		</action>
+
+		<view hlookat="110" vlookat="0" fovtype="MFOV" fov="90" maxpixelzoom="2.0" fovmin="60" fovmax="120" />
+
+		<preview url="1sekvoya.tiles/preview.jpg" />
+
+		<image>
+			<left  url="1sekvoya.tiles/pano_l.jpg" />
+			<front url="1sekvoya.tiles/pano_f.jpg" />
+			<right url="1sekvoya.tiles/pano_r.jpg" />
+			<back  url="1sekvoya.tiles/pano_b.jpg" />
+			<up    url="1sekvoya.tiles/pano_u.jpg" />
+			<down  url="1sekvoya.tiles/pano_d.jpg" />
+		</image>
+
+		<hotspot name="spot43" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_1facade,null,null,BLEND(1));set(autoratate.enabled,state);" url="hotspots/boris.png" onhover="showtext(фасад приміщення клініки Борис[br]фасад помещения клиники Борис);" ath="-85.84606741474883" atv="-5.681840216383741" rz="-2.8609531956645022" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" />
+    		<!hotspot name="spot44" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_1resuscikationmoto,null,null,BLEND(1));set(autoratate.enabled,state);" url="hotspots/boris.png" onhover="showtext(реанімаційний мотоцикл);" ath="286.537" atv="-17.8827" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" />
+
+
+	</scene>
+<scene name="scene_1reanimobil" title="автомобіль швидкої невідкладної допомоги[br]автомобиль скорой неотложной помощи" onstart="action(startscene);" thumburl="1reanimobil.tiles/thumb.jpg">
+
+		<action name="startscene">
+			action(activatespot,scene_1reanimobil,315);
+		</action>
+
+
+		<view hlookat="30" vlookat="40" fovtype="MFOV" fov="90" maxpixelzoom="2.0" fovmin="60" fovmax="120" />
+
+		<preview url="1reanimobil.tiles/preview.jpg" />
+
+		<image>
+			<left  url="1reanimobil.tiles/pano_l.jpg" />
+			<front url="1reanimobil.tiles/pano_f.jpg" />
+			<right url="1reanimobil.tiles/pano_r.jpg" />
+			<back  url="1reanimobil.tiles/pano_b.jpg" />
+			<up    url="1reanimobil.tiles/pano_u.jpg" />
+			<down  url="1reanimobil.tiles/pano_d.jpg" />
+		</image>
+
+		<!-- place hotspots here -->
+
+		<hotspot name="spot62" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_1facade,null,null,BLEND(1));wait(blend);set(autoratate.enabled,state);" url="hotspots/boris.png" onhover="showtext(фасад приміщення клініки Борис[br]фасад помещения клиники Борис);" ath="-42.58075430688743" atv="6.450692721045411"
+scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1);" onout="tween(alpha,0.5);tween(scale,0.5);" distorted="true" />
+
+
+	</scene>
+<scene name="scene_7receptionpolic2" title="хол поліклініки №2[br]холл поликлиники №2" onstart="action(startscene);" thumburl="7receptionpolic2.tiles/thumb.jpg">
+		<action name="startscene">
+			
+			action(activatespot,scene_7receptionpolic2, 90);
+		</action>
+		<view hlookat="200" vlookat="0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="60" fovmax="120" />
+
+		<preview url="7receptionpolic2.tiles/preview.jpg" />
+
+		<image>
+			<left  url="7receptionpolic2.tiles/pano_l.jpg" />
+			<front url="7receptionpolic2.tiles/pano_f.jpg" />
+			<right url="7receptionpolic2.tiles/pano_r.jpg" />
+			<back  url="7receptionpolic2.tiles/pano_b.jpg" />
+			<up    url="7receptionpolic2.tiles/pano_u.jpg" />
+			<down  url="7receptionpolic2.tiles/pano_d.jpg" />
+		</image>
+
+		<!-- place hotspots here -->
+
+		<hotspot name="spot18" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_1facade,null,null,BLEND(1));set(autoratate.enabled,state);" url="hotspots/boris.png" onhover="showtext(фасад приміщення клініки Борис[br]фасад помещения клиники Борис);" ath="287.707" atv="0.879479" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1);" onout="tween(alpha,0.5);tween(scale,0.5);" distorted="true" />
+
+
+	</scene>
+	<scene name="scene_2reception" title="рецепція поліклініки 2-й поверх[br]рецепция поликлиники 2-й этаж" onstart="action(startscene);" thumburl="2reception.tiles/thumb.jpg">
+		<action name="startscene">
+			
+			action(activatespot,scene_2reception, 155);
+		</action>
+		<view hlookat="155" vlookat="0" fovtype="MFOV" fov="90" maxpixelzoom="2.0" fovmin="60" fovmax="120" />
+
+		<preview url="2reception.tiles/preview.jpg" />
+
+		<image>
+			<left  url="2reception.tiles/pano_l.jpg" />
+			<front url="2reception.tiles/pano_f.jpg" />
+			<right url="2reception.tiles/pano_r.jpg" />
+			<back  url="2reception.tiles/pano_b.jpg" />
+			<up    url="2reception.tiles/pano_u.jpg" />
+			<down  url="2reception.tiles/pano_d.jpg" />
+		</image>
+
+		<!-- place hotspots here -->
+		<hotspot name="spot52" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_3corridor,null,null,BLEND(1));set(autoratate.enabled,state);" url="hotspots/borisU.png" onhover="showtext(хол 3-й поверх[br]холл 3-й этаж);"  ath="114.840942011159" atv="-12.086200074505696" rx="-13" ry="-11.25" rz="-2.4591998140300304" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,0.7);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" />
+    		<hotspot name="spot53" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_1reception,null,null,BLEND(1));lookat(-104.61,0.88,90);wait(blend);set(autoratate.enabled,state);" url="hotspots/borisD.png" onhover="showtext(рецепція поліклініки 1-й поверх[br]рецепция поликлиники 1-й этаж);" ath="114.99385750328896" atv="9.469135574337185" rz="-0.1399253220598823" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,0.7);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" />
+    		<hotspot name="spot54" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_2otolaringologist,null,null,BLEND(1));lookat(66.16,16.13,62);wait(blend);lookto(63.55,14.73,65.99,smooth(100,20,50));set(autoratate.enabled,state);" url="hotspots/borisR.png" onhover="showtext(кабінет отоларинголога[br]кабинет отоларинголога);" ath="115.5735976412275" atv="-3.5649763388977087" rz="-0.8235784141834581" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,0.7);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" />
+    		<hotspot name="spot55" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_2oftolmolog,null,null,BLEND(1));lookat(-47.14,3.64,66);wait(blend);lookto(0,0,61.99,smooth(100,20,50));set(autoratate.enabled,state);" url="hotspots/borisR.png" onhover="showtext(кабінет офтальмолога[br]кабинет офтальмолога);" ath="115.57879548662007" atv="-7.392483207685879" rz="-0.4834403036043618" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,0.7);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" />
+    		<hotspot name="spot56" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_2vaccination,null,null,BLEND(1));set(autoratate.enabled,state);" url="hotspots/borisR.png" onhover="showtext(кабінет вакцинації[br]кабинет вакцинации);" ath="115.56268654586938" atv="-9.248110013200517" rz="-0.795403225881977" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,0.7);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" />
+    		<hotspot name="spot57" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_2doppler,null,null,BLEND(1));lookat(176.12,3.58,50);wait(blend);lookto(178.01,1.82,73.99,smooth(100,20,50));set(autoratate.enabled,state);" url="hotspots/borisR.png" onhover="showtext(кабінет доплерографії[br]кабинет допплерографии);" ath="115.60722933078416" atv="-5.4764297600125245" rz="-0.5731153974524941" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,0.7);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" />
+    		<hotspot name="spot58" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_2gynecology,null,null,BLEND(1));lookat(-58.81,16.6,78);wait(blend);lookto(-47.34,17.24,89.99,smooth(100,20,50));set(autoratate.enabled,state);" url="hotspots/borisL.png" onhover="showtext(кабінет гінеколога[br]кабинет гинеколога);" ath="114.34384924316626" atv="-1.5444648668690442" rz="-0.6146647254036335" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,0.7);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" />
+    		<hotspot name="spot59" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_2uzi,null,null,BLEND(1));lookat(-173.55,7.68,78);wait(blend);lookto(177.06,9.51,73.99,smooth(100,20,50));set(autoratate.enabled,state);" url="hotspots/borisL.png" onhover="showtext(кабінет ультразвукового дослідження (УЗД)[br]кабинет ультразвукового исследования (УЗИ));" ath="114.38154229500091" atv="0.4822933444943745" rz="-0.5764241542523056" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,0.7);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" />
+    		<hotspot name="spot60" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_2bronchoscopy,null,null,BLEND(1));lookat(-164.53,3.08,66);wait(blend);lookto(-163.18,8.95,61.99,smooth(100,20,50));set(autoratate.enabled,state);" url="hotspots/borisL.png" onhover="showtext(кабінет ендоскопії[br]кабинет эндоскопии);" ath="114.35211864157512" atv="2.4358266563646964" rz="-0.6247012073768156" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,0.7);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" />
+		<hotspot name="spot81" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_2analiz,null,null,BLEND(1)); set(autoratate.enabled,state);" url="hotspots/borisL.png" onhover="showtext(лабораторія[br]лаборатория);" ath="114.33866036769362" atv="6.409519075646354" rz="0.0740004665941791" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,0.7);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" />
+		<hotspot name="spot82" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_2zaborkrovi,null,null,BLEND(1));set(autoratate.enabled,state);" url="hotspots/borisL.png" onhover="showtext(кімната забору аналізів[br]комната забора анализов);" ath="114.32668791674423" atv="4.406461240541833" rz="-0.2671416342006362"scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,0.7);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" />
+
+
+	</scene>
+
+
+	<scene name="scene_2bronchoscopy" title="кабінет ендоскопії[br]кабинет эндоскопии" onstart="action(startscene);" thumburl="2bronchoscopy.tiles/thumb.jpg">
+		<action name="startscene">
+			
+			action(activatespot,scene_2bronchoscopy, 70);
+		</action>
+
+		<view hlookat="200" vlookat="0" fovtype="MFOV" fov="90" maxpixelzoom="2.0" fovmin="60" fovmax="120" />
+
+		<preview url="2bronchoscopy.tiles/preview.jpg" />
+
+		<image>
+			<left  url="2bronchoscopy.tiles/pano_l.jpg" />
+			<front url="2bronchoscopy.tiles/pano_f.jpg" />
+			<right url="2bronchoscopy.tiles/pano_r.jpg" />
+			<back  url="2bronchoscopy.tiles/pano_b.jpg" />
+			<up    url="2bronchoscopy.tiles/pano_u.jpg" />
+			<down  url="2bronchoscopy.tiles/pano_d.jpg" />
+		</image>
+
+		<!-- place hotspots here -->
+
+		
+		<hotspot name="spot47" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_2reception,null,null,BLEND(1));lookat(-149.61,6.14,90);wait(blend);lookto(-151.36,6.43,89.99,smooth(100,20,50));set(autoratate.enabled,state);" url="hotspots/boris.png" onhover="showtext(рецепція поліклініки 2-й поверх[br]рецепция поликлиники 2-й этаж);" ath="365.561" atv="7.91531" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" rx="-8.5" ry="-14.5"/>
+
+	</scene>
+
+
+	<scene name="scene_2doppler" title="кабінет доплерографії[br]кабинет допплерографии" onstart="action(startscene);" thumburl="2doppler.tiles/thumb.jpg">
+		<action name="startscene">
+			
+			action(activatespot,scene_2doppler, 270);
+		</action>
+		<view hlookat="180" vlookat="0" fovtype="MFOV" fov="90" maxpixelzoom="2.0" fovmin="60" fovmax="120" />
+
+		<preview url="2doppler.tiles/preview.jpg" />
+
+		<image>
+			<left  url="2doppler.tiles/pano_l.jpg" />
+			<front url="2doppler.tiles/pano_f.jpg" />
+			<right url="2doppler.tiles/pano_r.jpg" />
+			<back  url="2doppler.tiles/pano_b.jpg" />
+			<up    url="2doppler.tiles/pano_u.jpg" />
+			<down  url="2doppler.tiles/pano_d.jpg" />
+		</image>
+
+		<!-- place hotspots here -->
+
+		<hotspot name="spot48" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_2reception,null,null,BLEND(1));lookat(-146.4,5.84,90);wait(blend);lookto(-151.36,6.43,89.99,smooth(100,20,50));set(autoratate.enabled,state);" url="hotspots/boris.png" onhover="showtext(рецепція поліклініки 2-й поверх[br]рецепция поликлиники 2-й этаж);" ath="358.537" atv="9.08795" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" />
+
+
+	</scene>
+
+
+	<scene name="scene_2gynecology" title="кабінет гінеколога[br]кабинет гинеколога" onstart="action(startscene);" thumburl="2gynecology.tiles/thumb.jpg">
+		<action name="startscene">
+			
+			action(activatespot,scene_2gynecology, 25);
+		</action>
+		<view hlookat="300" vlookat="30" fovtype="MFOV" fov="90" maxpixelzoom="2.0" fovmin="60" fovmax="120" />
+
+		<preview url="2gynecology.tiles/preview.jpg" />
+
+		<image>
+			<left  url="2gynecology.tiles/pano_l.jpg" />
+			<front url="2gynecology.tiles/pano_f.jpg" />
+			<right url="2gynecology.tiles/pano_r.jpg" />
+			<back  url="2gynecology.tiles/pano_b.jpg" />
+			<up    url="2gynecology.tiles/pano_u.jpg" />
+			<down  url="2gynecology.tiles/pano_d.jpg" />
+		</image>
+
+		<!-- place hotspots here -->
+<hotspot name="spot49" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_2reception,null,null,BLEND(1));lookat(-143.47,1.75,90);wait(blend);lookto(-151.36,6.43,89.99,smooth(100,20,50));set(autoratate.enabled,state);" url="hotspots/boris.png" onhover="showtext(рецепція поліклініки 2-й поверх[br]рецепция поликлиники 2-й этаж);" ath="192.878" atv="14.9511" scale="0.7" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1);" onout="tween(alpha,0.5);tween(scale,0.7);"distorted="true" rx="17.25" ry="-34"/>
+
+	</scene>
+
+
+	<scene name="scene_2oftolmolog" title="кабінет офтальмолога[br]кабинет офтальмолога" onstart="action(startscene);" thumburl="2oftolmolog.tiles/thumb.jpg">
+		<action name="startscene">
+			
+			action(activatespot,scene_2oftolmolog, 270);
+		</action>
+		<view hlookat="0" vlookat="0" fovtype="MFOV" fov="90" maxpixelzoom="2.0" fovmin="60" fovmax="120" />
+
+		<preview url="2oftolmolog.tiles/preview.jpg" />
+
+		<image>
+			<left  url="2oftolmolog.tiles/pano_l.jpg" />
+			<front url="2oftolmolog.tiles/pano_f.jpg" />
+			<right url="2oftolmolog.tiles/pano_r.jpg" />
+			<back  url="2oftolmolog.tiles/pano_b.jpg" />
+			<up    url="2oftolmolog.tiles/pano_u.jpg" />
+			<down  url="2oftolmolog.tiles/pano_d.jpg" />
+		</image>
+
+		<!-- place hotspots here -->
+<hotspot name="spot50" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_2reception,null,null,BLEND(1));set(autoratate.enabled,state);" url="hotspots/boris.png" onhover="showtext(рецепція поліклініки 2-й поверх[br]рецепция поликлиники 2-й этаж);" ath="525.951" atv="8.50163" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" rx="-11.25" ry="-7.25" />
+
+	</scene>
+
+
+	<scene name="scene_2otolaringologist" title="кабінет отоларинголога[br]кабинет отоларинголога" onstart="action(startscene);" thumburl="2otolaringologist.tiles/thumb.jpg">
+		<action name="startscene">
+			
+			action(activatespot,scene_2otolaringologist, 240);
+		</action>
+		<view hlookat="60" vlookat="20" fovtype="MFOV" fov="70" maxpixelzoom="2.0" fovmin="60" fovmax="120" />
+
+		<preview url="2otolaringologist.tiles/preview.jpg" />
+
+		<image>
+			<left  url="2otolaringologist.tiles/pano_l.jpg" />
+			<front url="2otolaringologist.tiles/pano_f.jpg" />
+			<right url="2otolaringologist.tiles/pano_r.jpg" />
+			<back  url="2otolaringologist.tiles/pano_b.jpg" />
+			<up    url="2otolaringologist.tiles/pano_u.jpg" />
+			<down  url="2otolaringologist.tiles/pano_d.jpg" />
+		</image>
+
+		<!-- place hotspots here -->
+<hotspot name="spot51" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_2reception,null,null,BLEND(1));lookat(-147.27,7.01,90);wait(blend);set(autoratate.enabled,state);" url="hotspots/boris.png" onhover="showtext(рецепція поліклініки 2-й поверх[br]рецепция поликлиники 2-й этаж);" ath="188.195" atv="6.74267" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" rx="11.75" ry="7.5" rz="0.1449936180923736"/>
+
+	</scene>
+
+
+	
+
+
+	<scene name="scene_2uzi" title="кабінет ультразвукового дослідження (УЗД)[br]кабинет ультразвукового исследования (УЗИ)" onstart="action(startscene);" thumburl="2uzi.tiles/thumb.jpg">
+		<action name="startscene">
+			
+			action(activatespot,scene_2uzi, 270);
+		</action>
+		<view hlookat="180" vlookat="20" fovtype="MFOV" fov="90" maxpixelzoom="2.0" fovmin="60" fovmax="120" />
+
+		<preview url="2uzi.tiles/preview.jpg" />
+
+		<image>
+			<left  url="2uzi.tiles/pano_l.jpg" />
+			<front url="2uzi.tiles/pano_f.jpg" />
+			<right url="2uzi.tiles/pano_r.jpg" />
+			<back  url="2uzi.tiles/pano_b.jpg" />
+			<up    url="2uzi.tiles/pano_u.jpg" />
+			<down  url="2uzi.tiles/pano_d.jpg" />
+		</image>
+
+		<!-- place hotspots here -->
+<hotspot name="spot0" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_2reception,null,null,BLEND(1));lookat(-143.77,3.51,90);wait(blend);lookto(-151.36,6.43,89.99,smooth(100,20,50));set(autoratate.enabled,state);" url="hotspots/boris.png" onhover="showtext(рецепція поліклініки 2-й поверх[br]рецепция поликлиники 2-й этаж);" ath="340.976" atv="9.67427" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true"rx="25" ry="13.5" rz="-0.0014929425379404115"  />
+
+		
+
+	</scene>
+
+
+	<scene name="scene_2vaccination" title="кабінет вакцинації[br]кабинет вакцинации" onstart="action(startscene);" thumburl="2vaccination.tiles/thumb.jpg">
+		<action name="startscene">
+			
+			action(activatespot,scene_2vaccination, 90);
+		</action>
+		<view hlookat="0" vlookat="0" fovtype="MFOV" fov="90" maxpixelzoom="2.0" fovmin="60" fovmax="120" />
+
+		<preview url="2vaccination.tiles/preview.jpg" />
+
+		<image>
+			<left  url="2vaccination.tiles/pano_l.jpg" />
+			<front url="2vaccination.tiles/pano_f.jpg" />
+			<right url="2vaccination.tiles/pano_r.jpg" />
+			<back  url="2vaccination.tiles/pano_b.jpg" />
+			<up    url="2vaccination.tiles/pano_u.jpg" />
+			<down  url="2vaccination.tiles/pano_d.jpg" />
+		</image>
+
+		<!-- place hotspots here -->
+<hotspot name="spot1" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_2reception,null,null,BLEND(1));lookat(-144.35,0,90);wait(blend);lookto(-151.36,6.43,89.99,smooth(100,20,50));set(autoratate.enabled,state);" url="hotspots/boris.png" onhover="showtext(рецепція поліклініки 2-й поверх[br]рецепция поликлиники 2-й этаж);" ath="501.366" atv="8.50163" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1);" onout="tween(alpha,0.5);tween(scale,0.5);" rx="-12" ry="-24.75" rz="0.0036694175480132068" "distorted="true" />
+
+		
+
+	</scene>
+<scene name="scene_2analiz" title="лабораторія[br]лаборатория" onstart="action(startscene);" thumburl="2analiz.tiles/thumb.jpg">
+
+		<action name="startscene">
+			action(activatespot,scene_2analiz,170);
+		</action>
+
+
+		<view hlookat="350" vlookat="30" fovtype="MFOV" fov="90" maxpixelzoom="2.0" fovmin="60" fovmax="120" />
+
+		<preview url="2analiz.tiles/preview.jpg" />
+
+		<image>
+			<left  url="2analiz.tiles/pano_l.jpg" />
+			<front url="2analiz.tiles/pano_f.jpg" />
+			<right url="2analiz.tiles/pano_r.jpg" />
+			<back  url="2analiz.tiles/pano_b.jpg" />
+			<up    url="2analiz.tiles/pano_u.jpg" />
+			<down  url="2analiz.tiles/pano_d.jpg" />
+		</image>
+
+		<!-- place hotspots here -->
+
+		
+		<hotspot name="spot63" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_2reception,null,null,BLEND(1));lookat(-146.4,5.84,90);wait(blend);lookto(-151.36,6.43,89.99,smooth(100,20,50));set(autoratate.enabled,state);" url="hotspots/boris.png" onhover="showtext(рецепція поліклініки 2-й поверх[br]рецепция поликлиники 2-й этаж);" ath="143.96678321544348" atv="11.347995013485173"
+x="13" ry="-7" rz="-3.9288870190413063" scale="0.9" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1.2);" onout="tween(alpha,0.5);tween(scale,0.9);" distorted="true" />
+
+
+
+	</scene>
+
+
+	<scene name="scene_2zaborkrovi" title="кімната забору аналізів[br]комната забора анализов" onstart="action(startscene);" thumburl="2zaborkrovi.tiles/thumb.jpg">
+
+		<action name="startscene">
+			action(activatespot,scene_2zaborkrovi,180);
+		</action>
+
+
+		<view hlookat="290" vlookat="30" fovtype="MFOV" fov="90" maxpixelzoom="2.0" fovmin="60" fovmax="120" />
+
+		<preview url="2zaborkrovi.tiles/preview.jpg" />
+
+		<image>
+			<left  url="2zaborkrovi.tiles/pano_l.jpg" />
+			<front url="2zaborkrovi.tiles/pano_f.jpg" />
+			<right url="2zaborkrovi.tiles/pano_r.jpg" />
+			<back  url="2zaborkrovi.tiles/pano_b.jpg" />
+			<up    url="2zaborkrovi.tiles/pano_u.jpg" />
+			<down  url="2zaborkrovi.tiles/pano_d.jpg" />
+		</image>
+
+		<!-- place hotspots here -->
+
+		<hotspot name="spot64" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_2reception,null,null,BLEND(1));lookat(-146.4,5.84,90);wait(blend);lookto(-151.36,6.43,89.99,smooth(100,20,50));set(autoratate.enabled,state);" url="hotspots/boris.png" onhover="showtext(рецепція поліклініки 2-й поверх[br]рецепция поликлиники 2-й этаж);" ath="131.39936053023035" atv="13.84606564058683"
+rx="20.75" ry="38.75" rz="-2.1293328123778568" scale="0.8" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1.4);" onout="tween(alpha,0.5);tween(scale,0.8);" distorted="true" />
+
+
+	</scene>
+<scene name="scene_3corridor" title="хол 3-й поверх[br]холл 3-й этаж" onstart="action(startscene);" thumburl="3corridor.tiles/thumb.jpg">
+		<action name="startscene">
+			
+			action(activatespot,scene_3corridor, 270);
+		</action>
+		<view hlookat="210" vlookat="0" fovtype="MFOV" fov="100" maxpixelzoom="2.0" fovmin="90" fovmax="120" />
+
+		<preview url="3corridor.tiles/preview.jpg" />
+
+		<image>
+			<left  url="3corridor.tiles/pano_l.jpg" />
+			<front url="3corridor.tiles/pano_f.jpg" />
+			<right url="3corridor.tiles/pano_r.jpg" />
+			<back  url="3corridor.tiles/pano_b.jpg" />
+			<up    url="3corridor.tiles/pano_u.jpg" />
+			<down  url="3corridor.tiles/pano_d.jpg" />
+		</image>
+
+		<!-- place hotspots here -->
+
+		<hotspot name="spot3" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_3VIP,null,null,BLEND(1));set(autoratate.enabled,state);" url="hotspots/borisL.png" onhover="showtext(VIP-палата 3-й поверх[br]VIP-палата 3-й этаж);" ath="224.61277250080732" atv="-1.5843778170587557" rx="-2" ry="-29.5" rz="1.754079758912743" distorted="true" scale="0.9" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1.3);" onout="tween(alpha,0.5);tween(scale,0.9); "distorted="true" />
+    		<hotspot name="spot4" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_2reception,null,null,BLEND(1));set(autoratate.enabled,state);" url="hotspots/borisD.png" onhover="showtext(рецепція поліклініки 2-й поверх[br]рецепция поликлиники 2-й этаж);" ath="225.53576859141816" atv="20.784502667245466" rx="22.75" ry="-34.75" rz="-0.46008876007766175" distorted="true"  scale="0.9" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1.3);" onout="tween(alpha,0.5);tween(scale,0.9);"/>
+    		<hotspot name="spot5" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_3opretionunit3,null,null,BLEND(1));set(autoratate.enabled,state);" url="hotspots/borisR.png" onhover="showtext(операційна зала №3 3-й поверх[br]операционный зал №3 3-й этаж);" ath="226.55922185313355" atv="12.196036262588738" rx="14.5" ry="-34.75" rz="-0.00022955558083359584" distorted="true"  scale="0.9" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1.3);" onout="tween(alpha,0.5);tween(scale,0.9);"distorted="true" />
+    		<hotspot name="spot6" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_4corridor,null,null,BLEND(1));set(autoratate.enabled,state);" url="hotspots/borisU.png" onhover="showtext(хол 4-й поверх[br]холл 4-й этаж);" ath="225.4966309772152" atv="-9.870979703617817" rx="-13.75" ry="-29.75" rz="1.385814701735054" distorted="true" scale="0.9" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1.3);" onout="tween(alpha,0.5);tween(scale,0.9);"distorted="true" />
+   		<hotspot name="spot7" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_3chamber,null,null,BLEND(1));set(autoratate.enabled,state);" url="hotspots/borisL.png" onhover="showtext(палата 3-й поверх[br]палата 3-й этаж);" ath="224.70611543490733" atv="5.6119037366643285" rx="5.25" ry="-32.5" rz="-0.11325854604830199" distorted="true" scale="0.9" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1.3);" onout="tween(alpha,0.5);tween(scale,0.9);"distorted="true" />
+
+
+	</scene>
+<scene name="scene_3opretionunit3" title="операційна зала №3 3-й поверх[br]операционный зал №3 3-й этаж" onstart="action(startscene);" thumburl="3opretionunit3.tiles/thumb.jpg">
+		<action name="startscene">
+			
+			action(activatespot,scene_3opretionunit3, 270);
+		</action>
+		<view hlookat="90" vlookat="20" fovtype="MFOV" fov="110" maxpixelzoom="2.0" fovmin="60" fovmax="120" />
+
+		<preview url="3opretionunit3.tiles/preview.jpg" />
+
+		<image>
+			<left  url="3opretionunit3.tiles/pano_l.jpg" />
+			<front url="3opretionunit3.tiles/pano_f.jpg" />
+			<right url="3opretionunit3.tiles/pano_r.jpg" />
+			<back  url="3opretionunit3.tiles/pano_b.jpg" />
+			<up    url="3opretionunit3.tiles/pano_u.jpg" />
+			<down  url="3opretionunit3.tiles/pano_d.jpg" />
+		</image>
+
+		<!-- place hotspots here -->
+
+		<hotspot name="spot8" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_3corridor,null,null,BLEND(1));set(autoratate.enabled,state);" url="hotspots/boris.png" onhover="showtext(хол 3-й поверх[br]холл 3-й этаж);" ath="341.561" atv="5.57003" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1);" onout="tween(alpha,0.5);tween(scale,0.5);"/>
+
+
+	</scene>
+	<scene name="scene_3chamber" title="палата 3-й поверх[br]палата 3-й этаж" onstart="action(startscene);" thumburl="3chamber.tiles/thumb.jpg">
+		<action name="startscene">
+			
+			action(activatespot,scene_3chamber, 110);
+		</action>
+		<view hlookat="340" vlookat="30" fovtype="MFOV" fov="90" maxpixelzoom="2.0" fovmin="60" fovmax="120" />
+
+		<preview url="3chamber.tiles/preview.jpg" />
+
+		<image>
+			<left  url="3chamber.tiles/pano_l.jpg" />
+			<front url="3chamber.tiles/pano_f.jpg" />
+			<right url="3chamber.tiles/pano_r.jpg" />
+			<back  url="3chamber.tiles/pano_b.jpg" />
+			<up    url="3chamber.tiles/pano_u.jpg" />
+			<down  url="3chamber.tiles/pano_d.jpg" />
+		</image>
+
+		<!-- place hotspots here -->
+
+		<hotspot name="spot2" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_3corridor,null,null,BLEND(1));set(autoratate.enabled,state);" url="hotspots/boris.png" onhover="showtext(хол 3-й поверх[br]холл 3-й этаж);" ath="492.585" atv="6.15635" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1);" onout="tween(alpha,0.5);tween(scale,0.5);"/>
+
+
+	</scene>
+
+
+	
+
+	
+
+
+	<scene name="scene_3VIP" title="VIP-палата 3-й поверх[br]VIP-палата 3-й этаж" onstart="action(startscene);" thumburl="3VIP.tiles/thumb.jpg">
+		<action name="startscene">
+			
+			action(activatespot,scene_3VIP, 320);
+		</action>
+		<view hlookat="40" vlookat="30" fovtype="MFOV" fov="90" maxpixelzoom="2.0" fovmin="60" fovmax="120" />
+
+		<preview url="3VIP.tiles/preview.jpg" />
+
+		<image>
+			<left  url="3VIP.tiles/pano_l.jpg" />
+			<front url="3VIP.tiles/pano_f.jpg" />
+			<right url="3VIP.tiles/pano_r.jpg" />
+			<back  url="3VIP.tiles/pano_b.jpg" />
+			<up    url="3VIP.tiles/pano_u.jpg" />
+			<down  url="3VIP.tiles/pano_d.jpg" />
+		</image>
+
+		<!-- place hotspots here -->
+
+		<hotspot name="spot8" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_3corridor,null,null,BLEND(1));set(autoratate.enabled,state);" url="hotspots/boris.png" onhover="showtext(хол 3-й поверх[br]холл 3-й этаж);" ath="158.73967354467214" atv="6.077610952115877" rx="-0.5" ry="-30" rz="-2.1335398679229973" scale="0.6" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1);" onout="tween(alpha,0.5);tween(scale,0.6);" distorted="true" />
+		<hotspot name="spot70" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_3sanuzelVIP,null,null,BLEND(1));wait(blend);set(autoratate.enabled,state);" url="hotspots/boris.png" onhover="showtext(санвузол VIP-палати 3-й поверх[br]санузел VIP-палаты 3-й этаж);" ath="67.43537765417389" atv="7.528777670063413"
+scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1);" onout="tween(alpha,0.5);tween(scale,0.5);" distorted="true" rx="7" ry="46.25" rz="0.6528121007376817" />
+
+
+	</scene>
+ <scene name="scene_3sanuzelVIP" title="санвузол VIP-палати 3-й поверх[br]санузел VIP-палаты 3-й этаж" onstart="action(startscene);" thumburl="6sanuzelVIP.tiles/thumb.jpg">
+
+		<action name="startscene">
+			action(activatespot,scene_3sanuzelVIP,180);
+		</action>
+
+
+		<view hlookat="290" vlookat="20" fovtype="MFOV" fov="90" maxpixelzoom="2.0" fovmin="60" fovmax="120" />
+
+		<preview url="6sanuzelVIP.tiles/preview.jpg" />
+
+		<image>
+			<left  url="6sanuzelVIP.tiles/pano_l.jpg" />
+			<front url="6sanuzelVIP.tiles/pano_f.jpg" />
+			<right url="6sanuzelVIP.tiles/pano_r.jpg" />
+			<back  url="6sanuzelVIP.tiles/pano_b.jpg" />
+			<up    url="6sanuzelVIP.tiles/pano_u.jpg" />
+			<down  url="6sanuzelVIP.tiles/pano_d.jpg" />
+		</image>
+
+		<!-- place hotspots here -->
+
+		<hotspot name="spot65" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_3VIP,null,null,BLEND(1));set(autoratate.enabled,state);" url="hotspots/boris.png" onhover="showtext(VIP-палата 3-й поверх[br]VIP-палата 3-й этаж);" ath="91.94333191827478" atv="8.127786555427646"
+scale="1" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1.5);" onout="tween(alpha,0.5);tween(scale,1);"distorted="true"  rz="-2.1987019241930352"/>
+</scene>
+
+	<scene name="scene_4corridor" title="хол 4-й поверх[br]холл 4-й этаж" onstart="action(startscene);" thumburl="4corridor.tiles/thumb.jpg">
+		<action name="startscene">
+			
+			action(activatespot,scene_4corridor, 280);
+		</action>
+		<view hlookat="170" vlookat="0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="90" fovmax="120" />
+
+		<preview url="4corridor.tiles/preview.jpg" />
+
+		<image>
+			<left  url="4corridor.tiles/pano_l.jpg" />
+			<front url="4corridor.tiles/pano_f.jpg" />
+			<right url="4corridor.tiles/pano_r.jpg" />
+			<back  url="4corridor.tiles/pano_b.jpg" />
+			<up    url="4corridor.tiles/pano_u.jpg" />
+			<down  url="4corridor.tiles/pano_d.jpg" />
+		</image>
+
+		<!-- place hotspots here -->
+
+		<hotspot name="spot9" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_6corridor,null,null,BLEND(1));set(autoratate.enabled,state);" url="hotspots/borisU.png" onhover="showtext(хол відділення реанімації та інтенсивної терапії 6-й поверх[br]холл отделения реанимации и интенсивной терапии 6-й этаж);" ath="196.83125845383256" atv="-0.5529069323478971" rx="3.25" ry="-0.75" rz="0.26382484970888315" scale="0.8" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1);" onout="tween(alpha,0.5);tween(scale,0.8);"distorted="true" />
+    		<hotspot name="spot10" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_3corridor,null,null,BLEND(1));set(autoratate.enabled,state);" url="hotspots/borisD.png" onhover="showtext(хол 3-й поверх[br]холл 3-й этаж);" ath="196.92458659018" atv="20.71483475567537" rx="19.5" ry="-21.5" rz="-0.10117326991786027" scale="0.8" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1);" onout="tween(alpha,0.5);tween(scale,0.8);"distorted="true" />
+    		<hotspot name="spot11" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_4opretionunit4,null,null,BLEND(1));set(autoratate.enabled,state);" url="hotspots/borisL.png" onhover="showtext(операційна зала №4 4-й поверх[br]операционный зал №4 4-й этаж);" ath="196.02598462001984" atv="13.38807569294852" width="152" height="24" rx="8.5" ry="-30.25" rz="-0.13012032641510837" scale="0.8" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1);" onout="tween(alpha,0.5);tween(scale,0.8);"distorted="true" />
+    		<hotspot name="spot12" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_4opretionunit5,null,null,BLEND(1));set(autoratate.enabled,state);" url="hotspots/boris.png" onhover="showtext(операційна зала №5 4-й поверх[br]операционный зал №5 4-й этаж );" ath="196.89634970743452" atv="7.240429694307777" rx="10.25" ry="-16.5" rz="0.5879866439376428" scale="0.8" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1);" onout="tween(alpha,0.5);tween(scale,0.8);"distorted="true" />
+
+
+
+	</scene>
+
+
+	<scene name="scene_4opretionunit4" title="операційна зала №4 4-й поверх[br]операционный зал №4 4-й этаж" onstart="action(startscene);" thumburl="4opretionunit4.tiles/thumb.jpg">
+		<action name="startscene">
+			
+			action(activatespot,scene_4opretionunit4, 70);
+		</action>
+		<view hlookat="90" vlookat="20" fovtype="MFOV" fov="110" maxpixelzoom="2.0" fovmin="60" fovmax="120" />
+
+		<preview url="4opretionunit4.tiles/preview.jpg" />
+
+		<image>
+			<left  url="4opretionunit4.tiles/pano_l.jpg" />
+			<front url="4opretionunit4.tiles/pano_f.jpg" />
+			<right url="4opretionunit4.tiles/pano_r.jpg" />
+			<back  url="4opretionunit4.tiles/pano_b.jpg" />
+			<up    url="4opretionunit4.tiles/pano_u.jpg" />
+			<down  url="4opretionunit4.tiles/pano_d.jpg" />
+		</image>
+
+		<!-- place hotspots here -->
+
+		<hotspot name="spot13" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_4corridor,null,null,BLEND(1));set(autoratate.enabled,state);" url="hotspots/boris.png"  onhover="showtext(хол 4-й поверх[br]холл 4-й этаж);" ath="527.707" atv="6.15635" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" rz="2.75"/>
+
+
+	</scene>
+
+
+	<scene name="scene_4opretionunit5" title="операційна зала №5 4-й поверх[br]операционный зал №5 4-й этаж" onstart="action(startscene);" thumburl="4opretionunit5.tiles/thumb.jpg">
+		<action name="startscene">
+			
+			action(activatespot,scene_4opretionunit5, 230);
+		</action>
+		<view hlookat="320" vlookat="20" fovtype="MFOV" fov="110" maxpixelzoom="2.0" fovmin="60" fovmax="120" />
+
+		<preview url="4opretionunit5.tiles/preview.jpg" />
+
+		<image>
+			<left  url="4opretionunit5.tiles/pano_l.jpg" />
+			<front url="4opretionunit5.tiles/pano_f.jpg" />
+			<right url="4opretionunit5.tiles/pano_r.jpg" />
+			<back  url="4opretionunit5.tiles/pano_b.jpg" />
+			<up    url="4opretionunit5.tiles/pano_u.jpg" />
+			<down  url="4opretionunit5.tiles/pano_d.jpg" />
+		</image>
+
+		<!-- place hotspots here -->
+<hotspot name="spot14" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_4corridor,null,null,BLEND(1));set(autoratate.enabled,state);" url="hotspots/boris.png" onhover="showtext(хол 4-й поверх[br]холл 4-й этаж);" ath="370.829" atv="6.74267" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" />
+
+	</scene>
+
+
+	<scene name="scene_6corridor" title="хол відділення реанімації та інтенсивної терапії 6-й поверх[br]холл отделения реанимации и интенсивной терапии 6-й этаж" thumburl="6corridor.tiles/thumb.jpg">
+		<action name="startscene">
+			
+			action(activatespot,scene_6corridor, 90);
+		</action>
+		<view hlookat="120" vlookat="0" fovtype="MFOV" fov="90" maxpixelzoom="2.0" fovmin="60" fovmax="120" />
+
+		<preview url="6corridor.tiles/preview.jpg" />
+
+		<image>
+			<left  url="6corridor.tiles/pano_l.jpg" />
+			<front url="6corridor.tiles/pano_f.jpg" />
+			<right url="6corridor.tiles/pano_r.jpg" />
+			<back  url="6corridor.tiles/pano_b.jpg" />
+			<up    url="6corridor.tiles/pano_u.jpg" />
+			<down  url="6corridor.tiles/pano_d.jpg" />
+		</image>
+
+		<!-- place hotspots here -->
+<hotspot name="spot15" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_6reanimation,null,null,BLEND(1));set(autoratate.enabled,state);" url="hotspots/boris.png" onhover="showtext(відділення реанімації та інтенсивної терапії [br]отделение реанимации и интенсивной терапии);" ath="147.86878305564977" atv="12.542198175153025" rx="-9.25" ry="-32" rz="0.38004311160039017" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" />
+<hotspot name="spot16" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_4corridor,null,null,BLEND(1));set(autoratate.enabled,state);" url="hotspots/borisD.png" onhover="showtext(хол 4-й поверх[br]холл 4-й этаж);" ath="172.19658567619877" atv="17.075973733212667" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" />
+<hotspot name="spot69" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_6VIP,null,null,BLEND(1));set(autoratate.enabled,state);" url="hotspots/borisR.png" onhover="showtext(VIP-палата 6-й поверх[br]VIP-палата 6-й этаж);" ath="172.80498333819742" atv="12.094955358587521"  scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" />
+
+	
+</scene>
+
+
+	<scene name="scene_6reanimation" title="відділення реанімації та інтенсивної терапії [br]отделение реанимации и интенсивной терапии" onstart="action(startscene);" thumburl="6reanimation.tiles/thumb.jpg">
+		<action name="startscene">
+			
+			action(activatespot,scene_6reanimation, 280);
+		</action>
+		<view hlookat="355" vlookat="20" fovtype="MFOV" fov="110" maxpixelzoom="2.0" fovmin="60" fovmax="120" />
+
+		<preview url="6reanimation.tiles/preview.jpg" />
+
+		<image>
+			<left  url="6reanimation.tiles/pano_l.jpg" />
+			<front url="6reanimation.tiles/pano_f.jpg" />
+			<right url="6reanimation.tiles/pano_r.jpg" />
+			<back  url="6reanimation.tiles/pano_b.jpg" />
+			<up    url="6reanimation.tiles/pano_u.jpg" />
+			<down  url="6reanimation.tiles/pano_d.jpg" />
+		</image>
+
+		<!-- place hotspots here -->
+
+		<hotspot name="spot17" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_6corridor,null,null,BLEND(1));set(autoratate.enabled,state);" url="hotspots/boris.png" onhover="showtext(відділення реанімації[br]та інтенсивної терапії[br]отделение реанимации[br]и интенсивной терапии);" ath="101.94231411887252" atv="4.522409585176337" rz="-0.7678862182253514" scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" />
+
+
+	</scene>
+
+	<scene name="scene_6VIP" title="VIP-палата 6-й поверх[br]VIP-палата 6-й этаж" onstart="action(startscene);" thumburl="6VIP.tiles/thumb.jpg">
+
+		<action name="startscene">
+			action(activatespot,scene_6VIP,260);
+		</action>
+
+
+		<view hlookat="260" vlookat="10" fovtype="MFOV" fov="90" maxpixelzoom="2.0" fovmin="60" fovmax="120" />
+
+		<preview url="6VIP.tiles/preview.jpg" />
+
+		<image>
+			<left  url="6VIP.tiles/pano_l.jpg" />
+			<front url="6VIP.tiles/pano_f.jpg" />
+			<right url="6VIP.tiles/pano_r.jpg" />
+			<back  url="6VIP.tiles/pano_b.jpg" />
+			<up    url="6VIP.tiles/pano_u.jpg" />
+			<down  url="6VIP.tiles/pano_d.jpg" />
+		</image>
+
+		<!-- place hotspots here -->
+
+		<hotspot name="spot66" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_6corridor,null,null,BLEND(1));lookat(-246.4,5.84,90);wait(blend);set(autoratate.enabled,state);" url="hotspots/boris.png" onhover="showtext(хол відділення реанімації та інтенсивної терапії 6-й поверх[br]холл отделения реанимации и интенсивной терапии 6-й этаж);" ath="49.20407017684016" atv="8.286767387538006"
+scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" rx="25.75" ry="-14.25" />
+<hotspot name="spot67" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_6sanuzelVIP,null,null,BLEND(1));wait(blend);set(autoratate.enabled,state);" url="hotspots/boris.png" onhover="showtext(санвузол VIP-палати 6-й поверх[br]санузел VIP-палаты 6-й этаж);" ath="-50.18878701056019" atv="6.519120682001759"
+scale="0.5" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1);" onout="tween(alpha,0.5);tween(scale,0.5);"distorted="true" rx="8.75" ry="50.75" rz="0.14645372627087608" />
+
+
+
+	</scene>
+<scene name="scene_6sanuzelVIP" title="санвузол VIP-палати 6-й поверх[br]санузел VIP-палаты 6-й этаж" onstart="action(startscene);" thumburl="6sanuzelVIP.tiles/thumb.jpg">
+
+		<action name="startscene">
+			action(activatespot,scene_6sanuzelVIP,0);
+		</action>
+
+
+		<view hlookat="290" vlookat="20" fovtype="MFOV" fov="90" maxpixelzoom="2.0" fovmin="60" fovmax="120" />
+
+		<preview url="6sanuzelVIP.tiles/preview.jpg" />
+
+		<image>
+			<left  url="6sanuzelVIP.tiles/pano_l.jpg" />
+			<front url="6sanuzelVIP.tiles/pano_f.jpg" />
+			<right url="6sanuzelVIP.tiles/pano_r.jpg" />
+			<back  url="6sanuzelVIP.tiles/pano_b.jpg" />
+			<up    url="6sanuzelVIP.tiles/pano_u.jpg" />
+			<down  url="6sanuzelVIP.tiles/pano_d.jpg" />
+		</image>
+
+		<!-- place hotspots here -->
+
+		<hotspot name="spot65" onclick="set(state,autoratate.enabled);set(autoratate.enabled,false);loadscene(scene_6VIP,null,null,BLEND(1));set(autoratate.enabled,state);" url="hotspots/boris.png" onhover="showtext(VIP палата 6-й поверх);" ath="91.94333191827478" atv="8.127786555427646"
+scale="1" zoom="true"  alpha="0.5" onover="tween(alpha,1);tween(scale,1.5);" onout="tween(alpha,0.5);tween(scale,1);"distorted="true"  rz="-2.1987019241930352"/>
+	         	         
+	         	       
+
+	</scene>
+
+
+
+	
+
+
+	
+
+
+	
+
+
+	
+
+
+
+
+
+	<!-- thumbnail actions begin (remove the 'buildthumbs()' call in the onstart event to remove the thumbs) -->
+	<action name="buildthumbs"> 
+        if(%1 != NEXT, set(i,0)); 
+        if(i LT scene.count, 
+            copy(thumb, scene[get(i)].thumburl); 
+            txtadd(thumbname,'thumb_',get(i)); 
+            addplugin(get(thumbname)); 
+            set(plugin[get(thumbname)].url, get(thumb)); 
+            set(plugin[get(thumbname)].keep, true); 
+            set(plugin[get(thumbname)].align, leftbottom); 
+            set(plugin[get(thumbname)].width,  40); 
+            set(plugin[get(thumbname)].height, 20); 
+            set(plugin[get(thumbname)].x, 10); 
+            set(plugin[get(thumbname)].y, 10); 
+            mul(plugin[get(thumbname)].x, i,0); 
+            mul(plugin[get(thumbname)].y, i,5); 
+            add(plugin[get(thumbname)].x, 5); 
+            add(plugin[get(thumbname)].y, 5); 
+            copy(plugin[get(thumbname)].xsmall, plugin[get(thumbname)].x); 
+            copy(plugin[get(thumbname)].ysmall, plugin[get(thumbname)].y); 
+            add(plugin[get(thumbname)].zorder, 100, i); 
+            set(plugin[get(thumbname)].effect,glow(0xFFFFFF,1.0,2,10000)); 
+            set(plugin[get(thumbname)].jsborder,'1px solid #FFFFFF'); 
+            copy(plugin[get(thumbname)].thumbpos, i); 
+            set(plugin[get(thumbname)].linkedscene, get(scene[get(i)].name) ); 
+            set(plugin[get(thumbname)].onclick, openthumbs() ); 
+copy(plugin[get(thumbname)].scenetitle, scene[get(i)].title); 
+set(plugin[get(thumbname)].onhover, showtext(get(scenetitle)) );  
+            inc(i); 
+            buildthumbs(NEXT); 
+          ); 
+    </action>
+
+	<action name="openthumb">
+		if(%2 != NEXT,
+			set(pos,0);
+			copy(curpos, plugin[%1].thumbpos);
+			set(xdst, 0);
+			set(ydst, 0);
+		  );
+
+		if(pos LT curpos,
+			inc(pos);
+			inc(ydst,90);
+			sub(ymax, stageheight, 100);
+			if(ydst GT ymax, inc(xdst,170);set(ydst,0); );
+			openthumb(%1,NEXT);
+		  ,
+			add(xdst,10);
+			add(ydst,10);
+			tween(plugin[%1].x, get(xdst) );
+			tween(plugin[%1].y, get(ydst) );
+			tween(plugin[%1].width, 160);
+			tween(plugin[%1].height, 80);
+		  );
+	</action>
+
+	<action name="closethumb">
+		tween(plugin[%1].x, get(plugin[%1].xsmall));
+		tween(plugin[%1].y, get(plugin[%1].ysmall));
+		tween(plugin[%1].width, 40);
+		tween(plugin[%1].height, 20);
+	</action>
+
+	<action name="openthumbs">
+		if(%1 != NEXT,
+			set(i,0);
+			set(events.onclick, set(events.onclick,null); delayedcall(0.1, closethumbs() ); );
+		  );
+
+		if(i LT scene.count,
+			txtadd(thumbname,'thumb_',get(i));
+			openthumb(get(thumbname));
+			set(plugin[get(thumbname)].onclick, set(events.onclick,null); closethumbs(); loadscene(get(linkedscene),null,MERGE,BLEND(1)); );
+			inc(i);
+			openthumbs(NEXT);
+		  );
+	</action>
+
+	<action name="closethumbs">
+		if(%1 != NEXT, set(i,0));
+		if(i LT scene.count,
+			txtadd(thumbname,'thumb_',get(i));
+			closethumb(get(thumbname));
+			set(plugin[get(thumbname)].onclick, openthumbs() );
+			inc(i);
+			closethumbs(NEXT);
+		  );
+	</action>
+
+	<!-- thumbnail actions end -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- global settings -->
+	
+	<plugin name="map" url="hotspots/map.jpg" keep="true"  
+	        align="rightbottom" x="4"  y="4" alpha="0.75" handcursor="false" 
+	        scalechildren="true"
+            width="64" 
+            height="45"
+            onclick="action(openmap);"
+		onhover="showtext(плани поверхів кліники Борис [br]планы этажей клиники Борис);" 
+            />
+            
+    <plugin name="scene_1facade" url="hotspots/mappoint.png" keep="true" parent="map" align="lefttop" edge="center" x="266"  y="786" zorder="2" onhover="showtext(фасад приміщення клініки Борис[br]фасад помещения клиники Борис);"         onclick="loadscene(scene_1facade, null, MERGE, BLEND(1));" />
+    <plugin name="scene_0densitometr" url="hotspots/mappoint.png" keep="true" parent="map" align="lefttop" edge="center" x="241" y="263" zorder="2" onhover="showtext(кабінет денситометрії[br]кабинет денситометрии);"     onclick="loadscene(scene_0densitometr, null, MERGE, BLEND(1));" />
+    <plugin name="scene_0kt" url="hotspots/mappoint.png" keep="true" parent="map" align="lefttop" edge="center" x="322" y="302" zorder="2" onhover="showtext(кабінет мультиспіральної комп'ютерної томографії (МСКТ)[br]кабинет мультиспиральной компьютерной томографии (МСКТ));" onclick="loadscene(scene_0kt, null, MERGE, BLEND(1));" />
+    <plugin name="scene_0mrt" url="hotspots/mappoint.png" keep="true" parent="map" align="lefttop" edge="center" x="272" y="254" zorder="2" onhover="showtext(кабінет магнітно-резонансної томографії (МРТ)[br]кабинет магнитно-резонансной томографии (МРТ));" onclick="loadscene(scene_0mrt, null, MERGE, BLEND(1));" />
+    <plugin name="scene_0reception" url="hotspots/mappoint.png" keep="true" parent="map" align="lefttop" edge="center" x="295" y="362" zorder="2" onhover="showtext(рецепція діагностичного центру 0-й поверх[br]рецепция диагностического центра 0-й этаж);" onclick="loadscene(scene_0reception, null, MERGE, BLEND(1));" />
+    <plugin name="scene_0rengen" url="hotspots/mappoint.png" keep="true" parent="map" align="lefttop" edge="center" x="390" y="330" zorder="2" onhover="showtext(кабінет рентгенографії[br]кабинет рентгенографии);" onclick="loadscene(scene_0rengen, null, MERGE, BLEND(1));" />
+    <plugin name="scene_1dressingroom" url="hotspots/mappoint.png" keep="true" parent="map" align="lefttop" edge="center" x="328" y="538" zorder="2" onhover="showtext(кабінет хірурга[br]кабинет хирурга);" onclick="loadscene(scene_1dressingroom, null, MERGE, BLEND(1));" />
+    <plugin name="scene_1pediatry" url="hotspots/mappoint.png" keep="true" parent="map" align="lefttop" edge="center" x="158" y="707" zorder="2" onhover="showtext(кабінет педіатра[br]кабинет педиатра);" onclick="loadscene(scene_1pediatry, null, MERGE, BLEND(1));" />
+    <plugin name="scene_1reception" url="hotspots/mappoint.png" keep="true" parent="map" align="lefttop" edge="center" x="295" y="706" zorder="2" onhover="showtext(рецепція поліклініки 1-й поверх[br]рецепция поликлиники 1-й этаж);" onclick="loadscene(scene_1reception, null, MERGE, BLEND(1));" />
+    <plugin name="scene_1resuscikationmoto" url="hotspots/mappoint.png" keep="true" parent="map" align="lefttop" edge="center" x="532" y="782" zorder="2" onhover="showtext(мотоцикл швидкої допомоги[br]мотоцикл скорой помощи);" onclick="loadscene(scene_1resuscikationmoto, null, MERGE, BLEND(1));" />
+    <plugin name="scene_1sekvoya" url="hotspots/mappoint.png" keep="true" parent="map" align="lefttop" edge="center" x="542" y="773" zorder="2" onhover="showtext(реанімобіль[br]реанимобиль);" onclick="loadscene(scene_1sekvoya, null, MERGE, BLEND(1));" />
+    <plugin name="scene_1surgeon" url="hotspots/mappoint.png" keep="true" parent="map" align="lefttop" edge="center" x="303" y="513" zorder="2" onhover="showtext(кабінет травматолога[br]кабинет травматолога);" onclick="loadscene(scene_1surgeon, null, MERGE, BLEND(1));" />
+    <plugin name="scene_2bronchoscopy" url="hotspots/mappoint.png" keep="true" parent="map" align="lefttop" edge="center" x="700" y="142" zorder="2" onhover="showtext(кабінет ендоскопії[br]кабинет эндоскопии);" onclick="loadscene(scene_2bronchoscopy, null, MERGE, BLEND(1));" />
+    <plugin name="scene_2doppler" url="hotspots/mappoint.png" keep="true" parent="map" align="lefttop" edge="center" x="980" y="200" zorder="2" onhover="showtext(кабінет доплерографії[br]кабинет допплерографии);" onclick="loadscene(scene_2doppler, null, MERGE, BLEND(1));" />
+    <plugin name="scene_2gynecology" url="hotspots/mappoint.png" keep="true" parent="map" align="lefttop" edge="center" x="641" y="144" zorder="2" onhover="showtext(кабінет гінеколога[br]кабинет гинеколога);" onclick="loadscene(scene_2gynecology, null, MERGE, BLEND(1));" />
+    <plugin name="scene_2oftolmolog" url="hotspots/mappoint.png" keep="true" parent="map" align="lefttop" edge="center" x="935" y="138" zorder="2" onhover="showtext(кабінет офтальмолога[br]кабинет офтальмолога);" onclick="loadscene(scene_2oftolmolog, null, MERGE, BLEND(1));" />
+    <plugin name="scene_2otolaringologist" url="hotspots/mappoint.png" keep="true" parent="map" align="lefttop" edge="center" x="1007" y="138" zorder="2" onhover="showtext(кабінет отоларинголога[br]кабинет отоларинголога);" onclick="loadscene(scene_2otolaringologist, null, MERGE, BLEND(1));" />
+    <plugin name="scene_2reception" url="hotspots/mappoint.png" keep="true" parent="map" align="lefttop" edge="center" x="834" y="198" zorder="2" onhover="showtext(рецепція поліклініки 2-й поверх[br]рецепция поликлиники 2-й этаж);" onclick="loadscene(scene_2reception, null, MERGE, BLEND(1));" />
+    <plugin name="scene_2uzi" url="hotspots/mappoint.png" keep="true" parent="map" align="lefttop" edge="center" x="670" y="200" zorder="2" onhover="showtext(кабінет ультразвукового дослідження (УЗД)[br]кабинет ультразвукового исследования (УЗИ));" onclick="loadscene(scene_2uzi, null, MERGE, BLEND(1));" />
+    <plugin name="scene_2vaccination" url="hotspots/mappoint.png" keep="true" parent="map" align="lefttop" edge="center" x="880" y="195" zorder="2" onhover="showtext(кабінет вакцинації[br]кабинет вакцинации);" onclick="loadscene(scene_2vaccination, null, MERGE, BLEND(1));" />
+    <plugin name="scene_3chamber" url="hotspots/mappoint.png" keep="true" parent="map" align="lefttop" edge="center" x="981" y="463" zorder="2" onhover="showtext(палата 3-й поверх[br]палата 3-й этаж);" onclick="loadscene(scene_3chamber, null, MERGE, BLEND(1));" />
+    <plugin name="scene_3corridor" url="hotspots/mappoint.png" keep="true" parent="map" align="lefttop" edge="center" x="785" y="421" zorder="2" onhover="showtext(хол 3-й поверх[br]холл 3-й этаж);" onclick="loadscene(scene_3corridor, null, MERGE, BLEND(1));" />
+    <plugin name="scene_3opretionunit3" url="hotspots/mappoint.png" keep="true" parent="map" align="lefttop" edge="center" x="785" y="495" zorder="2" onhover="showtext(операційна зала №3 3-й поверх[br]операционный зал №3 3-й этаж);" onclick="loadscene(scene_3opretionunit3, null, MERGE, BLEND(1));" />
+    <plugin name="scene_3VIP" url="hotspots/mappoint.png" keep="true" parent="map" align="lefttop" edge="center" x="983" y="380" zorder="2" onhover="showtext(VIP-палата 3-й поверх[br]VIP-палата 3-й этаж);" onclick="loadscene(scene_3VIP, null, MERGE, BLEND(1));" />
+    <plugin name="scene_4corridor" url="hotspots/mappoint.png" keep="true" parent="map" align="lefttop" edge="center" x="787" y="678" zorder="2" onhover="showtext(хол 4-й поверх[br]холл 4-й этаж);" onclick="loadscene(scene_4corridor, null, MERGE, BLEND(1));" />
+    <plugin name="scene_4opretionunit4" url="hotspots/mappoint.png" keep="true" parent="map" align="lefttop" edge="center" x="851" y="752" zorder="2" onhover="showtext(операційна зала №4 4-й поверх[br]операционный зал №4 4-й этаж);" onclick="loadscene(scene_4opretionunit4, null, MERGE, BLEND(1));" />
+    <plugin name="scene_4opretionunit5" url="hotspots/mappoint.png" keep="true" parent="map" align="lefttop" edge="center" x="803" y="752" zorder="2" onhover="showtext(операційна зала №5 4-й поверх[br]операционный зал №5 4-й этаж);" onclick="loadscene(scene_4opretionunit5, null, MERGE, BLEND(1));" />
+    <plugin name="scene_6corridor" url="hotspots/mappoint.png" keep="true" parent="map" align="lefttop" edge="center" x="418" y="124" zorder="2" onhover="showtext(хол відділення реанімації та інтенсивної терапії 6-й поверх[br]холл отделения реанимации и интенсивной терапии 6-й этаж);" onclick="loadscene(scene_6corridor, null, MERGE, BLEND(1));" />
+    <plugin name="scene_6reanimation" url="hotspots/mappoint.png" keep="true" parent="map" align="lefttop" edge="center" x="340" y="87" zorder="2" onhover="showtext(відділення реанімації та інтенсивної терапії [br]отделение реанимации и интенсивной терапии);" onclick="loadscene(scene_6reanimation, null, MERGE, BLEND(1));" />
+    <plugin name="scene_7receptionpolic2" url="hotspots/mappoint.png" keep="true" parent="map" align="lefttop" edge="center" x="532" y="763" zorder="2" onhover="showtext(хол поліклініки №2[br]холл поликлиники №2);" onclick="loadscene(scene_7receptionpolic2, null, MERGE, BLEND(1));" />
+    <plugin name="scene_0mamograf" url="hotspots/mappoint.png" keep="true" parent="map" align="lefttop" edge="center" x="215" y="262" zorder="2" onhover="showtext(кабінет мамографії[br]кабинет маммографии);" onclick="loadscene(scene_0mamograf, null, MERGE, BLEND(1));" />
+    <plugin name="scene_1reanimobil" url="hotspots/mappoint.png" keep="true" parent="map" align="lefttop" edge="center" x="542" y="791" zorder="2" onhover="showtext(автомобіль швидкої невідкладної допомоги);" onclick="loadscene(scene_1reanimobil, null, MERGE, BLEND(1));" />
+    <plugin name="scene_3sanuzelVIP" url="hotspots/mappoint.png" keep="true" parent="map" align="lefttop" edge="center" x="1012" y="394" zorder="2" onhover="showtext(санвузол VIP-палати 3-й поверх[br]санузел VIP-палаты 3-й этаж);" onclick="loadscene(scene_3sanuzelVIP, null, MERGE, BLEND(1));" />
+    <plugin name="scene_2zaborkrovi" url="hotspots/mappoint.png" keep="true" parent="map" align="lefttop" edge="center" x="751" y="202" zorder="2" onhover="showtext(кімната забору аналізів[br]комната забора анализов);" onclick="loadscene(scene_2zaborkrovi, null, MERGE, BLEND(1));" />
+    <plugin name="scene_2analiz" url="hotspots/mappoint.png" keep="true" parent="map" align="lefttop" edge="center" x="772" y="240" zorder="2" onhover="showtext(лабораторія[br]лаборатория);" onclick="loadscene(scene_2analiz, null, MERGE, BLEND(1));" />
+    <plugin name="scene_6VIP" url="hotspots/mappoint.png" keep="true" parent="map" align="lefttop" edge="center" x="514" y="277" zorder="2" onhover="showtext(VIP-палата 6-й поверх[br]VIP-палата 6-й этаж);" onclick="loadscene(scene_6VIP, null, MERGE, BLEND(1));" />
+    <plugin name="scene_6sanuzelVIP" url="hotspots/mappoint.png" keep="true" parent="map" align="lefttop" edge="center" x="491" y="257" zorder="2" onhover="showtext(санвузол VIP-палати 6-й поверх[br]санузел VIP-палаты 6-й этаж);" onclick="loadscene(scene_6sanuzelVIP, null, MERGE, BLEND(1));" />
+
+    <!-- activated hotpot -->
+    <plugin name="activespot" url="hotspots/mappointactive.png" keep="true" align="center" edge="center" visible="false" zorder="3" />
+    
+    <!-- radar plugin, set heading with "plugin[radar].heading" -->
+    <plugin name="radar"
+	        url="%SWFPATH%/plugins/radar.swf"
+	        zorder="1"
+	        keep="true"
+	        heading="0"
+	        parent="map"
+	        
+	        align="lefttop"
+	        edge="center"
+	        x="0" y="0"
+	        linecolor="0"
+	        fillcolor="0xFF0000"
+	        scale="0.3"
+	        visible="false"
+	        />
+    
+	
+    	        
+
+	<!-- actions -->
+	<action name="closemap">
+        set(onclick,action(openmap););
+        tween(width,64,distance(320,0.5),easeoutquad);
+        tween(height,45,distance(227,0.5),easeoutquad);
+    </action>
+    
+    <action name="openmap">
+        set(onclick,action(closemap););
+        tween(width,821,distance(1095,0.5),easeoutquad);
+        tween(height,600,distance(800,0.5),easeoutquad);
+    </action>
+
+
+	<!-- activatespot action, 
+	     - this action has two arguments:
+	       - %1 = the current spot
+	       - %2 = the current radar heading
+	-->
+	<action name="activatespot">
+		set(plugin[activespot].parent, plugin[%1]);
+		set(plugin[activespot].visible, true);
+		
+		copy(plugin[radar].x, plugin[%1].x);
+		copy(plugin[radar].y, plugin[%1].y);
+		
+		set(plugin[radar].visible, true);
+		set(plugin[radar].heading, %2);
+	</action>
+ <contextmenu>
+		<item caption="The creation of the tour +380661276168"     />
+            <item caption="KRPANO"     />
+		<item caption="FULLSCREEN" />
+		<item caption="normal view"        onclick="action(rectview);"          separator="true" />
+		<item caption="fisheye view"       onclick="action(fisheyeview);"       />
+		<item caption="architectural view" onclick="action(architectural);"     />
+		<item caption="stereographic view" onclick="action(stereofisheyeview);" />
+		<item caption="little planet view" onclick="action(littleplanet);"      />
+	</contextmenu>
+	
+	<!-- actions for view changing -->
+	<action name="rectview">
+		tween(view.fovmax,       155.0, distance(179, 0.25), easeoutquad);
+		tween(view.architectural,  0.0, distance(1.0, 0.25), easeoutquad);
+		tween(view.fisheye,        0.0, distance(1.0, 0.25), easeoutquad, set(view.stereographic,false); );
+	</action>
+	
+	<action name="fisheyeview">
+		tween(view.architectural, 0.0, distance(1.0, 0.25), easeoutquad);
+		tween(view.fisheye,       0.0 ,distance(1.0, 0.20), easeoutquad,
+				set(view.stereographic,false);
+				set(view.fovmax,179);
+				tween(view.fisheye, 0.35, distance(1.0, 1.25));
+			 );
+	</action>
+	
+	<action name="stereofisheyeview">
+		tween(view.architectural, 0.0, distance(1.0, 0.25), easeoutquad);
+		tween(view.fisheye,       0.0 ,distance(1.0, 0.10), easeoutquad,
+				set(view.stereographic,true);
+				tween(view.fisheye, 1.0, distance(1.0, 1.25));
+				tween(view.fovmax,  150, distance(179, 1.25));
+			 );
+	</action>
+	
+	<action name="littleplanet">
+		tween(view.architectural, 0.0, distance(1.0, 0.25), easeoutquad);
+		tween(view.fisheye,       0.0 ,distance(1.0, 0.10), easeoutquad,
+				set(view.stereographic,true);
+				tween(view.fisheye, 1.0, distance(1.0, 0.75));
+				tween(view.fov,     130, distance(179, 0.75), easeoutquad, set(view.fovmax,150););
+				tween(view.vlookat,  90, distance(179, 0.75), easeoutquad);
+			 );
+	</action>
+	
+	<action name="architectural">
+		tween(view.fovmax,       155.0, distance(179, 0.25), easeoutquad);
+		tween(view.architectural,  1.0, distance(1.0, 0.25), easeoutquad);
+		tween(view.fisheye,        0.0, distance(1.0, 0.25), easeoutquad, set(view.stereographic,false); );
+	</action>
+<plugin name="cameracontrols" 
+  	        url="plugins/cameracontrols.swf"  zoom_refresh_fps="10" alpha="0.5" 
+  	        keep="true"
+  	        align="righttop"
+  	        x="5"
+  	        y="5"
+                />
+<!-- fullscreen button and events -->            
+            
+	          
+		       
+	<plugin name="fsbutton" url="hotspots/fsbutton.png" keep="true"
+			align="leftbottom"  x="55"
+  	        y="4"
+
+	        scale="0.34" zoom="true"  alpha="0.3"
+ onover="tween(alpha,0.5);tween(scale,0.5);" onout="tween(alpha,0.3);tween(scale,0.34);"
+	        onhover="if(fullscreen, showtext(згорнути екран[br]свернуть экран), showtext(розгорнути екран[br]развернуть экран));"
+
+	        onclick="switch(fullscreen);"
+	        />            
+    
+
+
+</krpano>
